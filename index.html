@@ -35,16 +35,7 @@ html{scroll-behavior:smooth}
 :root{--green:#00875A;--green2:#00C77A;--gd:#006644;--yellow:#FFD700;--orange:#FF9500;--dark:#090F0D;--dark2:#0F1A14;--dark3:#162B1F;--text:#E8F5F0;--muted:#6B9E85;--border:rgba(0,135,90,.2)}
 body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;overflow-x:hidden;line-height:1.6}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
-/* LOADER */
-.lo{position:fixed;inset:0;background:var(--dark);z-index:99999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;animation:loHide .5s 1.6s ease forwards}
-@keyframes loHide{0%{opacity:1;pointer-events:all}100%{opacity:0;pointer-events:none;visibility:hidden}}
-.lo-logo{animation:loPop .8s cubic-bezier(.34,1.56,.64,1) forwards}
-@keyframes loPop{0%{transform:scale(0);opacity:0}60%{transform:scale(1.1)}100%{transform:scale(1);opacity:1}}
-.lo-name{font-family:'Outfit',sans-serif;font-size:28px;font-weight:900;color:white;opacity:0;animation:fu .5s .4s ease forwards}
-.lo-name span{color:var(--green2)}
-.lo-bar{width:120px;height:3px;background:rgba(0,199,122,.2);border-radius:2px;overflow:hidden;opacity:0;animation:fu .3s .5s ease forwards}
-.lo-fill{height:100%;background:var(--green2);border-radius:2px;animation:loFill 1s .5s ease forwards}
-@keyframes loFill{from{width:0}to{width:100%}}
+
 /* STRIP */
 .strip{background:var(--green);padding:9px 16px;text-align:center;font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;color:white;position:relative;overflow:hidden}
 .strip::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(-45deg,transparent,transparent 8px,rgba(255,255,255,.05) 8px,rgba(255,255,255,.05) 16px)}
@@ -318,15 +309,7 @@ body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;ove
 <body>
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PQHZWD3R" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
-<!-- LOADER -->
-<div class="lo">
-  <svg width="64" height="64" viewBox="0 0 38 38" fill="none" class="lo-logo">
-    <path d="M19 2L4 8V20C4 28.5 10.8 35.4 19 37C27.2 35.4 34 28.5 34 20V8L19 2Z" fill="#0A1A14" stroke="#00875A" stroke-width="1.5"/>
-    <circle cx="12" cy="18" r="3" fill="#00C77A"/><circle cx="19" cy="14" r="3" fill="#FFD700"/><circle cx="26" cy="18" r="3" fill="white"/>
-    <path d="M19 22L19 28M16 25L22 25" stroke="#00C77A" stroke-width="1.5" stroke-linecap="round"/>
-  </svg>
-  <div class="lo-name">Point<span>Save</span></div>
-  <div class="lo-bar"><div class="lo-fill"></div></div>
+</div>
 </div>
 
 <!-- POPUP exit-intent uniquement -->
