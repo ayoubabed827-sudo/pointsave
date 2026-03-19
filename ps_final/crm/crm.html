@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CRM PointSave</title>
+<meta name="robots" content="noindex, nofollow">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --g1:#00875A;--g2:#00C77A;--g3:#006644;
+  --y:#FFD700;--or:#FF9500;--re:#E53935;--bl:#1976D2;
+  --d1:#090F0D;--d2:#0F1A14;--d3:#162B1F;--d4:#1E3828;
+  --tx:#E8F5F0;--mu:#6B9E85;--bo:rgba(0,135,90,.18);
+  --sb:220px;
+}
+html,body{height:100%;overflow:hidden}
+body{background:var(--d1);color:var(--tx);font-family:'Inter',sans-serif;display:flex}
+
+/* ========= LOGIN ========= */
+#login{position:fixed;inset:0;background:var(--d1);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px}
+#login.off{display:none}
+.lb{background:var(--d2);border:1.5px solid var(--bo);border-radius:20px;padding:44px 36px;max-width:400px;width:100%;text-align:center}
+.lb-logo{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:28px}
+.lb-logo svg{width:42px;height:42px}
+.lb-name{font-family:'Outfit',sans-serif;font-weight:900;font-size:24px;color:white}
+.lb-name span{color:var(--g2)}
+.lb h2{font-family:'Outfit',sans-serif;font-size:18px;font-weight:800;color:white;margin-bottom:5px}
+.lb p{font-size:13px;color:var(--mu);margin-bottom:24px}
+.lf{margin-bottom:12px;text-align:left}
+.lf label{display:block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--mu);margin-bottom:4px}
+.lf input{width:100%;padding:12px 14px;background:rgba(255,255,255,.04);border:1.5px solid var(--bo);border-radius:10px;color:white;font-size:14px;font-family:'Inter',sans-serif;outline:none;transition:border-color .2s}
+.lf input:focus{border-color:var(--g2)}
+.lb-btn{width:100%;padding:13px;background:linear-gradient(135deg,var(--g1),var(--g3));border:none;border-radius:10px;color:white;font-family:'Outfit',sans-serif;font-size:15px;font-weight:800;cursor:pointer;margin-top:8px}
+.lb-err{background:rgba(229,57,53,.1);border:1px solid rgba(229,57,53,.3);color:#ff8080;border-radius:8px;padding:9px;font-size:12px;margin-top:10px;display:none;text-align:center}
+.lb-err.on{display:block}
+
+/* ========= SIDEBAR ========= */
+#app{display:none;width:100%;height:100%}
+#app.on{display:flex}
+.sb{width:var(--sb);min-width:var(--sb);background:var(--d2);border-right:1px solid var(--bo);display:flex;flex-direction:column;height:100vh;position:fixed;left:0;top:0;z-index:50;transition:transform .3s}
+.sb-logo{display:flex;align-items:center;gap:9px;padding:20px 16px 16px;border-bottom:1px solid var(--bo)}
+.sb-logo svg{width:28px;height:28px;flex-shrink:0}
+.sb-logo-name{font-family:'Outfit',sans-serif;font-weight:900;font-size:16px;color:white;line-height:1}
+.sb-logo-name span{color:var(--g2)}
+.sb-logo-sub{font-size:9px;color:var(--mu);margin-top:1px;font-weight:600;letter-spacing:1px;text-transform:uppercase}
+.sb-section{padding:12px 10px 4px}
+.sb-section-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--mu);padding:0 8px;margin-bottom:4px}
+.sb-nav{display:flex;flex-direction:column;gap:2px}
+.sb-link{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:9px;cursor:pointer;color:var(--mu);font-size:13px;font-weight:600;transition:all .15s;border:none;background:none;width:100%;text-align:left;font-family:'Inter',sans-serif}
+.sb-link:hover{background:rgba(0,135,90,.08);color:var(--tx)}
+.sb-link.active{background:rgba(0,199,122,.1);color:var(--g2);border:1px solid rgba(0,199,122,.2)}
+.sb-link .sb-ico{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;background:rgba(0,135,90,.08)}
+.sb-link.active .sb-ico{background:rgba(0,199,122,.15)}
+.sb-badge{margin-left:auto;background:rgba(255,80,80,.2);color:#ff8080;font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px}
+.sb-badge.green{background:rgba(0,199,122,.15);color:var(--g2)}
+.sb-footer{margin-top:auto;padding:12px 10px;border-top:1px solid var(--bo)}
+.sb-user{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:9px;background:rgba(0,135,90,.06)}
+.sb-avatar{width:32px;height:32px;border-radius:50%;background:var(--g1);display:flex;align-items:center;justify-content:center;font-family:'Outfit',sans-serif;font-weight:800;font-size:13px;color:white;flex-shrink:0}
+.sb-uname{font-size:12px;font-weight:600;color:var(--tx);line-height:1.2}
+.sb-urole{font-size:10px;color:var(--mu)}
+.sb-logout{margin-left:auto;background:none;border:none;color:var(--mu);cursor:pointer;font-size:16px;padding:2px;transition:color .2s}
+.sb-logout:hover{color:#ff8080}
+
+/* ========= MAIN ========= */
+.main{margin-left:var(--sb);flex:1;height:100vh;overflow-y:auto;display:flex;flex-direction:column}
+.topbar{background:rgba(9,15,13,.97);border-bottom:1px solid var(--bo);padding:0 24px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:40;backdrop-filter:blur(20px);flex-shrink:0}
+.tb-title{font-family:'Outfit',sans-serif;font-size:16px;font-weight:800;color:white;display:flex;align-items:center;gap:8px}
+.tb-right{display:flex;align-items:center;gap:10px}
+.tb-clock{font-size:12px;color:var(--mu);padding:3px 10px;background:rgba(0,135,90,.06);border:1px solid var(--bo);border-radius:6px}
+.tb-btn{background:rgba(0,135,90,.1);border:1px solid rgba(0,199,122,.2);color:var(--g2);font-size:11px;font-weight:700;padding:5px 12px;border-radius:6px;cursor:pointer;font-family:'Outfit',sans-serif;text-decoration:none;display:inline-flex;align-items:center;gap:5px}
+
+.content{flex:1;padding:24px}
+.panel{display:none}
+.panel.on{display:block}
+
+/* ========= KPI ========= */
+.kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:20px}
+.kpi{background:var(--d2);border:1px solid var(--bo);border-radius:12px;padding:16px 18px;position:relative;overflow:hidden}
+.kpi::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--kc,var(--g1))}
+.kpi-l{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--mu);margin-bottom:6px}
+.kpi-v{font-family:'Outfit',sans-serif;font-size:30px;font-weight:900;color:white;line-height:1}
+.kpi-s{font-size:11px;color:var(--mu);margin-top:4px}
+
+/* ========= SECTION TITLE ========= */
+.sh{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px}
+.sh-left{font-family:'Outfit',sans-serif;font-size:15px;font-weight:800;color:white;display:flex;align-items:center;gap:7px}
+.sh-right{display:flex;align-items:center;gap:8px}
+
+/* ========= CARDS ========= */
+.card{background:var(--d2);border:1px solid var(--bo);border-radius:12px;padding:18px 20px;margin-bottom:16px}
+.card-title{font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;color:white;margin-bottom:14px;display:flex;align-items:center;gap:6px}
+
+/* ========= TABLE ========= */
+.tbl-wrap{background:var(--d2);border:1px solid var(--bo);border-radius:12px;overflow:hidden;overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:700px}
+thead th{background:var(--d3);padding:10px 14px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--mu);border-bottom:1px solid var(--bo);cursor:pointer;white-space:nowrap;user-select:none}
+thead th:hover{color:var(--tx)}
+tbody tr{border-bottom:1px solid rgba(0,135,90,.07);transition:background .1s}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:rgba(0,135,90,.04)}
+td{padding:10px 14px;font-size:13px;vertical-align:middle}
+td.dt{color:var(--mu);font-size:11px;white-space:nowrap}
+td.tel a{color:var(--g2);text-decoration:none;font-weight:600;font-size:12px}
+.empty-td{text-align:center;padding:40px;color:var(--mu);font-size:13px}
+
+/* ========= BADGES ========= */
+.badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;cursor:pointer;border:none;font-family:'Inter',sans-serif;white-space:nowrap}
+.b-n{background:rgba(255,215,0,.1);color:var(--y);border:1px solid rgba(255,215,0,.2)}
+.b-c{background:rgba(25,118,210,.1);color:#64B5F6;border:1px solid rgba(25,118,210,.2)}
+.b-i{background:rgba(0,199,122,.1);color:var(--g2);border:1px solid rgba(0,199,122,.2)}
+.b-nj{background:rgba(255,149,0,.1);color:var(--or);border:1px solid rgba(255,149,0,.2)}
+.b-ni{background:rgba(229,57,53,.1);color:#ff8080;border:1px solid rgba(229,57,53,.2)}
+
+/* ========= NOTE ========= */
+.note-i{background:transparent;border:none;border-bottom:1px dashed rgba(0,135,90,.3);color:var(--mu);font-size:12px;font-family:'Inter',sans-serif;padding:2px 4px;width:140px;outline:none}
+.note-i:focus{border-color:var(--g2);color:var(--tx)}
+.note-i::placeholder{color:rgba(107,158,133,.3)}
+
+/* ========= TOOLBAR ========= */
+.toolbar{display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+.t-title{font-family:'Outfit',sans-serif;font-size:15px;font-weight:800;color:white;flex:1}
+.t-search{position:relative}
+.t-search input{background:var(--d2);border:1px solid var(--bo);border-radius:8px;color:var(--tx);font-size:12px;font-family:'Inter',sans-serif;padding:7px 10px 7px 30px;outline:none;width:180px}
+.t-search input:focus{border-color:var(--g2)}
+.t-search input::placeholder{color:var(--mu)}
+.t-search::before{content:'🔍';position:absolute;left:9px;top:50%;transform:translateY(-50%);font-size:12px}
+.t-sel{background:var(--d2);border:1px solid var(--bo);border-radius:8px;color:var(--tx);font-size:12px;font-family:'Inter',sans-serif;padding:7px 10px;outline:none;cursor:pointer;-webkit-appearance:none;appearance:none}
+.btn{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;padding:7px 12px;border-radius:8px;cursor:pointer;font-family:'Outfit',sans-serif;border:none;white-space:nowrap;text-decoration:none}
+.btn-g{background:rgba(0,135,90,.1);border:1px solid rgba(0,199,122,.2);color:var(--g2)}
+.btn-g:hover{background:rgba(0,135,90,.2)}
+.btn-r{background:rgba(229,57,53,.08);border:1px solid rgba(229,57,53,.2);color:#ff8080}
+.btn-solid{background:linear-gradient(135deg,var(--g1),var(--g3));color:white}
+
+/* ========= CHARTS ========= */
+.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px}
+.bar-r{display:flex;align-items:center;gap:8px;margin-bottom:9px}
+.bar-l{font-size:11px;color:var(--mu);width:120px;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bar-t{flex:1;height:7px;background:rgba(0,135,90,.1);border-radius:4px;overflow:hidden}
+.bar-f{height:100%;background:linear-gradient(90deg,var(--g1),var(--g2));border-radius:4px;transition:width .7s ease}
+.bar-v{font-size:11px;color:var(--tx);font-weight:600;width:22px;text-align:right;flex-shrink:0}
+.donut-w{display:flex;align-items:center;gap:16px}
+.leg-w{display:flex;flex-direction:column;gap:7px;flex:1}
+.leg-r{display:flex;align-items:center;justify-content:space-between;gap:6px;font-size:11px;color:var(--mu)}
+.leg-l{display:flex;align-items:center;gap:6px}
+.leg-d{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.leg-v{font-weight:600;color:var(--tx)}
+.tl-wrap{display:flex;align-items:flex-end;gap:5px;height:72px;padding-top:8px}
+.tl-b{flex:1;border-radius:3px 3px 0 0;background:rgba(0,199,122,.15);position:relative;min-height:4px;cursor:pointer;transition:background .2s}
+.tl-b:hover{background:rgba(0,199,122,.35)}
+.tl-b .tl-lbl{position:absolute;bottom:-17px;left:50%;transform:translateX(-50%);font-size:9px;color:var(--mu);white-space:nowrap}
+.tl-b .tl-val{position:absolute;top:-16px;left:50%;transform:translateX(-50%);font-size:10px;color:var(--g2);font-weight:700;opacity:0;transition:opacity .2s;white-space:nowrap}
+.tl-b:hover .tl-val{opacity:1}
+
+/* ========= AGENDA ========= */
+.ag-item{background:var(--d2);border:1px solid var(--bo);border-radius:10px;padding:14px 16px;display:flex;align-items:center;gap:14px;margin-bottom:8px;transition:border-color .2s}
+.ag-item:hover{border-color:var(--g2)}
+.ag-item.urg{border-left:2px solid #ff8080}
+.ag-item.enc{border-left:2px solid #64B5F6}
+.ag-ico{width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.ag-body{flex:1;min-width:0}
+.ag-name{font-weight:600;font-size:13px;color:var(--tx);margin-bottom:2px}
+.ag-detail{font-size:11px;color:var(--mu);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ag-note{font-size:11px;color:var(--tx);margin-top:2px}
+.ag-actions{display:flex;gap:6px;flex-shrink:0}
+.ag-btn{background:none;border:1px solid var(--bo);color:var(--mu);font-size:11px;font-weight:600;padding:4px 9px;border-radius:6px;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s;white-space:nowrap}
+.ag-btn.g{border-color:rgba(0,199,122,.3);color:var(--g2)}
+.ag-btn.g:hover{background:rgba(0,199,122,.1)}
+.ag-btn.r{border-color:rgba(229,57,53,.3);color:#ff8080}
+.ag-empty{text-align:center;padding:32px;color:var(--mu);font-size:13px;background:var(--d2);border:1px dashed var(--bo);border-radius:10px;margin-bottom:8px}
+
+/* ========= STATS ========= */
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+
+/* ========= OUTILS ========= */
+.tools-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px}
+.tool-card{background:var(--d2);border:1px solid var(--bo);border-radius:12px;padding:20px;text-align:center}
+.tool-ico{font-size:32px;margin-bottom:10px}
+.tool-title{font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;color:white;margin-bottom:5px}
+.tool-desc{font-size:12px;color:var(--mu);line-height:1.6;margin-bottom:14px}
+.settings-card{background:var(--d2);border:1px solid var(--bo);border-radius:12px;padding:20px}
+.set-field{margin-bottom:14px}
+.set-label{display:block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--mu);margin-bottom:5px}
+.set-input{width:100%;padding:10px 12px;background:rgba(255,255,255,.04);border:1.5px solid var(--bo);border-radius:8px;color:white;font-size:13px;font-family:'Inter',sans-serif;outline:none;transition:border-color .2s}
+.set-input:focus{border-color:var(--g2)}
+
+/* ========= MODAL ========= */
+.modal-ov{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:500;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(6px)}
+.modal-ov.on{display:flex}
+.modal{background:var(--d2);border:1.5px solid var(--bo);border-radius:16px;padding:24px;max-width:340px;width:100%}
+.modal h3{font-family:'Outfit',sans-serif;font-size:16px;font-weight:800;color:white;margin-bottom:10px}
+.modal-info{font-size:12px;color:var(--mu);margin-bottom:16px;padding:9px 12px;background:rgba(0,135,90,.06);border-radius:8px;border:1px solid var(--bo);line-height:1.6}
+.modal-info strong{color:var(--tx)}
+.statut-list{display:flex;flex-direction:column;gap:7px}
+.s-opt{padding:10px 14px;border-radius:9px;cursor:pointer;font-size:13px;font-weight:600;border:1.5px solid transparent;text-align:left;font-family:'Inter',sans-serif;transition:transform .12s}
+.s-opt:hover{transform:translateX(4px)}
+.s-n{background:rgba(255,215,0,.07);color:var(--y);border-color:rgba(255,215,0,.18)}
+.s-c{background:rgba(25,118,210,.07);color:#64B5F6;border-color:rgba(25,118,210,.18)}
+.s-i{background:rgba(0,199,122,.07);color:var(--g2);border-color:rgba(0,199,122,.18)}
+.s-nj{background:rgba(255,149,0,.07);color:var(--or);border-color:rgba(255,149,0,.18)}
+.s-ni{background:rgba(229,57,53,.07);color:#ff8080;border-color:rgba(229,57,53,.18)}
+.modal-cancel{width:100%;margin-top:8px;background:none;border:1px solid var(--bo);color:var(--mu);font-size:12px;font-weight:600;padding:9px;border-radius:8px;cursor:pointer;font-family:'Inter',sans-serif}
+
+/* ========= TOAST ========= */
+.toast{position:fixed;bottom:20px;right:20px;background:var(--d3);border:1px solid rgba(0,199,122,.3);color:var(--g2);font-size:12px;font-weight:600;padding:10px 16px;border-radius:9px;z-index:9999;transform:translateY(70px);opacity:0;transition:all .3s;pointer-events:none;display:flex;align-items:center;gap:7px}
+.toast.on{transform:translateY(0);opacity:1}
+
+/* ========= SRC PILL ========= */
+.src{background:rgba(0,135,90,.08);border:1px solid rgba(0,199,122,.12);border-radius:5px;padding:2px 6px;font-size:10px;color:var(--mu)}
+
+/* ========= MOBILE ========= */
+.burger-btn{display:none;position:fixed;top:10px;left:10px;z-index:60;background:var(--d2);border:1px solid var(--bo);border-radius:8px;padding:7px;cursor:pointer;color:var(--tx)}
+@media(max-width:900px){
+  :root{--sb:0px}
+  .sb{transform:translateX(-220px)}
+  .sb.open{transform:translateX(0);width:220px;min-width:220px}
+  .main{margin-left:0}
+  .burger-btn{display:flex}
+  .chart-grid{grid-template-columns:1fr}
+  .stats-grid{grid-template-columns:1fr}
+  .tools-grid{grid-template-columns:1fr}
+  .kpi-row{grid-template-columns:1fr 1fr}
+  .toolbar{flex-direction:column;align-items:stretch}
+  .t-search input{width:100%}
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login">
+  <div class="lb">
+    <div class="lb-logo">
+      <svg viewBox="0 0 38 38" fill="none">
+        <path d="M19 2L4 8V20C4 28.5 10.8 35.4 19 37C27.2 35.4 34 28.5 34 20V8L19 2Z" fill="#0A1A14" stroke="#00875A" stroke-width="1.5"/>
+        <circle cx="12" cy="18" r="3" fill="#00C77A"/>
+        <circle cx="19" cy="14" r="3" fill="#FFD700"/>
+        <circle cx="26" cy="18" r="3" fill="white"/>
+        <path d="M19 22L19 28M16 25L22 25" stroke="#00C77A" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <div class="lb-name">Point<span>Save</span></div>
+    </div>
+    <h2>Acces CRM</h2>
+    <p>Tableau de bord prive &mdash; Acces restreint</p>
+    <div class="lf"><label>Identifiant</label><input type="text" id="lu" placeholder="admin" autocomplete="username"></div>
+    <div class="lf"><label>Mot de passe</label><input type="password" id="lp" placeholder="••••••••" autocomplete="current-password"></div>
+    <button class="lb-btn" onclick="doLogin()">Se connecter au CRM</button>
+    <div class="lb-err" id="lerr">Identifiant ou mot de passe incorrect.</div>
+  </div>
+</div>
+
+<!-- BURGER MOBILE -->
+<button class="burger-btn" id="burger-btn" onclick="toggleSb()">&#9776;</button>
+
+<!-- APP -->
+<div id="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sb" id="sidebar">
+    <div class="sb-logo">
+      <svg viewBox="0 0 38 38" fill="none">
+        <path d="M19 2L4 8V20C4 28.5 10.8 35.4 19 37C27.2 35.4 34 28.5 34 20V8L19 2Z" fill="#0A1A14" stroke="#00875A" stroke-width="1.5"/>
+        <circle cx="12" cy="18" r="3" fill="#00C77A"/>
+        <circle cx="19" cy="14" r="3" fill="#FFD700"/>
+        <circle cx="26" cy="18" r="3" fill="white"/>
+        <path d="M19 22L19 28M16 25L22 25" stroke="#00C77A" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <div>
+        <div class="sb-logo-name">Point<span>Save</span></div>
+        <div class="sb-logo-sub">CRM Pro</div>
+      </div>
+    </div>
+
+    <div class="sb-section">
+      <div class="sb-section-label">Principal</div>
+      <div class="sb-nav">
+        <button class="sb-link active" onclick="showPanel('dashboard',this)">
+          <div class="sb-ico">&#128202;</div>
+          Dashboard
+        </button>
+        <button class="sb-link" onclick="showPanel('leads',this)">
+          <div class="sb-ico">&#128101;</div>
+          Leads
+          <span class="sb-badge green" id="sb-leads-count">0</span>
+        </button>
+        <button class="sb-link" onclick="showPanel('agenda',this)">
+          <div class="sb-ico">&#128680;</div>
+          Agenda
+          <span class="sb-badge" id="sb-urgent-count">0</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="sb-section">
+      <div class="sb-section-label">Analyse</div>
+      <div class="sb-nav">
+        <button class="sb-link" onclick="showPanel('stats',this)">
+          <div class="sb-ico">&#128200;</div>
+          Statistiques
+        </button>
+        <button class="sb-link" onclick="showPanel('map',this)">
+          <div class="sb-ico">&#128205;</div>
+          Par ville
+        </button>
+      </div>
+    </div>
+
+    <div class="sb-section">
+      <div class="sb-section-label">Configuration</div>
+      <div class="sb-nav">
+        <button class="sb-link" onclick="showPanel('outils',this)">
+          <div class="sb-ico">&#128736;</div>
+          Outils &amp; Export
+        </button>
+        <button class="sb-link" onclick="showPanel('settings',this)">
+          <div class="sb-ico">&#9881;&#65039;</div>
+          Parametres
+        </button>
+        <a href="/" target="_blank" class="sb-link" style="text-decoration:none">
+          <div class="sb-ico">&#127758;</div>
+          Voir le site
+        </a>
+      </div>
+    </div>
+
+    <div class="sb-footer">
+      <div class="sb-user">
+        <div class="sb-avatar" id="sb-avatar">K</div>
+        <div>
+          <div class="sb-uname" id="sb-uname">Admin</div>
+          <div class="sb-urole">PointSave</div>
+        </div>
+        <button class="sb-logout" onclick="doLogout()" title="Deconnexion">&#10005;</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+    <div class="topbar">
+      <div class="tb-title" id="tb-title">&#128202; Dashboard</div>
+      <div class="tb-right">
+        <div class="tb-clock" id="clock">--:--</div>
+        <a href="/" target="_blank" class="tb-btn">&#8599; Site</a>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- DASHBOARD -->
+      <div class="panel on" id="panel-dashboard">
+        <div class="kpi-row" id="kpi-row"></div>
+        <div style="margin-bottom:6px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--mu)">Leads des 7 derniers jours</div>
+        <div class="card" style="margin-bottom:16px;padding:16px 20px 24px">
+          <div class="tl-wrap" id="tl-wrap"></div>
+        </div>
+        <div class="chart-grid">
+          <div class="card">
+            <div class="card-title">&#127775; Repartition par statut</div>
+            <div class="donut-w">
+              <canvas id="donut" width="100" height="100"></canvas>
+              <div class="leg-w" id="donut-leg"></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title">&#127968; Top villes</div>
+            <div id="bar-villes"></div>
+          </div>
+        </div>
+        <div class="sh"><div class="sh-left">&#128680; Derniers leads</div><button class="btn btn-g" onclick="showPanel('leads',document.querySelector('.sb-link:nth-child(2))'))">Voir tous &#8594;</button></div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Date</th><th>Nom</th><th>Telephone</th><th>Ville</th><th>Statut</th><th>Note</th></tr></thead>
+            <tbody id="recent-tb"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- LEADS -->
+      <div class="panel" id="panel-leads">
+        <div class="toolbar">
+          <div class="t-title">Leads <span id="leads-label" style="font-size:12px;color:var(--mu);font-weight:400"></span></div>
+          <div class="t-search"><input type="text" placeholder="Rechercher..." id="search-inp" oninput="filterLeads()"></div>
+          <select class="t-sel" id="f-statut" onchange="filterLeads()">
+            <option value="">Tous statuts</option>
+            <option>Nouveau</option><option>Contacte</option>
+            <option>Inscrit au stage</option><option>Non joignable</option><option>Non interesse</option>
+          </select>
+          <select class="t-sel" id="f-ville" onchange="filterLeads()">
+            <option value="">Toutes villes</option>
+          </select>
+          <button class="btn btn-r" onclick="clearFilters()">&#10005; Reset</button>
+          <button class="btn btn-g" onclick="exportCSV()">&#8659; CSV</button>
+        </div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr>
+              <th onclick="sortBy('date')">Date &#8597;</th>
+              <th onclick="sortBy('nom')">Nom &#8597;</th>
+              <th>Telephone</th>
+              <th onclick="sortBy('ville')">Ville &#8597;</th>
+              <th>Rappel</th>
+              <th>Source</th>
+              <th onclick="sortBy('statut')">Statut &#8597;</th>
+              <th>Note</th>
+            </tr></thead>
+            <tbody id="leads-tb"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- AGENDA -->
+      <div class="panel" id="panel-agenda">
+        <div class="sh"><div class="sh-left">&#128680; A rappeler en priorite</div></div>
+        <p style="font-size:12px;color:var(--mu);margin-bottom:14px">Leads "Nouveau" et "Non joignable" — a traiter maintenant.</p>
+        <div id="ag-urgent"></div>
+        <div class="sh" style="margin-top:20px"><div class="sh-left">&#128222; En cours de traitement</div></div>
+        <p style="font-size:12px;color:var(--mu);margin-bottom:14px">Leads contacts en attente de confirmation d'inscription.</p>
+        <div id="ag-encours"></div>
+      </div>
+
+      <!-- STATS -->
+      <div class="panel" id="panel-stats">
+        <div class="kpi-row" id="kpi-stats"></div>
+        <div class="stats-grid">
+          <div class="card"><div class="card-title">&#128205; Par ville</div><div id="st-villes"></div></div>
+          <div class="card"><div class="card-title">&#127760; Par source</div><div id="st-sources"></div></div>
+          <div class="card"><div class="card-title">&#128197; Par mois (6 derniers)</div><div id="st-mois"></div></div>
+          <div class="card"><div class="card-title">&#127919; Taux de conversion</div><div id="st-conv"></div></div>
+        </div>
+      </div>
+
+      <!-- MAP / PAR VILLE -->
+      <div class="panel" id="panel-map">
+        <div class="sh"><div class="sh-left">&#128205; Leads par ville</div></div>
+        <div id="map-content"></div>
+      </div>
+
+      <!-- OUTILS -->
+      <div class="panel" id="panel-outils">
+        <div class="sh" style="margin-bottom:16px"><div class="sh-left">&#128736; Outils &amp; Export</div></div>
+        <div class="tools-grid">
+          <div class="tool-card">
+            <div class="tool-ico">&#128202;</div>
+            <div class="tool-title">Export CSV</div>
+            <div class="tool-desc">Telecharger tous les leads au format CSV. Compatible Excel, Google Sheets.</div>
+            <button class="btn btn-solid" onclick="exportCSV()">&#8659; Telecharger CSV</button>
+          </div>
+          <div class="tool-card">
+            <div class="tool-ico">&#128190;</div>
+            <div class="tool-title">Sauvegarde JSON</div>
+            <div class="tool-desc">Sauvegarde complete de tous vos leads. A conserver regulierement.</div>
+            <button class="btn btn-solid" onclick="exportJSON()">&#8659; Telecharger JSON</button>
+          </div>
+          <div class="tool-card">
+            <div class="tool-ico">&#128260;</div>
+            <div class="tool-title">Importer JSON</div>
+            <div class="tool-desc">Restaurer une sauvegarde precedente de vos leads.</div>
+            <input type="file" id="import-f" accept=".json" style="display:none" onchange="importJSON(this)">
+            <button class="btn btn-solid" onclick="document.getElementById('import-f').click()">&#8657; Importer</button>
+          </div>
+          <div class="tool-card">
+            <div class="tool-ico">&#128465;</div>
+            <div class="tool-title">Vider les tests</div>
+            <div class="tool-desc">Supprimer les leads de demonstration pour demarrer avec de vraies donnees.</div>
+            <button class="btn" style="background:linear-gradient(135deg,#c62828,#b71c1c);color:white" onclick="clearDemo()">&#128465; Vider</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SETTINGS -->
+      <div class="panel" id="panel-settings">
+        <div class="sh" style="margin-bottom:16px"><div class="sh-left">&#9881;&#65039; Parametres</div></div>
+        <div class="settings-card">
+          <div class="set-field"><label class="set-label">Identifiant</label><input class="set-input" id="s-user" placeholder="admin"></div>
+          <div class="set-field"><label class="set-label">Nouveau mot de passe</label><input class="set-input" type="password" id="s-pass" placeholder="Laisser vide pour ne pas changer"></div>
+          <div class="set-field"><label class="set-label">URL Apps Script Google Sheets</label><input class="set-input" id="s-url" placeholder="https://script.google.com/macros/s/..."></div>
+          <button class="btn btn-g" style="margin-top:4px" onclick="saveSettings()">&#10003; Sauvegarder</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- MODAL STATUT -->
+<div class="modal-ov" id="modal">
+  <div class="modal">
+    <h3>Changer le statut</h3>
+    <div class="modal-info" id="modal-info"></div>
+    <div class="statut-list">
+      <button class="s-opt s-n" onclick="setStatut('Nouveau')">&#127381; Nouveau — a rappeler</button>
+      <button class="s-opt s-c" onclick="setStatut('Contacte')">&#128222; Contacte — en attente</button>
+      <button class="s-opt s-i" onclick="setStatut('Inscrit au stage')">&#9989; Inscrit au stage</button>
+      <button class="s-opt s-nj" onclick="setStatut('Non joignable')">&#128245; Non joignable</button>
+      <button class="s-opt s-ni" onclick="setStatut('Non interesse')">&#10060; Non interesse</button>
+    </div>
+    <button class="modal-cancel" onclick="closeModal()">Annuler</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">&#10003; <span id="toast-msg"></span></div>
+
+<script>
+var CU = localStorage.getItem('crm_user') || 'admin';
+var CP = localStorage.getItem('crm_pass') || 'pointsave2025';
+var CURL = localStorage.getItem('crm_url') || 'COLLER_ICI_VOTRE_URL_APPS_SCRIPT';
+var leads = [];
+var curIdx = null;
+var sk = 'date'; var sasc = false;
+
+function doLogin(){
+  CU = localStorage.getItem('crm_user') || 'admin';
+  CP = localStorage.getItem('crm_pass') || 'pointsave2025';
+  var u = document.getElementById('lu').value.trim();
+  var p = document.getElementById('lp').value.trim();
+  if(u===CU && p===CP){
+    sessionStorage.setItem('crm_ok','1');
+    document.getElementById('login').classList.add('off');
+    document.getElementById('app').classList.add('on');
+    init();
+  } else {
+    document.getElementById('lerr').classList.add('on');
+    document.getElementById('lp').value='';
+  }
+}
+document.addEventListener('keydown',function(e){
+  if(e.key==='Enter' && !document.getElementById('login').classList.contains('off')) doLogin();
+});
+function doLogout(){sessionStorage.removeItem('crm_ok');location.reload();}
+if(sessionStorage.getItem('crm_ok')==='1'){
+  document.getElementById('login').classList.add('off');
+  document.getElementById('app').classList.add('on');
+  setTimeout(init,80);
+}
+
+function init(){
+  loadLeads();
+  startClock();
+  loadSettings();
+}
+
+function loadLeads(){
+  var s = localStorage.getItem('ps_leads');
+  leads = s ? JSON.parse(s) : demoLeads();
+  renderAll();
+}
+function saveLeads(){localStorage.setItem('ps_leads',JSON.stringify(leads));}
+
+function demoLeads(){
+  var now = new Date();
+  function dAgo(n){var d=new Date(now);d.setDate(d.getDate()-n);return d.toLocaleString('fr-FR');}
+  return [
+    {id:1,date:dAgo(0),prenom:'Jean',nom:'Dupont',telephone:'06 11 22 33 44',ville:'Meaux',moment:'Des que possible',source:'www.pointsave.fr',statut:'Nouveau',note:''},
+    {id:2,date:dAgo(1),prenom:'Marie',nom:'Martin',telephone:'06 55 66 77 88',ville:'Chelles',moment:'Ce matin',source:'pointsave.fr/chelles',statut:'Contacte',note:'Rappel fait'},
+    {id:3,date:dAgo(1),prenom:'Ahmed',nom:'Benali',telephone:'07 12 34 56 78',ville:'Torcy',moment:'Cet apres-midi',source:'pointsave.fr/torcy',statut:'Inscrit au stage',note:'Stage le 22/03'},
+    {id:4,date:dAgo(2),prenom:'Sophie',nom:'Leclerc',telephone:'06 98 76 54 32',ville:'Lagny-sur-Marne',moment:'Ce soir',source:'www.pointsave.fr',statut:'Non joignable',note:'3 tentatives'},
+    {id:5,date:dAgo(3),prenom:'Karim',nom:'Bouazza',telephone:'07 00 11 22 33',ville:'Villeparisis',moment:'Demain matin',source:'pointsave.fr/villeparisis',statut:'Non interesse',note:'Trop cher'},
+    {id:6,date:dAgo(3),prenom:'Fatima',nom:'Oukili',telephone:'06 33 44 55 66',ville:'Meaux',moment:'Des que possible',source:'www.pointsave.fr',statut:'Nouveau',note:''},
+    {id:7,date:dAgo(4),prenom:'Thomas',nom:'Moreau',telephone:'07 77 88 99 00',ville:'Noisiel',moment:'Ce matin',source:'pointsave.fr/noisiel',statut:'Contacte',note:''},
+    {id:8,date:dAgo(5),prenom:'Nadia',nom:'Hamidi',telephone:'06 44 55 66 77',ville:'Meaux',moment:'Des que possible',source:'www.pointsave.fr',statut:'Inscrit au stage',note:'Stage confirme'},
+    {id:9,date:dAgo(6),prenom:'Lucas',nom:'Bernard',telephone:'07 22 33 44 55',ville:'Chelles',moment:'Ce soir',source:'pointsave.fr/chelles',statut:'Nouveau',note:''},
+    {id:10,date:dAgo(7),prenom:'Amina',nom:'Diallo',telephone:'06 66 77 88 99',ville:'Claye-Souilly',moment:'Ce matin',source:'pointsave.fr/claye-souilly',statut:'Non joignable',note:''},
+  ];
+}
+
+function renderAll(){
+  renderKPIs();
+  renderTimeline();
+  renderDonut();
+  renderBarVilles();
+  renderRecent();
+  renderLeadsTable(getFiltered());
+  renderAgenda();
+  renderStats();
+  renderMap();
+  updateSbCounts();
+}
+
+function renderKPIs(){
+  var t=leads.length;
+  var now=new Date();
+  var mois=leads.filter(function(l){var d=pd(l.date);return d&&d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear();}).length;
+  var sw=new Date(now);sw.setDate(sw.getDate()-7);
+  var sem=leads.filter(function(l){var d=pd(l.date);return d&&d>=sw;}).length;
+  var ins=leads.filter(function(l){return l.statut==='Inscrit au stage';}).length;
+  var nv=leads.filter(function(l){return l.statut==='Nouveau';}).length;
+  var nj=leads.filter(function(l){return l.statut==='Non joignable';}).length;
+  var tx=t>0?Math.round(ins/t*100):0;
+  var kpis=[
+    {l:'Total leads',v:t,s:'depuis le debut',c:'#00C77A'},
+    {l:'Ce mois',v:mois,s:mn(now.getMonth())+' '+now.getFullYear(),c:'#FFD700'},
+    {l:'Cette semaine',v:sem,s:'7 derniers jours',c:'#00875A'},
+    {l:'Inscrits',v:ins,s:'taux : '+tx+'%',c:'#00C77A'},
+    {l:'A rappeler',v:nv+nj,s:nv+' nouveaux, '+nj+' NJ',c:'#FF9500'},
+    {l:'Conversion',v:tx+'%',s:ins+' / '+t+' leads',c:'#00C77A'},
+  ];
+  document.getElementById('kpi-row').innerHTML=kpis.map(function(k){
+    return '<div class="kpi" style="--kc:'+k.c+'"><div class="kpi-l">'+k.l+'</div><div class="kpi-v">'+k.v+'</div><div class="kpi-s">'+k.s+'</div></div>';
+  }).join('');
+  document.getElementById('kpi-stats').innerHTML=kpis.map(function(k){
+    return '<div class="kpi" style="--kc:'+k.c+'"><div class="kpi-l">'+k.l+'</div><div class="kpi-v">'+k.v+'</div><div class="kpi-s">'+k.s+'</div></div>';
+  }).join('');
+}
+
+function renderTimeline(){
+  var days=[];var now=new Date();
+  for(var i=6;i>=0;i--){
+    var d=new Date(now);d.setDate(d.getDate()-i);
+    var k=d.getDate()+'/'+(d.getMonth()+1);
+    var c=leads.filter(function(l){var ld=pd(l.date);return ld&&ld.getDate()===d.getDate()&&ld.getMonth()===d.getMonth()&&ld.getFullYear()===d.getFullYear();}).length;
+    days.push({k:k,c:c});
+  }
+  var mx=Math.max.apply(null,days.map(function(d){return d.c;}))||1;
+  document.getElementById('tl-wrap').innerHTML=days.map(function(d){
+    var h=Math.max(4,Math.round(d.c/mx*62));
+    return '<div class="tl-b" style="height:'+h+'px"><span class="tl-val">'+d.c+'</span><span class="tl-lbl">'+d.k+'</span></div>';
+  }).join('');
+}
+
+function renderDonut(){
+  var sts=['Nouveau','Contacte','Inscrit au stage','Non joignable','Non interesse'];
+  var cols=['#FFD700','#64B5F6','#00C77A','#FF9500','#ff8080'];
+  var cts=sts.map(function(s){return leads.filter(function(l){return l.statut===s;}).length;});
+  var tot=cts.reduce(function(a,b){return a+b;},0)||1;
+  var cv=document.getElementById('donut');var ctx=cv.getContext('2d');
+  ctx.clearRect(0,0,100,100);var st=-Math.PI/2;
+  cts.forEach(function(c,i){
+    if(!c)return;
+    var sl=(c/tot)*Math.PI*2;
+    ctx.beginPath();ctx.moveTo(50,50);ctx.arc(50,50,46,st,st+sl);ctx.closePath();
+    ctx.fillStyle=cols[i];ctx.fill();st+=sl;
+  });
+  ctx.beginPath();ctx.arc(50,50,28,0,Math.PI*2);ctx.fillStyle='#0F1A14';ctx.fill();
+  document.getElementById('donut-leg').innerHTML=sts.map(function(s,i){
+    var p=Math.round(cts[i]/tot*100);
+    return '<div class="leg-r"><div class="leg-l"><div class="leg-d" style="background:'+cols[i]+'"></div><span>'+s+'</span></div><div class="leg-v">'+cts[i]+' ('+p+'%)</div></div>';
+  }).join('');
+}
+
+function renderBarVilles(){
+  var vc={};leads.forEach(function(l){vc[l.ville]=(vc[l.ville]||0)+1;});
+  var sk2=Object.keys(vc).sort(function(a,b){return vc[b]-vc[a];}).slice(0,7);
+  var mx=sk2.length>0?vc[sk2[0]]:1;
+  document.getElementById('bar-villes').innerHTML=sk2.length===0?'<div style="color:var(--mu);font-size:12px">Aucune donnee</div>':
+    sk2.map(function(v){return '<div class="bar-r"><div class="bar-l">'+v+'</div><div class="bar-t"><div class="bar-f" style="width:'+Math.round(vc[v]/mx*100)+'%"></div></div><div class="bar-v">'+vc[v]+'</div></div>';}).join('');
+}
+
+function renderRecent(){
+  var r=leads.slice().sort(function(a,b){return (pd(b.date)||0)-(pd(a.date)||0);}).slice(0,6);
+  document.getElementById('recent-tb').innerHTML=r.length===0?'<tr><td colspan="6" class="empty-td">Aucun lead</td></tr>':
+    r.map(function(l){
+      var idx=leads.indexOf(l);
+      return '<tr><td class="dt">'+l.date+'</td><td><strong>'+l.prenom+' '+l.nom+'</strong></td>'+
+        '<td class="tel"><a href="tel:'+l.telephone.replace(/\s/g,'')+'">&#128222; '+l.telephone+'</a></td>'+
+        '<td>'+l.ville+'</td>'+
+        '<td><button class="badge '+bc(l.statut)+'" onclick="openModal('+idx+')">'+bi(l.statut)+' '+l.statut+'</button></td>'+
+        '<td><input class="note-i" placeholder="Note..." value="'+esc(l.note||'')+'" onchange="saveNote('+idx+',this.value)" onblur="saveNote('+idx+',this.value)"></td></tr>';
+    }).join('');
+}
+
+function getFiltered(){
+  var q=(document.getElementById('search-inp')||{value:''}).value.toLowerCase();
+  var fs=(document.getElementById('f-statut')||{value:''}).value;
+  var fv=(document.getElementById('f-ville')||{value:''}).value;
+  return leads.filter(function(l){
+    var mq=!q||(l.prenom+' '+l.nom+' '+l.telephone+' '+l.ville).toLowerCase().includes(q);
+    var ms=!fs||l.statut===fs;
+    var mv=!fv||l.ville===fv;
+    return mq&&ms&&mv;
+  }).sort(function(a,b){
+    var va=a[sk]||'';var vb=b[sk]||'';
+    return sasc?va.localeCompare(vb):vb.localeCompare(va);
+  });
+}
+
+function filterLeads(){renderLeadsTable(getFiltered());}
+function clearFilters(){
+  document.getElementById('search-inp').value='';
+  document.getElementById('f-statut').value='';
+  document.getElementById('f-ville').value='';
+  filterLeads();
+}
+function sortBy(k){if(sk===k)sasc=!sasc;else{sk=k;sasc=true;}filterLeads();}
+
+function renderLeadsTable(data){
+  document.getElementById('leads-label').textContent='('+data.length+'/'+leads.length+')';
+  var villes=[...new Set(leads.map(function(l){return l.ville;}))].sort();
+  var fv=document.getElementById('f-ville');var cur=fv.value;
+  fv.innerHTML='<option value="">Toutes villes</option>'+villes.map(function(v){return '<option value="'+v+'" '+(v===cur?'selected':'')+'>'+v+'</option>';}).join('');
+  if(!data.length){document.getElementById('leads-tb').innerHTML='<tr><td colspan="8" class="empty-td">Aucun lead</td></tr>';return;}
+  document.getElementById('leads-tb').innerHTML=data.map(function(l){
+    var idx=leads.indexOf(l);
+    return '<tr><td class="dt">'+l.date+'</td><td><strong>'+l.prenom+' '+l.nom+'</strong></td>'+
+      '<td class="tel"><a href="tel:'+l.telephone.replace(/\s/g,'')+'">&#128222; '+l.telephone+'</a></td>'+
+      '<td>'+l.ville+'</td><td class="dt">'+l.moment+'</td>'+
+      '<td><span class="src">'+l.source+'</span></td>'+
+      '<td><button class="badge '+bc(l.statut)+'" onclick="openModal('+idx+')">'+bi(l.statut)+' '+l.statut+'</button></td>'+
+      '<td><input class="note-i" placeholder="Note..." value="'+esc(l.note||'')+'" onchange="saveNote('+idx+',this.value)" onblur="saveNote('+idx+',this.value)"></td></tr>';
+  }).join('');
+}
+
+function renderAgenda(){
+  var urg=leads.filter(function(l){return l.statut==='Nouveau'||l.statut==='Non joignable';});
+  var enc=leads.filter(function(l){return l.statut==='Contacte';});
+  var agU=document.getElementById('ag-urgent');
+  var agE=document.getElementById('ag-encours');
+  if(!urg.length){agU.innerHTML='<div class="ag-empty">&#127881; Aucun rappel urgent. Tout est traite !</div>';}
+  else{agU.innerHTML=urg.map(function(l){
+    var idx=leads.indexOf(l);var isNJ=l.statut==='Non joignable';
+    return '<div class="ag-item urg"><div class="ag-ico" style="background:'+(isNJ?'rgba(255,149,0,.1)':'rgba(255,215,0,.1)')+'">'+(isNJ?'&#128245;':'&#127381;')+'</div>'+
+      '<div class="ag-body"><div class="ag-name">'+l.prenom+' '+l.nom+'</div><div class="ag-detail">'+l.ville+' &middot; '+l.telephone+' &middot; '+l.moment+'</div>'+(l.note?'<div class="ag-note">'+l.note+'</div>':'')+'</div>'+
+      '<div class="ag-actions"><a href="tel:'+l.telephone.replace(/\s/g,'')+'" class="ag-btn g">&#128222; Appeler</a><button class="ag-btn g" onclick="qs('+idx+',\'Contacte\')">Contacte</button><button class="ag-btn" onclick="openModal('+idx+')">Statut</button></div></div>';
+  }).join('');}
+  if(!enc.length){agE.innerHTML='<div class="ag-empty">Aucun lead en cours de traitement.</div>';}
+  else{agE.innerHTML=enc.map(function(l){
+    var idx=leads.indexOf(l);
+    return '<div class="ag-item enc"><div class="ag-ico" style="background:rgba(25,118,210,.1)">&#128222;</div>'+
+      '<div class="ag-body"><div class="ag-name">'+l.prenom+' '+l.nom+'</div><div class="ag-detail">'+l.ville+' &middot; '+l.telephone+'</div>'+(l.note?'<div class="ag-note">'+l.note+'</div>':'')+'</div>'+
+      '<div class="ag-actions"><button class="ag-btn g" onclick="qs('+idx+',\'Inscrit au stage\')">&#9989; Inscrit</button><button class="ag-btn r" onclick="qs('+idx+',\'Non interesse\')">&#10060;</button><button class="ag-btn" onclick="openModal('+idx+')">Statut</button></div></div>';
+  }).join('');}
+}
+
+function renderStats(){
+  var sts=['Nouveau','Contacte','Inscrit au stage','Non joignable','Non interesse'];
+  var cols=['#FFD700','#64B5F6','#00C77A','#FF9500','#ff8080'];
+  var t=leads.length||1;
+  var vc={};leads.forEach(function(l){vc[l.ville]=(vc[l.ville]||0)+1;});
+  var vs=Object.keys(vc).sort(function(a,b){return vc[b]-vc[a];});var vm=vs.length?vc[vs[0]]:1;
+  document.getElementById('st-villes').innerHTML=vs.map(function(v){return '<div class="bar-r"><div class="bar-l">'+v+'</div><div class="bar-t"><div class="bar-f" style="width:'+Math.round(vc[v]/vm*100)+'%"></div></div><div class="bar-v">'+vc[v]+'</div></div>';}).join('');
+  var sc={};leads.forEach(function(l){var s=l.source||'Direct';sc[s]=(sc[s]||0)+1;});
+  var ss=Object.keys(sc).sort(function(a,b){return sc[b]-sc[a];});var sm=ss.length?sc[ss[0]]:1;
+  document.getElementById('st-sources').innerHTML=ss.map(function(s){return '<div class="bar-r"><div class="bar-l">'+s+'</div><div class="bar-t"><div class="bar-f" style="width:'+Math.round(sc[s]/sm*100)+'%"></div></div><div class="bar-v">'+sc[s]+'</div></div>';}).join('');
+  var now=new Date();var mc={};
+  for(var i=5;i>=0;i--){var d=new Date(now);d.setMonth(d.getMonth()-i);var k=mn(d.getMonth()).slice(0,3)+' '+d.getFullYear();mc[k]=leads.filter(function(l){var ld=pd(l.date);return ld&&ld.getMonth()===d.getMonth()&&ld.getFullYear()===d.getFullYear();}).length;}
+  var mm=Math.max.apply(null,Object.values(mc))||1;
+  document.getElementById('st-mois').innerHTML=Object.keys(mc).map(function(m){return '<div class="bar-r"><div class="bar-l">'+m+'</div><div class="bar-t"><div class="bar-f" style="width:'+Math.round(mc[m]/mm*100)+'%"></div></div><div class="bar-v">'+mc[m]+'</div></div>';}).join('');
+  document.getElementById('st-conv').innerHTML=sts.map(function(s,i){var c=leads.filter(function(l){return l.statut===s;}).length;var p=Math.round(c/t*100);return '<div class="bar-r"><div class="bar-l" style="color:'+cols[i]+'">'+s+'</div><div class="bar-t"><div class="bar-f" style="width:'+p+'%;background:'+cols[i]+'"></div></div><div class="bar-v">'+c+'</div></div>';}).join('');
+}
+
+function renderMap(){
+  var vc={};leads.forEach(function(l){vc[l.ville]=(vc[l.ville]||0)+1;});
+  var vs=Object.keys(vc).sort(function(a,b){return vc[b]-vc[a];});
+  var t=leads.length||1;
+  document.getElementById('map-content').innerHTML='<div class="kpi-row">'+vs.map(function(v){
+    var c=vc[v];var p=Math.round(c/t*100);
+    var ins=leads.filter(function(l){return l.ville===v&&l.statut==='Inscrit au stage';}).length;
+    return '<div class="kpi" style="--kc:#00C77A"><div class="kpi-l">'+v+'</div><div class="kpi-v">'+c+'</div><div class="kpi-s">'+p+'% &middot; '+ins+' inscrit(s)</div></div>';
+  }).join('')+'</div>';
+}
+
+function updateSbCounts(){
+  document.getElementById('sb-leads-count').textContent=leads.length;
+  var u=leads.filter(function(l){return l.statut==='Nouveau'||l.statut==='Non joignable';}).length;
+  document.getElementById('sb-urgent-count').textContent=u;
+}
+
+function openModal(idx){
+  curIdx=idx;var l=leads[idx];
+  document.getElementById('modal-info').innerHTML='<strong>'+l.prenom+' '+l.nom+'</strong><br>'+l.ville+' &middot; '+l.telephone+'<br>Statut : <strong>'+l.statut+'</strong>';
+  document.getElementById('modal').classList.add('on');
+}
+function closeModal(){document.getElementById('modal').classList.remove('on');curIdx=null;}
+function setStatut(s){if(curIdx===null)return;leads[curIdx].statut=s;saveLeads();renderAll();closeModal();toast('Statut : '+s);}
+function qs(idx,s){leads[idx].statut=s;saveLeads();renderAll();toast('Statut : '+s);}
+document.getElementById('modal').addEventListener('click',function(e){if(e.target===this)closeModal();});
+
+function saveNote(idx,v){leads[idx].note=v;saveLeads();}
+
+function showPanel(name,btn){
+  document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('on');});
+  document.querySelectorAll('.sb-link').forEach(function(b){b.classList.remove('active');});
+  document.getElementById('panel-'+name).classList.add('on');
+  if(btn&&btn.classList)btn.classList.add('active');
+  var titles={dashboard:'&#128202; Dashboard',leads:'&#128101; Leads',agenda:'&#128680; Agenda',stats:'&#128200; Statistiques',map:'&#128205; Par ville',outils:'&#128736; Outils',settings:'&#9881;&#65039; Parametres'};
+  document.getElementById('tb-title').innerHTML=titles[name]||name;
+  if(name==='leads')renderLeadsTable(getFiltered());
+  if(name==='stats')renderStats();
+  if(name==='agenda')renderAgenda();
+  if(name==='map')renderMap();
+  if(window.innerWidth<=900)document.getElementById('sidebar').classList.remove('open');
+}
+
+function exportCSV(){
+  var h=['Date','Prenom','Nom','Telephone','Ville','Moment','Source','Statut','Note'];
+  var r=leads.map(function(l){return [l.date,l.prenom,l.nom,l.telephone,l.ville,l.moment,l.source,l.statut,l.note||''].map(function(v){return '"'+String(v).replace(/"/g,'""')+'"';}).join(',');});
+  dl('\uFEFF'+h.join(',')+'\n'+r.join('\n'),'pointsave_leads_'+td()+'.csv','text/csv');
+  toast('CSV telecharge');
+}
+function exportJSON(){dl(JSON.stringify(leads,null,2),'pointsave_backup_'+td()+'.json','application/json');toast('JSON telecharge');}
+function importJSON(input){var f=input.files[0];if(!f)return;var rd=new FileReader();rd.onload=function(e){try{var d=JSON.parse(e.target.result);if(Array.isArray(d)){leads=d;saveLeads();renderAll();toast(d.length+' leads importes');}catch(err){toast('Erreur fichier invalide');}};rd.readAsText(f);}
+function clearDemo(){if(confirm('Supprimer tous les leads de test ?')){leads=[];saveLeads();renderAll();toast('Vide');}}
+
+function loadSettings(){
+  document.getElementById('s-user').value=localStorage.getItem('crm_user')||'admin';
+  document.getElementById('s-url').value=localStorage.getItem('crm_url')||'';
+  var u=localStorage.getItem('crm_user')||'admin';
+  document.getElementById('sb-avatar').textContent=u.charAt(0).toUpperCase();
+  document.getElementById('sb-uname').textContent=u;
+}
+function saveSettings(){
+  var u=document.getElementById('s-user').value.trim();
+  var p=document.getElementById('s-pass').value.trim();
+  var url=document.getElementById('s-url').value.trim();
+  if(u)localStorage.setItem('crm_user',u);
+  if(p)localStorage.setItem('crm_pass',p);
+  if(url)localStorage.setItem('crm_url',url);
+  loadSettings();toast('Parametres sauvegardes');
+}
+
+function startClock(){
+  function tick(){document.getElementById('clock').textContent=new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});}
+  tick();setInterval(tick,30000);
+}
+function toggleSb(){document.getElementById('sidebar').classList.toggle('open');}
+
+function bc(s){var m={'Nouveau':'b-n','Contacte':'b-c','Inscrit au stage':'b-i','Non joignable':'b-nj','Non interesse':'b-ni'};return m[s]||'b-n';}
+function bi(s){var m={'Nouveau':'&#127381;','Contacte':'&#128222;','Inscrit au stage':'&#9989;','Non joignable':'&#128245;','Non interesse':'&#10060;'};return m[s]||'';}
+function pd(str){if(!str)return null;var p=str.split(' ');if(p.length<2)return null;var d=p[0].split('/');var t=p[1].split(':');if(d.length<3||t.length<2)return null;return new Date(parseInt(d[2]),parseInt(d[1])-1,parseInt(d[0]),parseInt(t[0]),parseInt(t[1]));}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function dl(c,n,type){var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([c],{type:type}));a.download=n;a.click();}
+function td(){return new Date().toISOString().slice(0,10);}
+function mn(i){return['Janvier','Fevrier','Mars','Avril','Mai','Juin','Juillet','Aout','Septembre','Octobre','Novembre','Decembre'][i];}
+function toast(msg){document.getElementById('toast-msg').textContent=msg;var t=document.getElementById('toast');t.classList.add('on');setTimeout(function(){t.classList.remove('on');},2800);}
+</script>
+</body>
+</html>
