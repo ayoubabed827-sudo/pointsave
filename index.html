@@ -1,24 +1,50 @@
 <!DOCTYPE html>
-
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({"gtm.start":new Date().getTime(),event:"gtm.js"});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!="dataLayer"?"&l="+l:"";j.async=true;j.src="https://www.googletagmanager.com/gtm.js?id="+i+dl;f.parentNode.insertBefore(j,f);})(window,document,"script","dataLayer","GTM-PQHZWD3R");</script>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Stage R&eacute;cup&eacute;ration Points Meaux 77 | PointSave</title>
-<meta name="description" content="Stage r&eacute;cup&eacute;ration de points agr&eacute;&eacute; pr&egrave;s de Meaux (77). Centres agr&eacute;&eacute;s &agrave; Meaux, Chelles, Lagny-sur-Marne, Torcy. Rayon 30km. Appelez le 0699926510.">
+<title>Stage Récupération Points Meaux 77 | PointSave</title>
+<meta name="description" content="Stage récupération de points agréé près de Meaux (77). Centres agréés à Meaux, Chelles, Lagny-sur-Marne, Torcy. Rayon 30km. Appelez le +33 6 99 92 65 10.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://www.pointsave.fr/">
 <meta name="google-site-verification" content="KUCgSiqiJ4ZTbvE_27wr3_X2UhFcgoDaiu6AUQj2JaM">
+<!-- Google Analytics GA4 -->
+
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<!-- Schema.org LocalBusiness -->
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"LocalBusiness",
+  "name":"PointSave",
+  "description":"Service de mise en relation pour stages de récupération de points de permis de conduire agréés dans le 77 et alentours.",
+  "url":"https://www.pointsave.fr",
+  "telephone":"+33699926510",
+  "address":{"@type":"PostalAddress","addressLocality":"Meaux","postalCode":"77100","addressCountry":"FR"},
+  "areaServed":["Meaux","Chelles","Lagny-sur-Marne","Torcy","Claye-Souilly","Noisiel","Mitry-Mory","Villeparisis","Coulommiers"],
+  "priceRange":"€€"
+}
+</script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 :root{--green:#00875A;--green2:#00C77A;--gd:#006644;--yellow:#FFD700;--orange:#FF9500;--dark:#090F0D;--dark2:#0F1A14;--dark3:#162B1F;--text:#E8F5F0;--muted:#6B9E85;--border:rgba(0,135,90,.2)}
 body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;overflow-x:hidden;line-height:1.6}
-
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+/* LOADER */
+.lo{position:fixed;inset:0;background:var(--dark);z-index:99999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;animation:loHide .5s 1.6s ease forwards}
+@keyframes loHide{0%{opacity:1;pointer-events:all}100%{opacity:0;pointer-events:none;visibility:hidden}}
+.lo-logo{animation:loPop .8s cubic-bezier(.34,1.56,.64,1) forwards}
+@keyframes loPop{0%{transform:scale(0);opacity:0}60%{transform:scale(1.1)}100%{transform:scale(1);opacity:1}}
+.lo-name{font-family:'Outfit',sans-serif;font-size:28px;font-weight:900;color:white;opacity:0;animation:fu .5s .4s ease forwards}
+.lo-name span{color:var(--green2)}
+.lo-bar{width:120px;height:3px;background:rgba(0,199,122,.2);border-radius:2px;overflow:hidden;opacity:0;animation:fu .3s .5s ease forwards}
+.lo-fill{height:100%;background:var(--green2);border-radius:2px;animation:loFill 1s .5s ease forwards}
+@keyframes loFill{from{width:0}to{width:100%}}
 /* STRIP */
 .strip{background:var(--green);padding:9px 16px;text-align:center;font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;color:white;position:relative;overflow:hidden}
 .strip::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(-45deg,transparent,transparent 8px,rgba(255,255,255,.05) 8px,rgba(255,255,255,.05) 16px)}
@@ -132,6 +158,11 @@ body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;ove
 .btn-sub{width:100%;padding:15px;background:linear-gradient(135deg,var(--green),var(--gd));border:none;border-radius:10px;color:white;font-family:'Outfit',sans-serif;font-size:17px;font-weight:800;cursor:pointer}
 .ftr{display:flex;justify-content:center;gap:14px;margin-top:12px;flex-wrap:wrap}
 .ft{font-size:11px;color:var(--muted);display:flex;align-items:center;gap:4px}
+/* CONSENTEMENT */
+.consent-box{background:rgba(0,135,90,.06);border:1px solid rgba(0,199,122,.2);border-radius:10px;padding:14px 16px;margin-bottom:16px}
+.consent-label{display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:12px;color:var(--muted);line-height:1.6}
+.consent-label input[type="checkbox"]{width:18px;height:18px;flex-shrink:0;margin-top:1px;accent-color:var(--green2);cursor:pointer}
+.consent-label a{color:var(--green2);text-decoration:underline;cursor:pointer}
 /* POINTS */
 .pts{padding:56px 20px;background:var(--dark2);border-top:1px solid var(--border)}
 .pts-in{max-width:760px;margin:0 auto;text-align:center}
@@ -208,6 +239,7 @@ body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;ove
 .bart ul{padding-left:16px;margin-bottom:12px}
 .bart ul li{font-size:13px;color:var(--muted);line-height:1.8;margin-bottom:4px}
 .bart strong{color:white}
+.bart a[href^="tel"]{color:var(--green2);font-weight:700;text-decoration:none}
 .bclose{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);cursor:pointer;background:none;border:none;margin-top:14px;text-decoration:underline}
 /* FOOTER */
 .footer{background:#000}
@@ -229,6 +261,7 @@ body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;ove
 .lc ul{padding-left:18px;margin-bottom:10px}
 .lc ul li{font-size:13px;color:var(--muted);line-height:1.8;margin-bottom:4px}
 .lc strong{color:var(--text)}
+.lc a{color:var(--green2)}
 /* POPUP */
 .po{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:9998;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(8px)}
 .po.show{display:flex}
@@ -266,6 +299,15 @@ body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;ove
 .sticky p{font-size:13px;font-weight:500;color:var(--text)}
 .sticky strong{color:var(--green2)}
 .sticky-btn{display:flex;align-items:center;gap:7px;background:var(--green);color:white;font-family:'Outfit',sans-serif;font-weight:700;font-size:15px;padding:9px 22px;border-radius:8px;text-decoration:none;white-space:nowrap}
+/* ICONE TEL SVG */
+.ico-tel{width:20px;height:20px;display:inline-block;vertical-align:middle;flex-shrink:0;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.btn-tel .ico-tel{width:16px;height:16px}
+.phi .ico-tel{width:28px;height:28px}
+.sticky-btn .ico-tel{width:17px;height:17px}
+/* MSG ERREUR FORM */
+.form-msg{display:none;padding:12px 16px;border-radius:10px;font-size:13px;font-weight:600;margin-top:12px;text-align:center}
+.form-msg.ok{background:rgba(0,199,122,.1);border:1px solid rgba(0,199,122,.3);color:var(--green2);display:block}
+.form-msg.err{background:rgba(255,80,80,.1);border:1px solid rgba(255,80,80,.3);color:#ff8080;display:block}
 @keyframes fu{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
 .rev{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
 .rev.vis{opacity:1;transform:translateY(0)}
@@ -276,38 +318,43 @@ body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;ove
 <body>
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PQHZWD3R" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
-<div class="lo-bar"><div class="lo-fill"></div></div>
+<!-- LOADER -->
+<div class="lo">
+  <svg width="64" height="64" viewBox="0 0 38 38" fill="none" class="lo-logo">
+    <path d="M19 2L4 8V20C4 28.5 10.8 35.4 19 37C27.2 35.4 34 28.5 34 20V8L19 2Z" fill="#0A1A14" stroke="#00875A" stroke-width="1.5"/>
+    <circle cx="12" cy="18" r="3" fill="#00C77A"/><circle cx="19" cy="14" r="3" fill="#FFD700"/><circle cx="26" cy="18" r="3" fill="white"/>
+    <path d="M19 22L19 28M16 25L22 25" stroke="#00C77A" stroke-width="1.5" stroke-linecap="round"/>
+  </svg>
+  <div class="lo-name">Point<span>Save</span></div>
+  <div class="lo-bar"><div class="lo-fill"></div></div>
 </div>
 
-<!-- POPUP -->
-
+<!-- POPUP exit-intent uniquement -->
 <div class="po" id="popup">
   <div class="pb">
-    <div class="pb-ic">&#9888;&#65039;</div>
+    <div class="pb-ic">⚠️</div>
     <h2>Votre permis est en danger&nbsp;!</h2>
-    <p>Ne partez pas sans agir. <strong>Un appel gratuit</strong> suffit pour v&eacute;rifier votre situation.</p>
-    <a href="tel:+33699926510" class="pb-call">&#128222; Appeler maintenant &mdash; Gratuit</a>
+    <p>Ne partez pas sans agir. <strong>Un appel suffit</strong> pour vérifier votre situation.</p>
+    <a href="tel:+33699926510" class="pb-call" onclick="trackCall()"><svg class="ico-tel" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.07 1.15 2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.09a16 16 0 006.29 6.29l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 15.42z"/></svg> Appeler maintenant</a>
     <button class="pb-close" onclick="document.getElementById('popup').classList.remove('show');document.body.style.overflow=''">Non merci</button>
   </div>
 </div>
 
 <!-- MERCI -->
-
 <div class="mo" id="merci">
   <div class="mb">
-    <div class="mb-ic">&#9989;</div>
-    <h2>Demande re&ccedil;ue&nbsp;!</h2>
+    <div class="mb-ic">✅</div>
+    <h2>Demande reçue&nbsp;!</h2>
     <p>Un conseiller vous rappellera dans les <strong>30 prochaines minutes</strong>.</p>
-    <a href="tel:+33699926510" class="mb-call">&#128222; Appeler directement</a>
-    <button class="mb-back" onclick="document.getElementById('merci').classList.remove('show');document.body.style.overflow=''">&#8592; Retour</button>
+    <a href="tel:+33699926510" class="mb-call" onclick="trackCall()"><svg class="ico-tel" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.07 1.15 2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.09a16 16 0 006.29 6.29l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 15.42z"/></svg> Appeler directement</a>
+    <button class="mb-back" onclick="document.getElementById('merci').classList.remove('show');document.body.style.overflow=''">← Retour</button>
   </div>
 </div>
 
 <!-- COOKIES -->
-
 <div class="ck" id="ck">
   <div class="ck-in">
-    <p>&#127850; Ce site utilise des cookies techniques. En continuant, vous acceptez notre <a onclick="openLegal('cookies')">politique de cookies</a>.</p>
+    <p>🍪 Ce site utilise des cookies techniques. En continuant, vous acceptez notre <a onclick="openLegal('cookies')">politique de cookies</a>.</p>
     <div class="ck-btns">
       <button class="ck-ok" onclick="localStorage.setItem('ps_ck','ok');document.getElementById('ck').classList.remove('show')">Accepter</button>
       <button class="ck-no" onclick="localStorage.setItem('ps_ck','no');document.getElementById('ck').classList.remove('show')">Refuser</button>
@@ -316,18 +363,16 @@ body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;ove
 </div>
 
 <!-- STRIP -->
-
 <div class="strip">
   <div class="strip-in">
     <div class="dot"></div>
-    <span>&#9888;&#65039; <em>PERMIS EN DANGER&nbsp;?</em></span>
+    <span>⚠️ <em>PERMIS EN DANGER&nbsp;?</em></span>
     Meaux &amp; 30km &mdash; <em>Centres disponibles maintenant</em>
     <div class="dot"></div>
   </div>
 </div>
 
 <!-- HEADER -->
-
 <header class="hdr">
   <div class="hdr-in">
     <a href="#" class="logo">
@@ -339,8 +384,8 @@ body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;ove
       <div><div class="logo-name">Point<span>Save</span></div><div class="logo-sub">Meaux &amp; alentours</div></div>
     </a>
     <nav class="nav">
-      <a href="#formulaire">&#128203; Demande gratuite</a>
-      <a href="#comment">Comment &ccedil;a marche</a>
+      <a href="#formulaire">📋 Demande rapide</a>
+      <a href="#comment">Comment ça marche</a>
       <a href="#avis">Avis</a>
       <a href="#faq">FAQ</a>
       <a href="#blog">Conseils</a>
@@ -348,80 +393,76 @@ body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;ove
     <button class="burger" id="burger" onclick="toggleMenu()" aria-label="Menu">
       <div class="bl"><span></span><span></span><span></span></div>
     </button>
-    <a href="tel:+33699926510" class="btn-tel">
-      <span>&#128222; Appeler</span>
-      <small>0699926510</small>
+    <a href="tel:+33699926510" class="btn-tel" onclick="trackCall()">
+      <span><svg class="ico-tel" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.07 1.15 2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.09a16 16 0 006.29 6.29l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 15.42z"/></svg> Appeler</span>
+      <small>+33 6 99 92 65 10</small>
     </a>
   </div>
 </header>
 
 <!-- MENU MOB -->
-
 <div class="mmenu" id="mmenu">
   <div class="mlinks">
-    <a href="javascript:void(0)" onclick="goTo('formulaire')"><div class="mico">&#128203;</div>Demande gratuite</a>
-    <a href="javascript:void(0)" onclick="goTo('comment')"><div class="mico">&#8505;&#65039;</div>Comment &ccedil;a marche</a>
-    <a href="javascript:void(0)" onclick="goTo('avis')"><div class="mico">&#11088;</div>Avis clients</a>
-    <a href="javascript:void(0)" onclick="goTo('faq')"><div class="mico">&#10067;</div>FAQ</a>
-    <a href="javascript:void(0)" onclick="goTo('blog')"><div class="mico">&#128240;</div>Conseils</a>
+    <a href="javascript:void(0)" onclick="goTo('formulaire')"><div class="mico">📋</div>Demande rapide</a>
+    <a href="javascript:void(0)" onclick="goTo('comment')"><div class="mico">ℹ️</div>Comment ça marche</a>
+    <a href="javascript:void(0)" onclick="goTo('avis')"><div class="mico">⭐</div>Avis clients</a>
+    <a href="javascript:void(0)" onclick="goTo('faq')"><div class="mico">❓</div>FAQ</a>
+    <a href="javascript:void(0)" onclick="goTo('blog')"><div class="mico">📰</div>Conseils</a>
   </div>
-  <div class="mcta"><a href="tel:+33699926510">&#128222; Appeler maintenant &mdash; Gratuit</a></div>
-  <div class="mfoot">R&eacute;ponse imm&eacute;diate &middot; Sans engagement &middot; Confidentiel</div>
+  <div class="mcta"><a href="tel:+33699926510" onclick="trackCall()"><svg class="ico-tel" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.07 1.15 2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.09a16 16 0 006.29 6.29l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 15.42z"/></svg> +33 6 99 92 65 10</a></div>
+  <div class="mfoot">Réponse immédiate · Sans engagement · Confidentiel</div>
 </div>
 
 <!-- HERO -->
-
 <section class="hero" id="accueil">
   <div class="hglow"></div><div class="hgrid"></div>
   <div class="hero-in">
     <div class="cband">
       <div class="cdot"></div>
       <div class="cnum" id="counter">--</div>
-      <div class="ctxt">personnes ont r&eacute;cup&eacute;r&eacute; leurs points ce mois-ci</div>
+      <div class="ctxt">personnes ont récupéré leurs points ce mois-ci</div>
     </div>
-    <h1 class="htit"><span class="hl">Permis en danger&nbsp;?</span><br>R&eacute;cup&eacute;rez vos points<br><span class="cy">autour de Meaux</span></h1>
-    <p class="hsub">Appelez maintenant pour <strong>v&eacute;rifier votre &eacute;ligibilit&eacute;</strong> et trouver un <strong>stage agr&eacute;&eacute; pr&egrave;s de chez vous</strong></p>
+    <h1 class="htit"><span class="hl">Permis en danger&nbsp;?</span><br>Récupérez vos points<br><span class="cy">autour de Meaux</span></h1>
+    <p class="hsub">Appelez maintenant pour <strong>vérifier votre éligibilité</strong> et trouver un <strong>stage agréé près de chez vous</strong></p>
     <div class="hcta">
-      <a href="tel:+33699926510" class="btn-main">
-        <span class="phi">&#128222;</span>
-        <span>Appeler maintenant<span class="bsub">R&eacute;ponse imm&eacute;diate &mdash; Gratuit &mdash; Confidentiel</span></span>
+      <a href="tel:+33699926510" class="btn-main" onclick="trackCall()">
+        <span class="phi"><svg class="ico-tel" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.07 1.15 2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.09a16 16 0 006.29 6.29l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 15.42z"/></svg></span>
+        <span>Appeler maintenant<span class="bsub">Réponse immédiate &mdash; Confidentiel</span></span>
       </a>
     </div>
     <div class="trust">
-      <div class="tb"><div class="tk">&#10003;</div> Centres agr&eacute;&eacute;s</div>
-      <div class="tb"><div class="tk">&#10003;</div> R&eacute;ponse imm&eacute;diate</div>
-      <div class="tb"><div class="tk">&#10003;</div> Sans engagement</div>
+      <div class="tb"><div class="tk">✓</div> Centres agréés</div>
+      <div class="tb"><div class="tk">✓</div> Réponse immédiate</div>
+      <div class="tb"><div class="tk">✓</div> Sans engagement</div>
     </div>
   </div>
 </section>
 
 <!-- BADGES -->
-
 <section class="bsec">
   <div class="bsec-in">
     <div class="brow">
-      <div class="bi" data-badge><div class="bic">&#127963;&#65039;</div><div class="bit">Agr&eacute;&eacute; Minist&egrave;re<span>Centres officiels</span></div></div>
-      <div class="bi" data-badge><div class="bic">&#9989;</div><div class="bit">Certifi&eacute; Pr&eacute;fecture<span>Arr&ecirc;t&eacute; pr&eacute;fectoral</span></div></div>
+      <div class="bi" data-badge><div class="bic">🏛️</div><div class="bit">Agréé Ministère<span>Centres officiels</span></div></div>
+      <div class="bi" data-badge><div class="bic">✅</div><div class="bit">Certifié Préfecture<span>Arrêté préfectoral</span></div></div>
     </div>
     <div class="brow">
-      <div class="bi" data-badge><div class="bic">&#128274;</div><div class="bit">RGPD S&eacute;curis&eacute;<span>Donn&eacute;es prot&eacute;g&eacute;es</span></div></div>
-      <div class="bi" data-badge><div class="bic">&#11088;</div><div class="bit">4.8/5 &mdash; 127 avis<span>Clients satisfaits</span></div></div>
+      <div class="bi" data-badge><div class="bic">🔒</div><div class="bit">RGPD Sécurisé<span>Données protégées</span></div></div>
+      <div class="bi" data-badge><div class="bic">⭐</div><div class="bit">4.8/5 &mdash; 127 avis<span>Clients satisfaits</span></div></div>
     </div>
     <div class="bctr">
-      <div class="bi" data-badge><div class="bic">&#128663;</div><div class="bit">+10 000 conducteurs aid&eacute;s<span>Depuis notre cr&eacute;ation</span></div></div>
+      <div class="bi" data-badge><div class="bic">🚗</div><div class="bit">+10 000 conducteurs aidés<span>Depuis notre création</span></div></div>
     </div>
   </div>
 </section>
 
 <!-- VILLES -->
-
 <div class="villes rev">
   <div class="villes-in">
     <div class="vl">Villes couvertes &mdash; rayon 30km autour de Meaux</div>
     <div class="vg">
-      <div class="vt">&#128205; Meaux<span class="km">centre</span></div>
+      <div class="vt">📍 Meaux<span class="km">centre</span></div>
       <div class="vt">Trilport<span class="km">5km</span></div>
-      <div class="vt">Nanteuil-l&egrave;s-Meaux<span class="km">5km</span></div>
+      <div class="vt">Nanteuil-lès-Meaux<span class="km">5km</span></div>
       <div class="vt">Claye-Souilly<span class="km">15km</span></div>
       <div class="vt">Lagny-sur-Marne<span class="km">12km</span></div>
       <div class="vt">Chelles<span class="km">18km</span></div>
@@ -430,70 +471,68 @@ body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;ove
       <div class="vt">Mitry-Mory<span class="km">20km</span></div>
       <div class="vt">Noisiel<span class="km">22km</span></div>
       <div class="vt">Villeparisis<span class="km">25km</span></div>
-      <div class="vt">Dammartin-en-Go&euml;le<span class="km">25km</span></div>
-      <div class="vt">La Fert&eacute;-sous-Jouarre<span class="km">28km</span></div>
+      <div class="vt">Dammartin-en-Goële<span class="km">25km</span></div>
+      <div class="vt">La Ferté-sous-Jouarre<span class="km">28km</span></div>
       <div class="vt">Coulommiers<span class="km">30km</span></div>
     </div>
   </div>
 </div>
 
 <!-- FORMULAIRE -->
-
 <section class="fsec" id="formulaire">
   <div class="fin">
     <div class="rev" style="text-align:center;margin-bottom:24px">
-      <div class="stag">Demande gratuite</div>
-      <h2 class="stit">Laissez-nous vos coordonn&eacute;es</h2>
+      <div class="stag">Demande de rappel</div>
+      <h2 class="stit">Laissez-nous vos coordonnées</h2>
       <p class="ssub">On vous rappelle dans les <strong style="color:white">30 minutes</strong>.</p>
     </div>
     <div class="fc rev">
       <div class="fh">
-        <div class="fhi">&#128203;</div>
-        <h3>Demande de rappel gratuit</h3>
+        <div class="fhi">📋</div>
+        <h3>Demande de rappel</h3>
         <p>Un conseiller vous contacte rapidement</p>
-        <span class="fhb">&#9889; Rappel sous 30 minutes</span>
+        <span class="fhb">⚡ Rappel sous 30 minutes</span>
       </div>
       <div class="fb">
-        <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-          <input type="hidden" name="form-name" value="contact">
-          <p style="display:none"><label>Ne pas remplir&nbsp;: <input name="bot-field"></label></p>
+        <form id="contactForm">
           <div class="g2">
-            <div class="fg"><label>Pr&eacute;nom</label><div class="iw"><span class="ico">&#128100;</span><input type="text" name="prenom" placeholder="Jean" required></div></div>
-            <div class="fg"><label>Nom</label><div class="iw"><span class="ico">&#128100;</span><input type="text" name="nom" placeholder="Dupont" required></div></div>
+            <div class="fg"><label>Prénom</label><div class="iw"><span class="ico">👤</span><input type="text" id="f_prenom" placeholder="Jean" required></div></div>
+            <div class="fg"><label>Nom</label><div class="iw"><span class="ico">👤</span><input type="text" id="f_nom" placeholder="Dupont" required></div></div>
           </div>
-          <div class="fg"><label>T&eacute;l&eacute;phone</label><div class="iw"><span class="ico">&#128222;</span><input type="tel" name="telephone" placeholder="06 00 00 00 00" required></div></div>
-          <div class="fg"><label>Votre ville</label><div class="iw"><span class="ico">&#128205;</span>
-            <select name="ville" required>
+          <div class="fg"><label>Téléphone</label><div class="iw"><span class="ico"><svg class="ico-tel" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.07 1.15 2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.09a16 16 0 006.29 6.29l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 15.42z"/></svg></span><input type="tel" id="f_telephone" placeholder="06 00 00 00 00" required></div></div>
+          <div class="fg"><label>Votre ville</label><div class="iw"><span class="ico">📍</span>
+            <select id="f_ville" required>
               <option value="">Choisissez votre ville</option>
-              <option>Meaux</option><option>Trilport (5km)</option><option>Nanteuil-l&egrave;s-Meaux (5km)</option>
+              <option>Meaux</option><option>Trilport (5km)</option><option>Nanteuil-lès-Meaux (5km)</option>
               <option>Lagny-sur-Marne (12km)</option><option>Claye-Souilly (15km)</option><option>Chelles (18km)</option>
               <option>Chessy (20km)</option><option>Torcy (20km)</option><option>Mitry-Mory (20km)</option>
-              <option>Noisiel (22km)</option><option>Villeparisis (25km)</option><option>Dammartin-en-Go&euml;le (25km)</option>
-              <option>La Fert&eacute;-sous-Jouarre (28km)</option><option>Coulommiers (30km)</option><option>Autre ville</option>
+              <option>Noisiel (22km)</option><option>Villeparisis (25km)</option><option>Dammartin-en-Goële (25km)</option>
+              <option>La Ferté-sous-Jouarre (28km)</option><option>Coulommiers (30km)</option><option>Autre ville</option>
             </select>
           </div></div>
-          <div class="fg"><label>Points restants</label><div class="iw"><span class="ico">&#127919;</span>
-            <select name="points">
-              <option>Je ne sais pas exactement</option>
-              <option>Moins de 3 points &mdash; URGENT</option>
-              <option>3 &agrave; 5 points</option><option>6 &agrave; 8 points</option><option>Plus de 8 points</option>
+          <div class="fg"><label>Quand vous rappeler ?</label><div class="iw"><span class="ico">📅</span>
+            <select id="f_moment">
+              <option>Dès que possible</option><option>Ce matin</option>
+              <option>Cet après-midi</option><option>Ce soir</option><option>Demain matin</option>
             </select>
           </div></div>
-          <div class="fg"><label>Quand vous rappeler&nbsp;?</label><div class="iw"><span class="ico">&#128197;</span>
-            <select name="moment">
-              <option>D&egrave;s que possible</option><option>Ce matin</option>
-              <option>Cet apr&egrave;s-midi</option><option>Ce soir</option><option>Demain matin</option>
-            </select>
-          </div></div>
+          <!-- CONSENTEMENT RGPD -->
+          <div class="consent-box">
+            <label class="consent-label">
+              <input type="checkbox" id="f_consent" required>
+              <span>J'accepte que mes coordonnées (prénom, nom, téléphone, ville) soient transmises à des centres de stages agréés partenaires de PointSave, dans le but de me recontacter pour m'orienter vers un stage de récupération de points. En savoir plus : <a onclick="openLegal('confidentialite')">politique de confidentialité</a>.</span>
+            </label>
+          </div>
           <div class="div"><span>OU appelez directement</span></div>
-          <a href="tel:+33699926510" class="btn-call-f">&#128222; Appeler maintenant</a>
+          <a href="tel:+33699926510" class="btn-call-f" onclick="trackCall()"><svg class="ico-tel" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.07 1.15 2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.09a16 16 0 006.29 6.29l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 15.42z"/></svg> +33 6 99 92 65 10</a>
           <div class="div"><span>OU envoyez votre demande</span></div>
-          <button type="submit" class="btn-sub">&#128232; Envoyer ma demande de rappel</button>
+          <button type="submit" class="btn-sub" id="submitBtn">📨 Envoyer ma demande de rappel</button>
+          <div class="form-msg" id="formMsg"></div>
         </form>
         <div class="ftr">
-          <span class="ft">&#128274; S&eacute;curis&eacute;</span>
-          <span class="ft">&#128245; Sans spam</span>
-          <span class="ft">&#128307; Gratuit</span>
+          <span class="ft">🔒 Sécurisé</span>
+          <span class="ft">📵 Sans spam</span>
+          <span class="ft">🔇 Confidentiel</span>
         </div>
       </div>
     </div>
@@ -501,13 +540,12 @@ body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;ove
 </section>
 
 <!-- POINTS -->
-
 <section class="pts" id="points">
   <div class="pts-in">
     <div class="rev">
       <div class="stag">Votre capital points</div>
-      <h2 class="stit">Jusqu&rsquo;&agrave; 4 points r&eacute;cup&eacute;r&eacute;s en un seul stage</h2>
-      <p class="ssub">Tout conducteur peut perdre des points. Un stage agr&eacute;&eacute; vous permet d&rsquo;en r&eacute;cup&eacute;rer l&eacute;galement.</p>
+      <h2 class="stit">Jusqu'à 4 points récupérés en un seul stage</h2>
+      <p class="ssub">Tout conducteur peut perdre des points. Un stage agréé vous permet d'en récupérer légalement.</p>
     </div>
     <div class="meter rev">
       <div class="pt pt-ok">12</div><div class="pt pt-ok">11</div><div class="pt pt-ok">10</div>
@@ -516,80 +554,76 @@ body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;ove
       <div class="pt pt-re">3</div><div class="pt pt-re">2</div><div class="pt pt-re">1</div>
     </div>
     <div class="leg">
-      <div class="lgi"><div class="lgd" style="background:var(--green2)"></div> Points conserv&eacute;s</div>
+      <div class="lgi"><div class="lgd" style="background:var(--green2)"></div> Points conservés</div>
       <div class="lgi"><div class="lgd" style="background:var(--orange)"></div> Points perdus</div>
-      <div class="lgi"><div class="lgd" style="background:var(--yellow)"></div> Points r&eacute;cup&eacute;rables</div>
+      <div class="lgi"><div class="lgd" style="background:var(--yellow)"></div> Points récupérables</div>
     </div>
     <div class="ibox rev">
-      <div class="ibox-ic">&#127937;</div>
+      <div class="ibox-ic">🎯</div>
       <div>
-        <h3>+4 points r&eacute;cup&eacute;r&eacute;s en 2 jours</h3>
-        <p>Le stage vous permet de r&eacute;cup&eacute;rer <strong>jusqu&rsquo;&agrave; 4 points</strong> sur votre permis, tous les <strong>12 mois minimum</strong>. Stage valid&eacute; d&egrave;s la fin du 2&egrave;me jour.</p>
+        <h3>+4 points récupérés en 2 jours</h3>
+        <p>Le stage vous permet de récupérer <strong>jusqu'à 4 points</strong> sur votre permis, tous les <strong>12 mois minimum</strong>. Stage validé dès la fin du 2ème jour.</p>
       </div>
     </div>
   </div>
 </section>
 
 <!-- COMMENT CA MARCHE -->
-
 <section class="how" id="comment">
   <div class="how-in">
     <div class="rev" style="text-align:center">
-      <div class="stag">Comment &ccedil;a marche</div>
-      <h2 class="stit">3 &eacute;tapes simples</h2>
-      <p class="ssub">Du premier appel &agrave; la r&eacute;cup&eacute;ration de vos points, tout se fait simplement.</p>
+      <div class="stag">Comment ça marche</div>
+      <h2 class="stit">3 étapes simples</h2>
+      <p class="ssub">Du premier appel à la récupération de vos points, tout se fait simplement.</p>
     </div>
     <div class="steps">
-      <div class="step rev"><div class="snum">1</div><div><h4>&#128222; Vous appelez &mdash; on v&eacute;rifie ensemble</h4><p>Notre &eacute;quipe v&eacute;rifie votre &eacute;ligibilit&eacute; et trouve un centre agr&eacute;&eacute; disponible pr&egrave;s de Meaux dans un rayon de 30km. Gratuit et sans engagement.</p></div></div>
-      <div class="step rev"><div class="snum">2</div><div><h4>&#128203; Vous choisissez votre stage</h4><p>Stage de 2 jours (16h) dans un centre agr&eacute;&eacute; Pr&eacute;fecture. Centres disponibles &agrave; Meaux, Chelles, Lagny-sur-Marne, Torcy, Noisiel, Villeparisis, Mitry-Mory, Coulommiers.</p></div></div>
-      <div class="step rev"><div class="snum">3</div><div><h4>&#9989; Vos points sont r&eacute;cup&eacute;r&eacute;s</h4><p>Le centre transmet automatiquement votre attestation au Minist&egrave;re de l&rsquo;Int&eacute;rieur. Vos points sont cr&eacute;dit&eacute;s sous <strong style="color:white">3 &agrave; 4 semaines</strong>.</p></div></div>
+      <div class="step rev"><div class="snum">1</div><div><h4><svg class="ico-tel" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.07 1.15 2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.09a16 16 0 006.29 6.29l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 15.42z"/></svg> Vous appelez &mdash; on vérifie ensemble</h4><p>Notre équipe vérifie votre éligibilité et trouve un centre agréé disponible près de Meaux dans un rayon de 30km. Sans engagement.</p></div></div>
+      <div class="step rev"><div class="snum">2</div><div><h4>📋 Vous choisissez votre stage</h4><p>Stage de 2 jours (16h) dans un centre agréé Préfecture. Centres disponibles à Meaux, Chelles, Lagny-sur-Marne, Torcy, Noisiel, Villeparisis, Mitry-Mory, Coulommiers.</p></div></div>
+      <div class="step rev"><div class="snum">3</div><div><h4>✅ Vos points sont récupérés</h4><p>Le centre transmet automatiquement votre attestation au Ministère de l'Intérieur. Vos points sont crédités sous <strong style="color:white">3 à 4 semaines</strong>.</p></div></div>
     </div>
     <div class="rev" style="text-align:center;margin-top:32px">
-      <a href="tel:+33699926510" class="btn-main" style="max-width:420px">
-        <span class="phi">&#128222;</span>
-        <span>Appeler maintenant<span class="bsub">V&eacute;rification gratuite de votre &eacute;ligibilit&eacute;</span></span>
+      <a href="tel:+33699926510" class="btn-main" style="max-width:420px" onclick="trackCall()">
+        <span class="phi"><svg class="ico-tel" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.07 1.15 2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.09a16 16 0 006.29 6.29l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 15.42z"/></svg></span>
+        <span>Appeler maintenant<span class="bsub">Vérification de votre éligibilité</span></span>
       </a>
     </div>
   </div>
 </section>
 
 <!-- AVIS -->
-
 <section class="avis" id="avis">
   <div class="avis-in">
     <div class="rev" style="text-align:center">
       <div class="stag">Avis clients</div>
-      <div class="at"><div class="sc">4.8</div><div><div class="sb">&#11088;&#11088;&#11088;&#11088;&#11088;</div><div class="cnt">Bas&eacute; sur 127 avis v&eacute;rifi&eacute;s</div></div></div>
+      <div class="at"><div class="sc">4.8</div><div><div class="sb">⭐⭐⭐⭐⭐</div><div class="cnt">Basé sur 127 avis</div></div></div>
     </div>
     <div class="ag">
-      <div class="ac rev"><div class="as">&#11088;&#11088;&#11088;&#11088;&#11088;</div><div class="at2">&ldquo;Rapide et efficace&nbsp;! J&rsquo;avais 4 points restants, en 2 jours j&rsquo;en ai r&eacute;cup&eacute;r&eacute; 4. Service au top.&rdquo;</div><div class="aa"><div class="av">K</div><div><div class="an">Karim B.</div><div class="ad">Meaux &middot; il y a 2 semaines</div></div></div></div>
-      <div class="ac rev"><div class="as">&#11088;&#11088;&#11088;&#11088;&#11088;</div><div class="at2">&ldquo;Centre trouv&eacute; rapidement pr&egrave;s de Chelles. Tr&egrave;s bon accompagnement, je recommande.&rdquo;</div><div class="aa"><div class="av">S</div><div><div class="an">Sophie M.</div><div class="ad">Chelles &middot; il y a 1 mois</div></div></div></div>
-      <div class="ac rev"><div class="as">&#11088;&#11088;&#11088;&#11088;&#11088;</div><div class="at2">&ldquo;Permis sauv&eacute;&nbsp;! J&rsquo;&eacute;tais &agrave; 2 points, PointSave m&rsquo;a aid&eacute; &agrave; trouver un stage en urgence. Merci&nbsp;!&rdquo;</div><div class="aa"><div class="av">M</div><div><div class="an">Mohamed T.</div><div class="ad">Torcy &middot; il y a 3 semaines</div></div></div></div>
+      <div class="ac rev"><div class="as">⭐⭐⭐⭐⭐</div><div class="at2">&ldquo;Rapide et efficace&nbsp;! J'avais 4 points restants, en 2 jours j'en ai récupéré 4. Service au top.&rdquo;</div><div class="aa"><div class="av">K</div><div><div class="an">Karim B.</div><div class="ad">Meaux &middot; il y a 2 semaines</div></div></div></div>
+      <div class="ac rev"><div class="as">⭐⭐⭐⭐⭐</div><div class="at2">&ldquo;Centre trouvé rapidement près de Chelles. Très bon accompagnement, je recommande.&rdquo;</div><div class="aa"><div class="av">S</div><div><div class="an">Sophie M.</div><div class="ad">Chelles &middot; il y a 1 mois</div></div></div></div>
+      <div class="ac rev"><div class="as">⭐⭐⭐⭐⭐</div><div class="at2">&ldquo;Permis sauvé&nbsp;! J'étais à 2 points, PointSave m'a aidé à trouver un stage en urgence. Merci&nbsp;!&rdquo;</div><div class="aa"><div class="av">M</div><div><div class="an">Mohamed T.</div><div class="ad">Torcy &middot; il y a 3 semaines</div></div></div></div>
     </div>
   </div>
 </section>
 
 <!-- FAQ -->
-
 <section class="faq" id="faq">
   <div class="faq-in">
     <div class="rev" style="text-align:center">
-      <div class="stag">Questions fr&eacute;quentes</div>
+      <div class="stag">Questions fréquentes</div>
       <h2 class="stit">Tout ce que vous devez savoir</h2>
     </div>
     <div class="fl rev">
-      <div class="fi"><div class="fq" onclick="tFaq(this)">C&rsquo;est l&eacute;gal&nbsp;? <span class="fa2">+</span></div><div class="fan"><p>Oui, totalement l&eacute;gal. Les stages sont encadr&eacute;s par le Code de la Route (article L223-6) et organis&eacute;s par des centres agr&eacute;&eacute;s par le Minist&egrave;re de l&rsquo;Int&eacute;rieur.</p></div></div>
-      <div class="fi"><div class="fq" onclick="tFaq(this)">Combien &ccedil;a co&ucirc;te&nbsp;? <span class="fa2">+</span></div><div class="fan"><p>Le service PointSave est enti&egrave;rement gratuit. Le co&ucirc;t du stage varie entre 200 et 350 euros selon le centre.</p></div></div>
-      <div class="fi"><div class="fq" onclick="tFaq(this)">Combien de points puis-je r&eacute;cup&eacute;rer&nbsp;? <span class="fa2">+</span></div><div class="fan"><p>Un stage vous permet de r&eacute;cup&eacute;rer jusqu&rsquo;&agrave; 4 points, tous les 12 mois minimum.</p></div></div>
-      <div class="fi"><div class="fq" onclick="tFaq(this)">Combien de temps pour recevoir mes points&nbsp;? <span class="fa2">+</span></div><div class="fan"><p>Les points sont cr&eacute;dit&eacute;s dans un d&eacute;lai de 3 &agrave; 4 semaines apr&egrave;s la fin du stage.</p></div></div>
-      <div class="fi"><div class="fq" onclick="tFaq(this)">Suis-je &eacute;ligible&nbsp;? <span class="fa2">+</span></div><div class="fan"><p>Vous &ecirc;tes &eacute;ligible si vous avez perdu au moins 1 point et que vous n&rsquo;avez pas fait de stage dans les 12 derniers mois.</p></div></div>
-      <div class="fi"><div class="fq" onclick="tFaq(this)">Que se passe-t-il si je perds tous mes points&nbsp;? <span class="fa2">+</span></div><div class="fan"><p>Si vous atteignez 0 point, votre permis est invalid&eacute;. Vous devrez repasser le permis apr&egrave;s 6 mois minimum.</p></div></div>
+      <div class="fi"><div class="fq" onclick="tFaq(this)">C'est légal ? <span class="fa2">+</span></div><div class="fan"><p>Oui, totalement légal. Les stages sont encadrés par le Code de la Route (article L223-6) et organisés par des centres agréés par le Ministère de l'Intérieur.</p></div></div>
+      <div class="fi"><div class="fq" onclick="tFaq(this)">Combien ça coûte ? <span class="fa2">+</span></div><div class="fan"><p>Le coût du stage varie entre 200 et 350 euros selon le centre. Appelez le <strong>+33 6 99 92 65 10</strong> pour connaître les tarifs disponibles près de chez vous.</p></div></div>
+      <div class="fi"><div class="fq" onclick="tFaq(this)">Combien de points puis-je récupérer ? <span class="fa2">+</span></div><div class="fan"><p>Un stage vous permet de récupérer jusqu'à 4 points, tous les 12 mois minimum.</p></div></div>
+      <div class="fi"><div class="fq" onclick="tFaq(this)">Combien de temps pour recevoir mes points ? <span class="fa2">+</span></div><div class="fan"><p>Les points sont crédités dans un délai de 3 à 4 semaines après la fin du stage.</p></div></div>
+      <div class="fi"><div class="fq" onclick="tFaq(this)">Suis-je éligible ? <span class="fa2">+</span></div><div class="fan"><p>Vous êtes éligible si vous avez perdu au moins 1 point et que vous n'avez pas fait de stage dans les 12 derniers mois.</p></div></div>
+      <div class="fi"><div class="fq" onclick="tFaq(this)">Que se passe-t-il si je perds tous mes points ? <span class="fa2">+</span></div><div class="fan"><p>Si vous atteignez 0 point, votre permis est invalidé. Vous devrez repasser le permis après 6 mois minimum.</p></div></div>
     </div>
   </div>
 </section>
 
 <!-- BLOG -->
-
 <section class="blog" id="blog">
   <div class="blog-in">
     <div class="rev" style="text-align:center">
@@ -598,130 +632,356 @@ body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;ove
       <p class="ssub">Cliquez sur un article pour le lire.</p>
     </div>
     <div class="bg rev">
-      <div class="bc" onclick="tArt('a1',this)"><div class="bimg" style="background:rgba(0,135,90,.1)">&#128663;</div><div class="bbody"><div class="btag">Guide</div><div class="btit">Comment v&eacute;rifier son solde de points gratuitement&nbsp;?</div><div class="bex">D&eacute;couvrez le t&eacute;l&eacute;service officiel.</div><div class="bdate">Mars 2026</div><div class="bread">Lire &#8594;</div></div></div>
-      <div class="bc" onclick="tArt('a2',this)"><div class="bimg" style="background:rgba(255,215,0,.08)">&#9888;&#65039;</div><div class="bbody"><div class="btag">Infos</div><div class="btit">Quelles infractions font perdre le plus de points&nbsp;?</div><div class="bex">Le classement des infractions les plus p&eacute;nalisantes.</div><div class="bdate">F&eacute;vrier 2026</div><div class="bread">Lire &#8594;</div></div></div>
-      <div class="bc" onclick="tArt('a3',this)"><div class="bimg" style="background:rgba(0,199,122,.08)">&#9989;</div><div class="bbody"><div class="btag">Conseil</div><div class="btit">Stage de r&eacute;cup&eacute;ration&nbsp;: tout ce qu&rsquo;il faut savoir</div><div class="bex">Dur&eacute;e, co&ucirc;t, &eacute;ligibilit&eacute;, d&eacute;roulement&hellip;</div><div class="bdate">Janvier 2026</div><div class="bread">Lire &#8594;</div></div></div>
+      <div class="bc" id="card-a1" onclick="tArt('a1','card-a1')"><div class="bimg" style="background:rgba(0,135,90,.1)">🚗</div><div class="bbody"><div class="btag">Guide</div><div class="btit">Comment vérifier son solde de points gratuitement&nbsp;?</div><div class="bex">Découvrez le téléservice officiel.</div><div class="bdate">Mars 2026</div><div class="bread">Lire →</div></div></div>
+      <div class="bc" id="card-a2" onclick="tArt('a2','card-a2')"><div class="bimg" style="background:rgba(255,215,0,.08)">⚠️</div><div class="bbody"><div class="btag">Infos</div><div class="btit">Quelles infractions font perdre le plus de points&nbsp;?</div><div class="bex">Le classement des infractions les plus pénalisantes.</div><div class="bdate">Février 2026</div><div class="bread">Lire →</div></div></div>
+      <div class="bc" id="card-a3" onclick="tArt('a3','card-a3')"><div class="bimg" style="background:rgba(0,199,122,.08)">✅</div><div class="bbody"><div class="btag">Conseil</div><div class="btit">Stage de récupération&nbsp;: tout ce qu'il faut savoir</div><div class="bex">Durée, coût, éligibilité, déroulement…</div><div class="bdate">Janvier 2026</div><div class="bread">Lire →</div></div></div>
     </div>
     <div class="bart" id="a1">
-      <h3>&#128663; Comment v&eacute;rifier son solde de points gratuitement en 2025&nbsp;?</h3>
-      <p>En France, chaque conducteur dispose d&rsquo;un capital de 12 points. Ces points peuvent diminuer suite &agrave; des infractions au Code de la Route.</p>
-      <h4>Le t&eacute;l&eacute;service officiel</h4>
-      <p>Rendez-vous sur <strong>telepoints.interieur.gouv.fr</strong> avec votre num&eacute;ro de permis et votre date de naissance. Gratuit et disponible 24h/24.</p>
+      <h3>🚗 Comment vérifier son solde de points gratuitement en 2026&nbsp;?</h3>
+      <p>En France, chaque conducteur dispose d'un capital de 12 points. Ces points peuvent diminuer suite à des infractions au Code de la Route.</p>
+      <h4>Le téléservice officiel</h4>
+      <p>Rendez-vous sur <strong>telepoints.interieur.gouv.fr</strong> avec votre numéro de permis et votre date de naissance. Gratuit et disponible 24h/24.</p>
       <h4>Que faire si votre solde est faible&nbsp;?</h4>
-      <ul><li>Moins de 6 points&nbsp;: inscrivez-vous rapidement &agrave; un stage</li><li>Moins de 3 points&nbsp;: c&rsquo;est urgent, appelez-nous imm&eacute;diatement</li><li>0 point&nbsp;: votre permis est invalid&eacute;</li></ul>
-      <p>Appelez-nous gratuitement au <strong>0699926510</strong>.</p>
-      <button class="bclose" onclick="tArt('a1',null)">&#8593; Fermer</button>
+      <ul><li>Moins de 6 points&nbsp;: inscrivez-vous rapidement à un stage</li><li>Moins de 3 points&nbsp;: c'est urgent, appelez-nous immédiatement</li><li>0 point&nbsp;: votre permis est invalidé</li></ul>
+      <p>Appelez-nous au <a href="tel:+33699926510" onclick="trackCall()">+33 6 99 92 65 10</a>.</p>
+      <button class="bclose" onclick="tArt('a1',null)">↑ Fermer</button>
     </div>
     <div class="bart" id="a2">
-      <h3>&#9888;&#65039; Quelles infractions font perdre le plus de points en 2025&nbsp;?</h3>
-      <h4>Infractions &agrave; 6 points</h4>
-      <ul><li>Conduite sous alcool (&gt;0,8g/L)</li><li>Conduite sous stup&eacute;fiants</li><li>Grand exc&egrave;s de vitesse (&gt;50km/h)</li><li>D&eacute;lit de fuite</li></ul>
-      <h4>Infractions &agrave; 4 points</h4>
-      <ul><li>Exc&egrave;s de vitesse de 30 &agrave; 50km/h</li><li>Non-respect d&rsquo;un feu rouge</li><li>D&eacute;passement dangereux</li></ul>
-      <h4>Infractions &agrave; 3 points</h4>
-      <ul><li>T&eacute;l&eacute;phone au volant</li><li>Non-port de la ceinture</li></ul>
-      <p>Appelez le <strong>0699926510</strong> pour trouver un stage rapidement.</p>
-      <button class="bclose" onclick="tArt('a2',null)">&#8593; Fermer</button>
+      <h3>⚠️ Quelles infractions font perdre le plus de points en 2026&nbsp;?</h3>
+      <h4>Infractions à 6 points</h4>
+      <ul><li>Conduite sous alcool (&gt;0,8g/L)</li><li>Conduite sous stupéfiants</li><li>Grand excès de vitesse (&gt;50km/h)</li><li>Délit de fuite</li></ul>
+      <h4>Infractions à 4 points</h4>
+      <ul><li>Excès de vitesse de 30 à 50km/h</li><li>Non-respect d'un feu rouge</li><li>Dépassement dangereux</li></ul>
+      <h4>Infractions à 3 points</h4>
+      <ul><li>Téléphone au volant</li><li>Non-port de la ceinture</li></ul>
+      <p>Appelez le <a href="tel:+33699926510" onclick="trackCall()">+33 6 99 92 65 10</a> pour trouver un stage rapidement.</p>
+      <button class="bclose" onclick="tArt('a2',null)">↑ Fermer</button>
     </div>
     <div class="bart" id="a3">
-      <h3>&#9989; Stage de r&eacute;cup&eacute;ration&nbsp;: tout ce qu&rsquo;il faut savoir en 2025</h3>
+      <h3>✅ Stage de récupération&nbsp;: tout ce qu'il faut savoir en 2026</h3>
       <h4>Qui peut faire un stage&nbsp;?</h4>
-      <p>Tout titulaire d&rsquo;un permis fran&ccedil;ais ayant perdu au moins 1 point, n&rsquo;ayant pas fait de stage dans les <strong>12 mois pr&eacute;c&eacute;dents</strong>.</p>
-      <h4>Dur&eacute;e et d&eacute;roulement</h4>
-      <p><strong>2 jours cons&eacute;cutifs</strong> (16h), g&eacute;n&eacute;ralement en week-end, en groupe de maximum 20 personnes.</p>
-      <h4>Points r&eacute;cup&eacute;r&eacute;s</h4>
-      <ul><li>Maximum <strong>4 points</strong> par stage</li><li>Un stage tous les <strong>12 mois</strong></li><li>Points cr&eacute;dit&eacute;s sous <strong>3 &agrave; 4 semaines</strong></li></ul>
-      <h4>Co&ucirc;t</h4>
+      <p>Tout titulaire d'un permis français ayant perdu au moins 1 point, n'ayant pas fait de stage dans les <strong>12 mois précédents</strong>.</p>
+      <h4>Durée et déroulement</h4>
+      <p><strong>2 jours consécutifs</strong> (16h), généralement en week-end, en groupe de maximum 20 personnes.</p>
+      <h4>Points récupérés</h4>
+      <ul><li>Maximum <strong>4 points</strong> par stage</li><li>Un stage tous les <strong>12 mois</strong></li><li>Points crédités sous <strong>3 à 4 semaines</strong></li></ul>
+      <h4>Coût</h4>
       <p>Entre <strong>200 et 350 euros</strong> selon le centre.</p>
-      <p>Appelez le <strong>0699926510</strong> pour r&eacute;server votre stage pr&egrave;s de Meaux.</p>
-      <button class="bclose" onclick="tArt('a3',null)">&#8593; Fermer</button>
+      <p>Appelez le <a href="tel:+33699926510" onclick="trackCall()">+33 6 99 92 65 10</a> pour réserver votre stage près de Meaux.</p>
+      <button class="bclose" onclick="tArt('a3',null)">↑ Fermer</button>
     </div>
   </div>
 </section>
 
 <!-- FOOTER -->
-
 <footer class="footer">
   <div class="fl2">
-    <button onclick="openLegal('mentions')">&#128220; Mentions l&eacute;gales</button>
-    <button onclick="openLegal('cgu')">&#128196; CGU</button>
-    <button onclick="openLegal('confidentialite')">&#128274; Confidentialit&eacute;</button>
-    <button onclick="openLegal('cookies')">&#127850; Cookies</button>
+    <button onclick="openLegal('mentions')">📜 Mentions légales</button>
+    <button onclick="openLegal('cgu')">📄 CGU</button>
+    <button onclick="openLegal('confidentialite')">🔒 Confidentialité</button>
+    <button onclick="openLegal('cookies')">🍪 Cookies</button>
   </div>
-  <div class="fc2">&copy; 2025 PointSave &mdash; Stage r&eacute;cup&eacute;ration de points agr&eacute;&eacute; pr&egrave;s de Meaux</div>
+  <div class="fc2">&copy; 2025 PointSave &mdash; Stage récupération de points agréé près de Meaux</div>
+
+  <!-- MENTIONS LÉGALES -->
   <div class="lp" id="lp">
     <div class="lp-in">
       <div class="lph">
-        <h2>Informations l&eacute;gales</h2>
-        <button class="lpc-btn" onclick="closeLegal()">&#10005; Fermer</button>
+        <h2>Informations légales</h2>
+        <button class="lpc-btn" onclick="closeLegal()">✕ Fermer</button>
       </div>
+
+      <!-- MENTIONS LÉGALES -->
       <div class="lc" id="lc-mentions">
-        <div class="lst">&#128220; Mentions l&eacute;gales</div>
-        <h3>&Eacute;diteur du site</h3>
-        <p><strong>Nom&nbsp;:</strong> Kylian P.<br><strong>Adresse&nbsp;:</strong> Meaux, 77100<br><strong>Email&nbsp;:</strong> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="8deee2e3f9eceef9cdfde2e4e3f9feecfbe8a3ebff">[email&#160;protected]</a><br><strong>Statut&nbsp;:</strong> Particulier</p>
-        <h3>H&eacute;bergeur</h3>
-        <p><strong>Netlify, Inc.</strong> &mdash; 512 2nd Street, San Francisco, CA 94107</p>
-        <h3>Propri&eacute;t&eacute; intellectuelle</h3>
-        <p>L&rsquo;ensemble du contenu est la propri&eacute;t&eacute; de l&rsquo;&eacute;diteur. Toute reproduction sans autorisation est interdite.</p>
-        <h3>Responsabilit&eacute;</h3>
-        <p>PointSave est un service de mise en relation gratuit. Nous ne sommes pas organisateurs de stages.</p>
+        <div class="lst">📜 Mentions légales</div>
+        <h3>1. Éditeur du site</h3>
+        <p>Le site <strong>www.pointsave.fr</strong> est édité à titre personnel par :<br>
+        <strong>Nom :</strong> Kylian P.<br>
+        <strong>Adresse :</strong> Meaux, 77100, France<br>
+        <strong>Email :</strong> contact@pointsave.fr<br>
+        <strong>Statut :</strong> Particulier — personne physique non commerçante</p>
+
+        <h3>2. Hébergeur</h3>
+        <p><strong>Cloudflare, Inc.</strong><br>
+        101 Townsend St, San Francisco, CA 94107, États-Unis<br>
+        Site : <a href="https://www.cloudflare.com" target="_blank">www.cloudflare.com</a></p>
+
+        <h3>3. Activité du site</h3>
+        <p>PointSave est un service de mise en relation entre conducteurs souhaitant effectuer un stage de récupération de points de permis de conduire et des centres de stages agréés par le Ministère de l'Intérieur. PointSave n'est pas lui-même organisateur de stages et n'agit qu'en qualité d'intermédiaire.</p>
+
+        <h3>4. Propriété intellectuelle</h3>
+        <p>L'ensemble des contenus présents sur le site (textes, images, logos, structure) est la propriété exclusive de l'éditeur. Toute reproduction, représentation, modification ou exploitation, totale ou partielle, sans autorisation préalable écrite est strictement interdite et constituerait une contrefaçon au sens des articles L.335-2 et suivants du Code de la propriété intellectuelle.</p>
+
+        <h3>5. Responsabilité</h3>
+        <p>PointSave s'efforce de maintenir les informations publiées à jour et exactes. Toutefois, l'éditeur ne saurait être tenu responsable des erreurs ou omissions, ni de l'indisponibilité des centres partenaires. Les informations fournies sur ce site sont données à titre indicatif et ne sauraient engager la responsabilité de l'éditeur.</p>
+
+        <h3>6. Liens hypertextes</h3>
+        <p>Le site peut contenir des liens vers des sites tiers. L'éditeur n'exerce aucun contrôle sur ces sites et décline toute responsabilité quant à leur contenu.</p>
+
+        <h3>7. Droit applicable — Juridiction compétente</h3>
+        <p>Les présentes mentions légales sont soumises au droit français. En cas de litige, les tribunaux français seront seuls compétents.</p>
       </div>
+
+      <!-- CGU -->
       <div class="lc" id="lc-cgu">
-        <div class="lst">&#128196; Conditions G&eacute;n&eacute;rales d&rsquo;Utilisation</div>
-        <h3>1. Objet</h3><p>Les pr&eacute;sentes CGU r&eacute;gissent l&rsquo;utilisation du site pointsave.fr.</p>
-        <h3>2. Service</h3><p>PointSave est un service gratuit de mise en relation entre conducteurs et centres agr&eacute;&eacute;s dans un rayon de 30km autour de Meaux.</p>
-        <h3>3. Gratuit&eacute;</h3><p>La mise en relation est enti&egrave;rement gratuite. Le co&ucirc;t du stage (200 &agrave; 350 euros) est pay&eacute; directement au centre.</p>
-        <h3>4. Obligations</h3><ul><li>Fournir des informations exactes</li><li>Ne pas utiliser le service &agrave; des fins frauduleuses</li><li>&Ecirc;tre titulaire d&rsquo;un permis fran&ccedil;ais valide</li></ul>
-        <h3>5. Responsabilit&eacute;</h3><p>PointSave ne peut &ecirc;tre tenu responsable en cas d&rsquo;indisponibilit&eacute; des centres.</p>
-        <h3>6. Droit applicable</h3><p>Les pr&eacute;sentes CGU sont soumises au droit fran&ccedil;ais.</p>
+        <div class="lst">📄 Conditions Générales d'Utilisation</div>
+        <h3>1. Objet et champ d'application</h3>
+        <p>Les présentes Conditions Générales d'Utilisation (CGU) régissent les conditions d'accès et d'utilisation du site <strong>www.pointsave.fr</strong>. L'accès au site implique l'acceptation pleine et entière des présentes CGU.</p>
+
+        <h3>2. Description du service</h3>
+        <p>PointSave est un service de mise en relation entre des conducteurs titulaires d'un permis de conduire français souhaitant récupérer des points, et des centres de stages de sensibilisation à la sécurité routière agréés par le Ministère de l'Intérieur. PointSave agit en qualité d'intermédiaire et transmet les coordonnées des utilisateurs à ses centres partenaires, qui les recontactent pour finaliser l'inscription au stage.</p>
+
+        <h3>3. Conditions d'utilisation</h3>
+        <p>Pour utiliser le service PointSave, l'utilisateur doit :</p>
+        <ul>
+          <li>Être titulaire d'un permis de conduire français valide</li>
+          <li>Avoir perdu au moins 1 point sur son permis</li>
+          <li>Ne pas avoir effectué de stage de récupération de points dans les 12 mois précédents</li>
+          <li>Fournir des informations exactes, complètes et sincères lors de la demande de mise en relation</li>
+          <li>Ne pas utiliser le service à des fins frauduleuses ou illicites</li>
+        </ul>
+
+        <h3>4. Transmission des données</h3>
+        <p>En soumettant le formulaire de demande de rappel, l'utilisateur accepte expressément que ses coordonnées (prénom, nom, téléphone, ville) soient transmises à un ou plusieurs centres partenaires agréés, dans le but de lui proposer une inscription à un stage de récupération de points. Cette transmission constitue la finalité principale du service.</p>
+
+        <h3>5. Coût du stage</h3>
+        <p>Le coût du stage de récupération de points est compris entre 200 et 350 euros selon le centre choisi. Ce montant est directement réglé par l'utilisateur auprès du centre organisateur. PointSave n'encaisse aucun paiement de la part des utilisateurs.</p>
+
+        <h3>6. Disponibilité du service</h3>
+        <p>PointSave s'efforce de maintenir le service accessible 24h/24 et 7j/7. Toutefois, l'éditeur ne peut garantir une disponibilité permanente et se réserve le droit d'interrompre l'accès pour des raisons de maintenance, sans préavis.</p>
+
+        <h3>7. Responsabilité de l'éditeur</h3>
+        <p>PointSave ne peut être tenu responsable en cas d'indisponibilité des centres partenaires, d'annulation d'un stage ou de tout préjudice résultant de l'utilisation du service. L'éditeur est un intermédiaire et n'est pas partie au contrat conclu entre l'utilisateur et le centre de stage.</p>
+
+        <h3>8. Comportement de l'utilisateur</h3>
+        <p>L'utilisateur s'engage à ne pas transmettre de données erronées, à ne pas utiliser le service à des fins commerciales non autorisées, et à ne pas perturber le bon fonctionnement du site.</p>
+
+        <h3>9. Modification des CGU</h3>
+        <p>L'éditeur se réserve le droit de modifier les présentes CGU à tout moment. Les modifications prennent effet dès leur publication sur le site. L'utilisation du service après modification vaut acceptation des nouvelles CGU.</p>
+
+        <h3>10. Droit applicable</h3>
+        <p>Les présentes CGU sont soumises au droit français. Tout litige sera porté devant les juridictions compétentes du ressort de Meaux.</p>
       </div>
+
+      <!-- POLITIQUE DE CONFIDENTIALITÉ -->
       <div class="lc" id="lc-confidentialite">
-        <div class="lst">&#128274; Politique de confidentialit&eacute; (RGPD)</div>
-        <h3>1. Responsable</h3><p>Kylian P. &mdash; Meaux, 77100 &mdash; <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="3e5d51504a5f5d4a7e4e5157504a4d5f485b10584c">[email&#160;protected]</a></p>
-        <h3>2. Donn&eacute;es collect&eacute;es</h3><ul><li>Pr&eacute;nom et nom</li><li>Num&eacute;ro de t&eacute;l&eacute;phone</li><li>Ville</li><li>Estimation du solde de points</li></ul>
-        <h3>3. Finalit&eacute;</h3><p>Ces donn&eacute;es sont utilis&eacute;es uniquement pour vous rappeler. Elles ne sont jamais vendues.</p>
-        <h3>4. Conservation</h3><p>Vos donn&eacute;es sont conserv&eacute;es 3 mois maximum puis supprim&eacute;es.</p>
-        <h3>5. Vos droits</h3><p>Acc&egrave;s, rectification, suppression, opposition. Contactez-nous par email.</p>
-        <h3>6. H&eacute;bergement</h3><p>Netlify, Inc. (San Francisco), conforme aux clauses UE.</p>
+        <div class="lst">🔒 Politique de confidentialité — RGPD</div>
+        <h3>1. Responsable du traitement</h3>
+        <p><strong>Kylian P.</strong><br>
+        Adresse : Meaux, 77100, France<br>
+        Email : contact@pointsave.fr</p>
+
+        <h3>2. Données collectées</h3>
+        <p>Dans le cadre du fonctionnement du service PointSave, les données personnelles suivantes sont collectées via le formulaire de demande de rappel :</p>
+        <ul>
+          <li>Prénom et nom</li>
+          <li>Numéro de téléphone</li>
+          <li>Ville de résidence</li>
+          <li>Disponibilité souhaitée pour le rappel</li>
+        </ul>
+
+        <h3>3. Finalité et base légale du traitement</h3>
+        <p>Les données collectées sont traitées aux fins suivantes :</p>
+        <ul>
+          <li><strong>Mise en relation :</strong> transmission de vos coordonnées à un ou plusieurs centres de stages agréés partenaires de PointSave, afin qu'ils vous contactent pour vous proposer une inscription à un stage de récupération de points. <em>Base légale : consentement explicite de l'utilisateur (article 6.1.a du RGPD).</em></li>
+          <li><strong>Suivi de la demande :</strong> traitement interne pour assurer le bon déroulement de la mise en relation. <em>Base légale : intérêt légitime (article 6.1.f du RGPD).</em></li>
+        </ul>
+
+        <h3>4. Destinataires des données</h3>
+        <p>Vos données personnelles sont transmises aux centres de stages de récupération de points agréés, partenaires de PointSave, situés dans un rayon de 30km autour de votre ville. Ces centres sont seuls responsables de la suite donnée à votre demande d'inscription.</p>
+
+        <h3>5. Durée de conservation</h3>
+        <p>Vos données personnelles sont conservées pour une durée maximale de <strong>3 mois</strong> à compter de leur collecte, puis supprimées de manière définitive.</p>
+
+        <h3>6. Vos droits</h3>
+        <p>Conformément au Règlement Général sur la Protection des Données (RGPD — Règlement UE 2016/679) et à la loi Informatique et Libertés du 6 janvier 1978 modifiée, vous disposez des droits suivants :</p>
+        <ul>
+          <li><strong>Droit d'accès</strong> (article 15 RGPD) : obtenir la confirmation que vos données sont traitées et en obtenir une copie</li>
+          <li><strong>Droit de rectification</strong> (article 16 RGPD) : corriger des données inexactes ou incomplètes</li>
+          <li><strong>Droit à l'effacement</strong> (article 17 RGPD) : demander la suppression de vos données</li>
+          <li><strong>Droit d'opposition</strong> (article 21 RGPD) : vous opposer au traitement de vos données</li>
+          <li><strong>Droit à la limitation</strong> (article 18 RGPD) : demander la suspension temporaire du traitement</li>
+          <li><strong>Droit à la portabilité</strong> (article 20 RGPD) : recevoir vos données dans un format structuré</li>
+          <li><strong>Droit de retrait du consentement</strong> : à tout moment, sans affecter la licéité du traitement effectué avant le retrait</li>
+        </ul>
+        <p>Pour exercer ces droits, contactez-nous par email : <strong>contact@pointsave.fr</strong>. Nous nous engageons à répondre dans un délai maximum d'un mois.</p>
+        <p>Vous disposez également du droit d'introduire une réclamation auprès de la <strong>CNIL</strong> (Commission Nationale de l'Informatique et des Libertés) : <a href="https://www.cnil.fr" target="_blank">www.cnil.fr</a>.</p>
+
+        <h3>7. Sécurité des données</h3>
+        <p>Des mesures techniques et organisationnelles appropriées sont mises en place pour protéger vos données contre tout accès non autorisé, perte ou divulgation. Le site est hébergé sur les infrastructures de Cloudflare, Inc., qui garantit un niveau de sécurité conforme aux standards internationaux.</p>
+
+        <h3>8. Transfert hors UE</h3>
+        <p>L'hébergeur Cloudflare, Inc. est une société américaine. Les transferts de données vers les États-Unis sont encadrés par les clauses contractuelles types de la Commission européenne, garantissant un niveau de protection adéquat.</p>
+
+        <h3>9. Contact DPO</h3>
+        <p>Pour toute question relative à la protection de vos données personnelles : <strong>contact@pointsave.fr</strong></p>
       </div>
+
+      <!-- COOKIES -->
       <div class="lc" id="lc-cookies">
-        <div class="lst">&#127850; Politique de cookies</div>
-        <h3>Cookies utilis&eacute;s</h3>
-        <ul><li><strong>Cookie technique</strong> &mdash; Session uniquement. Indispensable.</li><li><strong>Google Fonts</strong> &mdash; Polices. Aucune donn&eacute;e personnelle.</li></ul>
-        <h3>Cookies tiers</h3><p>Aucun cookie publicitaire ou de tracking. Aucune donn&eacute;e vendue.</p>
-        <h3>Gestion</h3><p>Refus possible via les param&egrave;tres de votre navigateur.</p>
+        <div class="lst">🍪 Politique de gestion des cookies</div>
+        <h3>1. Qu'est-ce qu'un cookie ?</h3>
+        <p>Un cookie est un petit fichier texte déposé sur votre terminal (ordinateur, smartphone, tablette) lors de votre visite sur un site web. Il permet au site de mémoriser certaines informations sur votre navigation.</p>
+
+        <h3>2. Cookies utilisés sur www.pointsave.fr</h3>
+        <p><strong>a) Cookies strictement nécessaires (exemptés de consentement)</strong></p>
+        <ul>
+          <li><strong>ps_ck</strong> — Cookie de mémorisation de votre choix concernant les cookies. Durée : session / 12 mois. Aucune donnée personnelle.</li>
+        </ul>
+        <p><strong>b) Cookies de mesure d'audience (nécessitent votre consentement)</strong></p>
+        <ul>
+          <li><strong>Google Analytics (_ga, _gid, _gat)</strong> — Ces cookies permettent de mesurer l'audience du site (nombre de visiteurs, pages consultées, durée de visite) afin d'améliorer l'expérience utilisateur. Les données collectées sont anonymisées. Éditeur : Google Ireland Limited. Durée : 13 mois maximum. <a href="https://policies.google.com/privacy" target="_blank">Politique de confidentialité Google</a>.</li>
+        </ul>
+        <p><strong>c) Cookies tiers de polices de caractères</strong></p>
+        <ul>
+          <li><strong>Google Fonts</strong> — Chargement des polices Outfit et Inter. Aucune donnée personnelle identifiable collectée.</li>
+        </ul>
+
+        <h3>3. Cookies tiers publicitaires</h3>
+        <p>Aucun cookie publicitaire ou de tracking comportemental n'est utilisé sur ce site. Aucune donnée n'est transmise à des régies publicitaires.</p>
+
+        <h3>4. Gestion de vos préférences</h3>
+        <p>Vous pouvez à tout moment modifier vos préférences cookies :</p>
+        <ul>
+          <li>Via le bandeau de gestion des cookies affiché à votre première visite</li>
+          <li>Via les paramètres de votre navigateur (voir ci-dessous)</li>
+          <li>Via la plateforme de gestion du consentement accessible en bas de page</li>
+        </ul>
+        <p><strong>Désactivation via votre navigateur :</strong></p>
+        <ul>
+          <li>Chrome : Paramètres → Confidentialité et sécurité → Cookies</li>
+          <li>Firefox : Paramètres → Vie privée et sécurité → Cookies</li>
+          <li>Safari : Préférences → Confidentialité → Cookies</li>
+          <li>Edge : Paramètres → Confidentialité → Cookies</li>
+        </ul>
+        <p>Attention : la désactivation de certains cookies peut altérer le bon fonctionnement du site.</p>
+
+        <h3>5. Opt-out Google Analytics</h3>
+        <p>Pour désactiver le suivi Google Analytics sur l'ensemble des sites, vous pouvez installer l'extension officielle : <a href="https://tools.google.com/dlpage/gaoptout" target="_blank">tools.google.com/dlpage/gaoptout</a>.</p>
+
+        <h3>6. Mise à jour de la politique cookies</h3>
+        <p>La présente politique de cookies est susceptible d'être modifiée. Nous vous invitons à la consulter régulièrement. Dernière mise à jour : mars 2026.</p>
       </div>
+
     </div>
   </div>
 </footer>
 
 <!-- STICKY -->
-
 <div class="sticky" id="sticky">
   <div class="sticky-in">
-    <p>&#9888;&#65039; <strong>Permis en danger&nbsp;?</strong> &mdash; Meaux &amp; 30km</p>
-    <a href="tel:+33699926510" class="sticky-btn">&#128222; Appeler maintenant</a>
+    <p>⚠️ <strong>Permis en danger&nbsp;?</strong> &mdash; Meaux &amp; 30km</p>
+    <a href="tel:+33699926510" class="sticky-btn" onclick="trackCall()"><svg class="ico-tel" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.07 1.15 2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.09a16 16 0 006.29 6.29l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 15.42z"/></svg> +33 6 99 92 65 10</a>
   </div>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 function trackCall(){if(typeof gtag!=='undefined'){gtag('event','click_call',{event_category:'CTA',event_label:'Appel'});}if(typeof dataLayer!=='undefined'){dataLayer.push({'event':'click_call'});}}
+// =============================================
+// GOOGLE APPS SCRIPT — URL À REMPLACER
+// Étapes :
+// 1. Ouvrez votre Google Sheet
+// 2. Extensions → Apps Script
+// 3. Collez le code fourni séparément
+// 4. Déployez → Nouveau déploiement → Application Web
+// 5. Copiez l'URL et remplacez ci-dessous
+// =============================================
+var APPS_SCRIPT_URL = 'COLLER_ICI_VOTRE_URL_APPS_SCRIPT';
+
+// MENU
 function toggleMenu(){var m=document.getElementById('mmenu');var b=document.getElementById('burger');var h=document.querySelector('.hdr');m.style.top=h.getBoundingClientRect().bottom+'px';m.classList.toggle('open');b.classList.toggle('open');document.body.style.overflow=m.classList.contains('open')?'hidden':'';}
 function closeMenu(){document.getElementById('mmenu').classList.remove('open');document.getElementById('burger').classList.remove('open');document.body.style.overflow='';}
 function goTo(id){closeMenu();setTimeout(function(){var el=document.getElementById(id);if(el){window.scrollTo({top:el.getBoundingClientRect().top+window.pageYOffset-70,behavior:'smooth'});}},50);}
+
+// COMPTEUR
 function getC(){var d=new Date();var j=d.getDate();var m=d.getMonth()+1;var a=d.getFullYear();var jm=new Date(a,m,0).getDate();var p=Math.floor((j/jm)*150);var b=150+p;var s=(a*100+m)*31+j;var r=((s*7919+3571)%100)-50;return Math.max(150,Math.min(300,b+r));}
 var cT=getC();var cC=Math.max(140,cT-15);var cE=document.getElementById('counter');
 function animC(){if(cC<cT){cC++;cE.textContent=cC;setTimeout(animC,60);}else{cE.textContent=cT;}}
 setTimeout(animC,600);
+
+// POPUP — exit-intent uniquement
 var pS=false;
 document.addEventListener('mouseleave',function(e){if(e.clientY<10&&!pS){pS=true;document.getElementById('popup').classList.add('show');document.body.style.overflow='hidden';}});
-setTimeout(function(){if(!pS){pS=true;document.getElementById('popup').classList.add('show');document.body.style.overflow='hidden';}},45000);
+
+// FAQ
 function tFaq(el){var i=el.parentElement;var o=i.classList.contains('open');document.querySelectorAll('.fi').forEach(function(x){x.classList.remove('open');});if(!o)i.classList.add('open');}
-function tArt(id,card){var a=document.getElementById(id);var op=a.classList.contains('show');document.querySelectorAll('.bart').forEach(function(x){x.classList.remove('show');});document.querySelectorAll('.bc').forEach(function(x){x.classList.remove('active');});if(!op){a.classList.add('show');if(card)card.classList.add('active');setTimeout(function(){a.scrollIntoView({behavior:'smooth',block:'nearest'});},50);}}
+
+// BLOG — correction de l'affichage
+function tArt(id,cardId){
+  var a=document.getElementById(id);
+  var op=a.classList.contains('show');
+  document.querySelectorAll('.bart').forEach(function(x){x.classList.remove('show');});
+  document.querySelectorAll('.bc').forEach(function(x){x.classList.remove('active');});
+  if(!op){
+    a.classList.add('show');
+    if(cardId){
+      var card=document.getElementById(cardId);
+      if(card)card.classList.add('active');
+    }
+    setTimeout(function(){a.scrollIntoView({behavior:'smooth',block:'nearest'});},50);
+  }
+}
+
+// MENTIONS LÉGALES
 function openLegal(tab){var p=document.getElementById('lp');document.querySelectorAll('.lc').forEach(function(c){c.classList.remove('active');});var el=document.getElementById('lc-'+tab);if(el)el.classList.add('active');p.classList.add('show');setTimeout(function(){p.scrollIntoView({behavior:'smooth',block:'start'});},50);}
 function closeLegal(){document.getElementById('lp').classList.remove('show');document.querySelectorAll('.lc').forEach(function(c){c.classList.remove('active');});}
+
+// FORMULAIRE → GOOGLE SHEETS
+document.getElementById('contactForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  var consent=document.getElementById('f_consent');
+  if(!consent.checked){
+    var msg=document.getElementById('formMsg');
+    msg.textContent='Veuillez accepter les conditions avant d\'envoyer.';
+    msg.className='form-msg err';
+    return;
+  }
+  var btn=document.getElementById('submitBtn');
+  btn.disabled=true;
+  btn.textContent='Envoi en cours…';
+  var data={
+    prenom:document.getElementById('f_prenom').value,
+    nom:document.getElementById('f_nom').value,
+    telephone:document.getElementById('f_telephone').value,
+    ville:document.getElementById('f_ville').value,
+    moment:document.getElementById('f_moment').value,
+    date:new Date().toLocaleString('fr-FR'),
+    source:'www.pointsave.fr'
+  };
+  fetch(APPS_SCRIPT_URL,{
+    method:'POST',
+    mode:'no-cors',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(data)
+  }).then(function(){
+    // Sauvegarde locale pour le CRM
+    var stored=JSON.parse(localStorage.getItem('ps_leads')||'[]');
+    stored.unshift({id:Date.now(),date:new Date().toLocaleString('fr-FR'),prenom:data.prenom,nom:data.nom,telephone:data.telephone,ville:data.ville,moment:data.moment,source:data.source,statut:'Nouveau',note:''});
+    localStorage.setItem('ps_leads',JSON.stringify(stored));
+    document.getElementById('merci').classList.add('show');
+    document.body.style.overflow='hidden';
+    document.getElementById('contactForm').reset();
+    gtag('event','form_submit',{event_category:'Lead',event_label:'Formulaire soumis'});
+  }).catch(function(){
+    var msg=document.getElementById('formMsg');
+    msg.textContent='Une erreur est survenue. Appelez-nous directement au +33 6 99 92 65 10';
+    msg.className='form-msg err';
+  }).finally(function(){
+    btn.disabled=false;
+    btn.textContent='📨 Envoyer ma demande de rappel';
+  });
+});
+
+// COOKIES
 window.addEventListener('DOMContentLoaded',function(){
   if(!localStorage.getItem('ps_ck')){setTimeout(function(){document.getElementById('ck').classList.add('show');},2000);}
   var bO=new IntersectionObserver(function(en){en.forEach(function(e,i){if(e.isIntersecting){setTimeout(function(){e.target.classList.add('lit');},i*120);bO.unobserve(e.target);}});},{threshold:0.1});
   document.querySelectorAll('[data-badge]').forEach(function(el){bO.observe(el);});
-  var o=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isInterse
+  var o=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){e.target.classList.add('vis');o.unobserve(e.target);}});},{threshold:0.08});
+  document.querySelectorAll('.rev').forEach(function(el){o.observe(el);});
+  var st=document.getElementById('sticky');
+  window.addEventListener('scroll',function(){if(window.pageYOffset>400){st.classList.add('show');}else{st.classList.remove('show');}});
+});
+</script>
+</body>
+</html>
