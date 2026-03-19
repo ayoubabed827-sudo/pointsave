@@ -1,6 +1,0 @@
-name = "pointsave"
-compatibility_date = "2026-03-19"
-
-[assets]
-directory = "."
-html_handling = "none"
