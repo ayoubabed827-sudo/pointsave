@@ -676,7 +676,7 @@ to{opacity:1;transform:translateY(0)}}
         <p>Le site <strong>www.pointsave.fr</strong> est édité à titre personnel par :<br>
         <strong>Nom :</strong> Kylian P.<br>
         <strong>Adresse :</strong> Meaux, 77100, France<br>
-        <strong>Email :</strong> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f2919d9c86939186b2829d9b9c8681938497dc9480">[email&#160;protected]</a><br>
+        <strong>Email :</strong> contact@pointsave.fr<br>
         <strong>Statut :</strong> Particulier — personne physique non commerçante</p>
 
         <h3>2. Hébergeur</h3>
@@ -747,7 +747,7 @@ to{opacity:1;transform:translateY(0)}}
         <h3>1. Responsable du traitement</h3>
         <p><strong>Kylian P.</strong><br>
         Adresse : Meaux, 77100, France<br>
-        Email : <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="cfaca0a1bbaeacbb8fbfa0a6a1bbbcaeb9aae1a9bd">[email&#160;protected]</a></p>
+        Email : contact@pointsave.fr</p>
 
         <h3>2. Données collectées</h3>
         <p>Dans le cadre du fonctionnement du service PointSave, les données personnelles suivantes sont collectées via le formulaire de demande de rappel :</p>
@@ -782,7 +782,7 @@ to{opacity:1;transform:translateY(0)}}
           <li><strong>Droit à la portabilité</strong> (article 20 RGPD) : recevoir vos données dans un format structuré</li>
           <li><strong>Droit de retrait du consentement</strong> : à tout moment, sans affecter la licéité du traitement effectué avant le retrait</li>
         </ul>
-        <p>Pour exercer ces droits, contactez-nous par email : <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="25464a4b5144465165554a4c4b51564453400b4357">[email&#160;protected]</a></strong>. Nous nous engageons à répondre dans un délai maximum d'un mois.</p>
+        <p>Pour exercer ces droits, contactez-nous par email : <strong>contact@pointsave.fr</strong>. Nous nous engageons à répondre dans un délai maximum d'un mois.</p>
         <p>Vous disposez également du droit d'introduire une réclamation auprès de la <strong>CNIL</strong> (Commission Nationale de l'Informatique et des Libertés) : <a href="https://www.cnil.fr" target="_blank">www.cnil.fr</a>.</p>
 
         <h3>7. Sécurité des données</h3>
@@ -792,7 +792,7 @@ to{opacity:1;transform:translateY(0)}}
         <p>L'hébergeur Cloudflare, Inc. est une société américaine. Les transferts de données vers les États-Unis sont encadrés par les clauses contractuelles types de la Commission européenne, garantissant un niveau de protection adéquat.</p>
 
         <h3>9. Contact DPO</h3>
-        <p>Pour toute question relative à la protection de vos données personnelles : <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d2b1bdbca6b3b1a692a2bdbbbca6a1b3a4b7fcb4a0">[email&#160;protected]</a></strong></p>
+        <p>Pour toute question relative à la protection de vos données personnelles : <strong>contact@pointsave.fr</strong></p>
       </div>
 
       <!-- COOKIES -->
@@ -853,7 +853,7 @@ to{opacity:1;transform:translateY(0)}}
   </div>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 // =============================================
 // GOOGLE APPS SCRIPT — URL À REMPLACER
 // Étapes :
@@ -863,7 +863,7 @@ to{opacity:1;transform:translateY(0)}}
 // 4. Déployez → Nouveau déploiement → Application Web
 // 5. Copiez l'URL et remplacez ci-dessous
 // =============================================
-var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwxrqcKVB9Q1-twGrYTNQgM0AKWSl3z7EZK5yfyEHg5m074QKCyGwjlMaiKcp7vX7C6MQ/exec';
+var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyzBidKE6K4f0erDLIG8N8lNpdiiCdrUwEAKfN_8JC1TtcRRSMJA57F2Is79D-e0gmtQQ/exec';
 
 // MENU
 function trackCall(){if(typeof gtag!=="undefined"){gtag("event","click_call",{event_category:"CTA",event_label:"Appel"});}}
@@ -926,22 +926,28 @@ document.getElementById('contactForm').addEventListener('submit',function(e){
     date:new Date().toLocaleString('fr-FR'),
     source:'www.pointsave.fr'
   };
-  // Sauvegarde locale immediate
   var stored=JSON.parse(localStorage.getItem('ps_leads')||'[]');
   stored.unshift({id:Date.now(),date:new Date().toLocaleString('fr-FR'),prenom:data.prenom,nom:data.nom,telephone:data.telephone,ville:data.ville,moment:data.moment,source:data.source,statut:'Nouveau',note:''});
   localStorage.setItem('ps_leads',JSON.stringify(stored));
-  // Confirmation immediate
   document.getElementById('merci').classList.add('show');
   document.body.style.overflow='hidden';
   document.getElementById('contactForm').reset();
   btn.disabled=false;
   btn.textContent='📨 Envoyer ma demande de rappel';
   if(typeof gtag!=='undefined'){gtag('event','form_submit',{event_category:'Lead',event_label:'Formulaire soumis'});}
-  // Envoi Apps Script
   fetch(APPS_SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)}).catch(function(){});
 });
 
 // COOKIES
 window.addEventListener('DOMContentLoaded',function(){
   if(!localStorage.getItem('ps_ck')){setTimeout(function(){document.getElementById('ck').classList.add('show');},2000);}
-  var bO=new IntersectionObserver(function(en){en.forEach(function(e,i){if(e.isIntersecting){setTimeout(function(){e.target.classList.add(
+  var bO=new IntersectionObserver(function(en){en.forEach(function(e,i){if(e.isIntersecting){setTimeout(function(){e.target.classList.add('lit');},i*120);bO.unobserve(e.target);}});},{threshold:0.1});
+  document.querySelectorAll('[data-badge]').forEach(function(el){bO.observe(el);});
+  var o=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){e.target.classList.add('vis');o.unobserve(e.target);}});},{threshold:0.08});
+  document.querySelectorAll('.rev').forEach(function(el){o.observe(el);});
+  var st=document.getElementById('sticky');
+  window.addEventListener('scroll',function(){if(window.pageYOffset>400){st.classList.add('show');}else{st.classList.remove('show');}});
+});
+</script>
+</body>
+</html>
