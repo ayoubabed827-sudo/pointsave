@@ -297,7 +297,7 @@ body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;ove
 .form-msg{display:none;padding:12px 16px;border-radius:10px;font-size:13px;font-weight:600;margin-top:12px;text-align:center}
 .form-msg.ok{background:rgba(0,199,122,.1);border:1px solid rgba(0,199,122,.3);color:var(--green2);display:block}
 .form-msg.err{background:rgba(255,80,80,.1);border:1px solid rgba(255,80,80,.3);color:#ff8080;display:block}
-
+to{opacity:1;transform:translateY(0)}}
 .rev{opacity:1;transform:none}
 .rev.vis{opacity:1;transform:translateY(0)}
 @media(max-width:760px){.nav{display:none}.burger{display:flex}}
@@ -854,7 +854,6 @@ body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;ove
 </div>
 
 <script>
-function trackCall(){if(typeof gtag!=='undefined'){gtag('event','click_call',{event_category:'CTA',event_label:'Appel'});}}
 // =============================================
 // GOOGLE APPS SCRIPT — URL À REMPLACER
 // Étapes :
@@ -867,6 +866,7 @@ function trackCall(){if(typeof gtag!=='undefined'){gtag('event','click_call',{ev
 var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx0zLsHpvuTsJMoyqR8WMhwKY-XKJaV55Os5TKhyzJVxljQDSxxRI8SQH623jF4NLzpVw/exec';
 
 // MENU
+function trackCall(){if(typeof gtag!=="undefined"){gtag("event","click_call",{event_category:"CTA",event_label:"Appel"});}}
 function toggleMenu(){var m=document.getElementById('mmenu');var b=document.getElementById('burger');var h=document.querySelector('.hdr');m.style.top=h.getBoundingClientRect().bottom+'px';m.classList.toggle('open');b.classList.toggle('open');document.body.style.overflow=m.classList.contains('open')?'hidden':'';}
 function closeMenu(){document.getElementById('mmenu').classList.remove('open');document.getElementById('burger').classList.remove('open');document.body.style.overflow='';}
 function goTo(id){closeMenu();setTimeout(function(){var el=document.getElementById(id);if(el){window.scrollTo({top:el.getBoundingClientRect().top+window.pageYOffset-70,behavior:'smooth'});}},50);}
@@ -874,7 +874,7 @@ function goTo(id){closeMenu();setTimeout(function(){var el=document.getElementBy
 // COMPTEUR
 function getC(){var d=new Date();var j=d.getDate();var m=d.getMonth()+1;var a=d.getFullYear();var jm=new Date(a,m,0).getDate();var p=Math.floor((j/jm)*150);var b=150+p;var s=(a*100+m)*31+j;var r=((s*7919+3571)%100)-50;return Math.max(150,Math.min(300,b+r));}
 var cT=getC();var cC=Math.max(140,cT-15);var cE=document.getElementById('counter');
-function animC(){if(cE){if(cC<cT){cC++;cE.textContent=cC;setTimeout(animC,60);}else{cE.textContent=cT;}}}
+function animC(){if(cC<cT){cC++;cE.textContent=cC;setTimeout(animC,60);}else{cE.textContent=cT;}}
 setTimeout(animC,600);
 
 // POPUP — exit-intent uniquement
@@ -926,22 +926,16 @@ document.getElementById('contactForm').addEventListener('submit',function(e){
     date:new Date().toLocaleString('fr-FR'),
     source:'www.pointsave.fr'
   };
-  // 1. Sauvegarder localement IMMEDIATEMENT
   var stored=JSON.parse(localStorage.getItem('ps_leads')||'[]');
-  var newLead={id:Date.now(),date:new Date().toLocaleString('fr-FR'),prenom:data.prenom,nom:data.nom,telephone:data.telephone,ville:data.ville,moment:data.moment,source:data.source,statut:'Nouveau',note:''};
-  stored.unshift(newLead);
+  stored.unshift({id:Date.now(),date:new Date().toLocaleString('fr-FR'),prenom:data.prenom,nom:data.nom,telephone:data.telephone,ville:data.ville,moment:data.moment,source:data.source,statut:'Nouveau',note:''});
   localStorage.setItem('ps_leads',JSON.stringify(stored));
-
-  // 2. Afficher confirmation immediatement
   document.getElementById('merci').classList.add('show');
   document.body.style.overflow='hidden';
   document.getElementById('contactForm').reset();
   btn.disabled=false;
   btn.textContent='📨 Envoyer ma demande de rappel';
   if(typeof gtag!=='undefined'){gtag('event','form_submit',{event_category:'Lead',event_label:'Formulaire soumis'});}
-
-  // 3. Envoyer vers Google Sheets en arriere-plan
-  fetch('https://script.google.com/macros/s/AKfycbx0zLsHpvuTsJMoyqR8WMhwKY-XKJaV55Os5TKhyzJVxljQDSxxRI8SQH623jF4NLzpVw/exec',{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)}).catch(function(){});
+  fetch(APPS_SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)}).catch(function(){});
 });
 
 // COOKIES
