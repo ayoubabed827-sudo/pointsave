@@ -926,28 +926,28 @@ document.getElementById('contactForm').addEventListener('submit',function(e){
     date:new Date().toLocaleString('fr-FR'),
     source:'www.pointsave.fr'
   };
-  fetch(APPS_SCRIPT_URL,{
-    method:'POST',
-    mode:'no-cors',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify(data)
-  }).then(function(){
-    // Sauvegarde locale pour le CRM
-    var stored=JSON.parse(localStorage.getItem('ps_leads')||'[]');
-    stored.unshift({id:Date.now(),date:new Date().toLocaleString('fr-FR'),prenom:data.prenom,nom:data.nom,telephone:data.telephone,ville:data.ville,moment:data.moment,source:data.source,statut:'Nouveau',note:''});
-    localStorage.setItem('ps_leads',JSON.stringify(stored));
-    document.getElementById('merci').classList.add('show');
-    document.body.style.overflow='hidden';
-    document.getElementById('contactForm').reset();
-    gtag('event','form_submit',{event_category:'Lead',event_label:'Formulaire soumis'});
-  }).catch(function(){
-    var msg=document.getElementById('formMsg');
-    msg.textContent='Une erreur est survenue. Appelez-nous directement au +33 6 99 92 65 10';
-    msg.className='form-msg err';
-  }).finally(function(){
-    btn.disabled=false;
-    btn.textContent='📨 Envoyer ma demande de rappel';
-  });
+  // Sauvegarder dans localStorage IMMEDIATEMENT
+  var stored=JSON.parse(localStorage.getItem('ps_leads')||'[]');
+  stored.unshift({id:Date.now(),date:new Date().toLocaleString('fr-FR'),prenom:data.prenom,nom:data.nom,telephone:data.telephone,ville:data.ville,moment:data.moment,source:data.source,statut:'Nouveau',note:''});
+  localStorage.setItem('ps_leads',JSON.stringify(stored));
+
+  // Afficher confirmation immediatement
+  document.getElementById('merci').classList.add('show');
+  document.body.style.overflow='hidden';
+  document.getElementById('contactForm').reset();
+  btn.disabled=false;
+  btn.textContent='📨 Envoyer ma demande de rappel';
+  if(typeof gtag!=='undefined'){gtag('event','form_submit',{event_category:'Lead',event_label:'Formulaire soumis'});}
+
+  // Envoyer vers Google Sheets en arriere-plan (sans bloquer)
+  try{
+    fetch(APPS_SCRIPT_URL,{
+      method:'POST',
+      mode:'no-cors',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(data)
+    });
+  }catch(e){}
 });
 
 // COOKIES
