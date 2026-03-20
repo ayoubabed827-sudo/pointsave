@@ -676,7 +676,7 @@ body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;ove
         <p>Le site <strong>www.pointsave.fr</strong> est édité à titre personnel par :<br>
         <strong>Nom :</strong> Kylian P.<br>
         <strong>Adresse :</strong> Meaux, 77100, France<br>
-        <strong>Email :</strong> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="04676b6a7065677044746b6d6a70776572612a6276">[email&#160;protected]</a><br>
+        <strong>Email :</strong> contact@pointsave.fr<br>
         <strong>Statut :</strong> Particulier — personne physique non commerçante</p>
 
         <h3>2. Hébergeur</h3>
@@ -747,7 +747,7 @@ body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;ove
         <h3>1. Responsable du traitement</h3>
         <p><strong>Kylian P.</strong><br>
         Adresse : Meaux, 77100, France<br>
-        Email : <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="31525e5f4550524571415e585f45425047541f5743">[email&#160;protected]</a></p>
+        Email : contact@pointsave.fr</p>
 
         <h3>2. Données collectées</h3>
         <p>Dans le cadre du fonctionnement du service PointSave, les données personnelles suivantes sont collectées via le formulaire de demande de rappel :</p>
@@ -782,7 +782,7 @@ body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;ove
           <li><strong>Droit à la portabilité</strong> (article 20 RGPD) : recevoir vos données dans un format structuré</li>
           <li><strong>Droit de retrait du consentement</strong> : à tout moment, sans affecter la licéité du traitement effectué avant le retrait</li>
         </ul>
-        <p>Pour exercer ces droits, contactez-nous par email : <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="2c4f4342584d4f586c5c434542585f4d5a49024a5e">[email&#160;protected]</a></strong>. Nous nous engageons à répondre dans un délai maximum d'un mois.</p>
+        <p>Pour exercer ces droits, contactez-nous par email : <strong>contact@pointsave.fr</strong>. Nous nous engageons à répondre dans un délai maximum d'un mois.</p>
         <p>Vous disposez également du droit d'introduire une réclamation auprès de la <strong>CNIL</strong> (Commission Nationale de l'Informatique et des Libertés) : <a href="https://www.cnil.fr" target="_blank">www.cnil.fr</a>.</p>
 
         <h3>7. Sécurité des données</h3>
@@ -792,7 +792,7 @@ body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;ove
         <p>L'hébergeur Cloudflare, Inc. est une société américaine. Les transferts de données vers les États-Unis sont encadrés par les clauses contractuelles types de la Commission européenne, garantissant un niveau de protection adéquat.</p>
 
         <h3>9. Contact DPO</h3>
-        <p>Pour toute question relative à la protection de vos données personnelles : <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="bbd8d4d5cfdad8cffbcbd4d2d5cfc8dacdde95ddc9">[email&#160;protected]</a></strong></p>
+        <p>Pour toute question relative à la protection de vos données personnelles : <strong>contact@pointsave.fr</strong></p>
       </div>
 
       <!-- COOKIES -->
@@ -853,8 +853,8 @@ body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;ove
   </div>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-function trackCall(){if(typeof gtag!=='undefined'){gtag('event','click_call',{event_category:'CTA',event_label:'Appel'});}if(typeof dataLayer!=='undefined'){dataLayer.push({'event':'click_call'});}}
+<script>
+function trackCall(){if(typeof gtag!=='undefined'){gtag('event','click_call',{event_category:'CTA',event_label:'Appel'});}}
 // =============================================
 // GOOGLE APPS SCRIPT — URL À REMPLACER
 // Étapes :
@@ -874,7 +874,7 @@ function goTo(id){closeMenu();setTimeout(function(){var el=document.getElementBy
 // COMPTEUR
 function getC(){var d=new Date();var j=d.getDate();var m=d.getMonth()+1;var a=d.getFullYear();var jm=new Date(a,m,0).getDate();var p=Math.floor((j/jm)*150);var b=150+p;var s=(a*100+m)*31+j;var r=((s*7919+3571)%100)-50;return Math.max(150,Math.min(300,b+r));}
 var cT=getC();var cC=Math.max(140,cT-15);var cE=document.getElementById('counter');
-function animC(){if(cC<cT){cC++;cE.textContent=cC;setTimeout(animC,60);}else{cE.textContent=cT;}}
+function animC(){if(cE){if(cC<cT){cC++;cE.textContent=cC;setTimeout(animC,60);}else{cE.textContent=cT;}}}
 setTimeout(animC,600);
 
 // POPUP — exit-intent uniquement
@@ -926,18 +926,34 @@ document.getElementById('contactForm').addEventListener('submit',function(e){
     date:new Date().toLocaleString('fr-FR'),
     source:'www.pointsave.fr'
   };
-  // Confirmation immediate
+  // 1. Sauvegarder localement IMMEDIATEMENT
+  var stored=JSON.parse(localStorage.getItem('ps_leads')||'[]');
+  var newLead={id:Date.now(),date:new Date().toLocaleString('fr-FR'),prenom:data.prenom,nom:data.nom,telephone:data.telephone,ville:data.ville,moment:data.moment,source:data.source,statut:'Nouveau',note:''};
+  stored.unshift(newLead);
+  localStorage.setItem('ps_leads',JSON.stringify(stored));
+
+  // 2. Afficher confirmation immediatement
   document.getElementById('merci').classList.add('show');
   document.body.style.overflow='hidden';
   document.getElementById('contactForm').reset();
   btn.disabled=false;
   btn.textContent='📨 Envoyer ma demande de rappel';
   if(typeof gtag!=='undefined'){gtag('event','form_submit',{event_category:'Lead',event_label:'Formulaire soumis'});}
-  // Envoi Google Sheets en arriere-plan
-  try{fetch(APPS_SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});}catch(e){}
+
+  // 3. Envoyer vers Google Sheets en arriere-plan
+  fetch('https://script.google.com/macros/s/AKfycbx0zLsHpvuTsJMoyqR8WMhwKY-XKJaV55Os5TKhyzJVxljQDSxxRI8SQH623jF4NLzpVw/exec',{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)}).catch(function(){});
 });
 
 // COOKIES
 window.addEventListener('DOMContentLoaded',function(){
   if(!localStorage.getItem('ps_ck')){setTimeout(function(){document.getElementById('ck').classList.add('show');},2000);}
-  var bO=new IntersectionObserver(function(en){en.forEach(function(e,i){if(e.isIntersecting){setTimeout(function(){e.target.classList.add(
+  var bO=new IntersectionObserver(function(en){en.forEach(function(e,i){if(e.isIntersecting){setTimeout(function(){e.target.classList.add('lit');},i*120);bO.unobserve(e.target);}});},{threshold:0.1});
+  document.querySelectorAll('[data-badge]').forEach(function(el){bO.observe(el);});
+  var o=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){e.target.classList.add('vis');o.unobserve(e.target);}});},{threshold:0.08});
+  document.querySelectorAll('.rev').forEach(function(el){o.observe(el);});
+  var st=document.getElementById('sticky');
+  window.addEventListener('scroll',function(){if(window.pageYOffset>400){st.classList.add('show');}else{st.classList.remove('show');}});
+});
+</script>
+</body>
+</html>
