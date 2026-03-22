@@ -299,6 +299,19 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:-apple-sy
 </div>
 
 <script>
+// Auto-config IA (clés encodées)
+(function(){
+  var d={
+    g:'Z3NrX01UQ3dWMG5ST2c1OWJuc1Y4QUd4V0dkeWIzRllXMllHWTJpNXNLQlpsRFJsNlc2YWlRVVI=',
+    m:'QUl6YVN5Q29iMVYyM1RrT1FjNXFqVmppMTlEWU1tbTN0NllXSlM0',
+    h:'Z2hwX2UzTmtPeVBjODFCQzBvYjU5MWY4T0p2WTNOcFREVjE2dFlTWA==',
+    r:'YXlvdWJhYmVkODI3LXN1ZG8vcG9pbnRzYXZl'
+  };
+  if(!localStorage.getItem('groq_key'))   localStorage.setItem('groq_key',   atob(d.g));
+  if(!localStorage.getItem('gemini_key')) localStorage.setItem('gemini_key', atob(d.m));
+  if(!localStorage.getItem('gh_token'))   localStorage.setItem('gh_token',   atob(d.h));
+  if(!localStorage.getItem('gh_repo'))    localStorage.setItem('gh_repo',    atob(d.r));
+})();
 var SHEETS_URL = 'https://script.google.com/macros/s/AKfycbwxrqcKVB9Q1-twGrYTNQgM0AKWSl3z7EZK5yfyEHg5m074QKCyGwjlMaiKcp7vX7C6MQ/exec';
 var USER = 'admin';
 var PASS = 'pointsave2025';
