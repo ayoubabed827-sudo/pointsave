@@ -36,7 +36,7 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:-apple-sy
 .tb-dot{position:absolute;top:5px;right:5px;width:7px;height:7px;border-radius:50%;background:var(--re);border:2px solid var(--bg2);display:none}
 .tb-dot.on{display:block}
 .content{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:calc(68px + env(safe-area-inset-bottom))}
-.panel{display:none;padding:14px}.panel.on{display:block}
+.panel{display:none;padding:14px}.panel.on{display:block}.panel.on#p-ia{position:fixed;top:0;left:0;right:0;bottom:68px;z-index:50;background:var(--bg);display:flex;flex-direction:column;padding:12px;overflow:hidden}
 .bnav{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px solid var(--bo);display:flex;padding-bottom:env(safe-area-inset-bottom)}
 .bn{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:9px 4px;cursor:pointer;background:none;border:none;color:var(--mu);font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.4px;position:relative}
 .bn.on{color:var(--g2)}.bn-ico{font-size:20px}
@@ -254,24 +254,37 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:-apple-sy
 
     <!-- PANEL IA -->
     <div class="panel" id="p-ia">
-      <div id="ai-key-warn" class="ai-key-warn" style="display:none">
-        ⚠️ Clé API Anthropic manquante — <a onclick="goPanel('settings')">la configurer dans Réglages</a>
-      </div>
-      <div class="ai-shortcuts">
-        <div class="ai-sc" onclick="aiShortcut('Résume les leads du jour')">📊 Résumé du jour</div>
-        <div class="ai-sc" onclick="aiShortcut('Quels leads sont urgents à rappeler ?')">🚨 Urgents</div>
-        <div class="ai-sc" onclick="aiShortcut('Rédige un SMS de relance pour les leads non joignables')">📱 SMS relance</div>
-        <div class="ai-sc" onclick="aiShortcut('Donne-moi des conseils pour améliorer le taux de conversion')">💡 Conseils conversion</div>
-        <div class="ai-sc" onclick="aiShortcut('Analyse les villes avec le plus de leads')">📍 Analyse villes</div>
-        <div class="ai-sc" onclick="aiShortcut('Rédige un message WhatsApp de relance professionnel')">💬 WhatsApp relance</div>
-      </div>
-      <div class="ai-wrap">
-        <div class="ai-msgs" id="ai-msgs">
-          <div class="ai-msg bot">👋 Bonjour ! Je suis ton assistant PointSave.<br><br>Je connais tes leads en temps réel et je peux t'aider à :<br>• Analyser tes performances<br>• Rédiger des messages de relance<br>• Identifier les leads prioritaires<br>• Donner des conseils stratégiques<br><br>Comment puis-je t'aider ?</div>
+      <!-- Setup si pas de clé -->
+      <div id="ai-setup-box">
+        <div class="ai-setup">
+          <h4>🔑 Configuration IA</h4>
+          <p>Deux APIs gratuites. <strong style="color:var(--g2)">Groq</strong> → console.groq.com → API Keys<br>
+          <strong style="color:var(--mu)">Gemini</strong> → aistudio.google.com → Get API key</p>
+          <div style="font-size:11px;color:var(--g2);font-weight:700;margin:8px 0 4px">Groq (principal — gratuit)</div>
+          <input type="password" id="ai-groq-input" placeholder="gsk_...">
+          <div style="font-size:11px;color:var(--mu);font-weight:700;margin:8px 0 4px">Gemini (fallback — gratuit)</div>
+          <input type="password" id="ai-gemini-input" placeholder="AIzaSy...">
+          <div style="font-size:11px;color:var(--mu);font-weight:700;margin:8px 0 4px">Token GitHub</div>
+          <input type="password" id="ai-gh-input" placeholder="ghp_...">
+          <input id="ai-repo-input" placeholder="ayoubabed827-sudo/pointsave" style="margin-top:6px">
+          <button class="ai-setup-save" onclick="aiSaveSetup()">✅ Activer</button>
         </div>
-        <div class="ai-input-row">
-          <textarea class="ai-input" id="ai-input" placeholder="Pose ta question..." rows="1" onkeydown="aiKeydown(event)" oninput="aiResize(this)"></textarea>
-          <button class="ai-send" id="ai-send" onclick="aiSend()">➤</button>
+      </div>
+      <!-- Chat -->
+      <div id="ai-chat-box" style="display:none;flex-direction:column;height:100%">
+        <div class="ai-shortcuts">
+          <div class="ai-sc" onclick="aiShortcut('Résume les leads du jour et dis-moi quoi faire en priorité')">📊 Résumé jour</div>
+          <div class="ai-sc" onclick="aiShortcut('Quels leads sont urgents à rappeler maintenant ?')">🚨 Urgents</div>
+          <div class="ai-sc" onclick="aiShortcut('Rédige 3 messages WhatsApp de relance pour les leads non joignables')">💬 WhatsApp</div>
+          <div class="ai-sc" onclick="aiShortcut('Lis index.html et dis-moi ce que tu peux améliorer pour le SEO')">🔍 SEO</div>
+          <div class="ai-sc" onclick="aiShortcut('Liste tous les fichiers du repo GitHub')">📁 Fichiers</div>
+        </div>
+        <div class="ai-wrap">
+          <div class="ai-msgs" id="ai-msgs"></div>
+          <div class="ai-input-row">
+            <textarea class="ai-input" id="ai-input" rows="1" placeholder="Pose ta question ou donne une tâche..." onkeydown="aiKeydown(event)" oninput="aiAutosize(this)"></textarea>
+            <button class="ai-send" id="ai-send" onclick="aiRun()">➤</button>
+          </div>
         </div>
       </div>
     </div>
