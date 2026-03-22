@@ -127,23 +127,29 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:-apple-sy
 .sync-btn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:10px;background:rgba(0,199,122,.08);border:1px solid rgba(0,199,122,.2);color:var(--g2);font-size:12px;font-weight:600;border-radius:9px;cursor:pointer;margin-bottom:12px}
 
 /* ===== PANEL IA ===== */
-.ai-wrap{display:flex;flex-direction:column;height:calc(100vh - 130px);max-height:700px}
-.ai-msgs{flex:1;overflow-y:auto;padding:8px 0;display:flex;flex-direction:column;gap:10px;-webkit-overflow-scrolling:touch}
-.ai-msg{max-width:88%;padding:11px 14px;border-radius:14px;font-size:13px;line-height:1.6}
+.ai-wrap{display:flex;flex-direction:column;height:calc(100svh - 180px)}
+.ai-msgs{flex:1;overflow-y:auto;padding:8px 0 4px;display:flex;flex-direction:column;gap:10px;-webkit-overflow-scrolling:touch;scroll-behavior:smooth}
+.ai-msg{max-width:90%;padding:11px 14px;border-radius:14px;font-size:13px;line-height:1.65;word-break:break-word}
 .ai-msg.user{background:var(--g);color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
 .ai-msg.bot{background:var(--bg2);border:1px solid var(--bo);color:var(--tx);align-self:flex-start;border-bottom-left-radius:4px;white-space:pre-wrap}
-.ai-msg.bot.loading{color:var(--mu);font-style:italic}
-.ai-input-row{display:flex;gap:8px;padding:10px 0 4px;border-top:1px solid var(--bo);margin-top:8px}
-.ai-input{flex:1;background:var(--bg2);border:1.5px solid var(--bo);border-radius:12px;color:var(--tx);font-size:14px;padding:11px 14px;outline:none;font-family:inherit;resize:none}
+.ai-msg.tool{background:rgba(74,158,255,.07);border:1px solid rgba(74,158,255,.2);color:#4A9EFF;align-self:flex-start;font-size:11px;font-family:monospace;max-width:95%}
+.ai-msg.bot.thinking{color:var(--mu);font-style:italic;animation:pulse-o .8s ease-in-out infinite}
+@keyframes pulse-o{0%,100%{opacity:1}50%{opacity:.4}}
+.ai-input-row{display:flex;gap:8px;padding:8px 0 2px;border-top:1px solid var(--bo);margin-top:6px;flex-shrink:0}
+.ai-input{flex:1;background:var(--bg2);border:1.5px solid var(--bo);border-radius:12px;color:var(--tx);font-size:14px;padding:10px 13px;outline:none;font-family:inherit;resize:none;max-height:100px;overflow-y:auto}
 .ai-input:focus{border-color:var(--g2)}
-.ai-send{width:44px;height:44px;border-radius:12px;background:var(--g);border:none;color:#fff;font-size:20px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:background .2s}
-.ai-send:hover{background:var(--g2)}
+.ai-send{width:42px;height:42px;border-radius:11px;background:var(--g);border:none;color:#fff;font-size:18px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:background .2s;align-self:flex-end}
 .ai-send:disabled{background:var(--bg3);cursor:not-allowed}
-.ai-shortcuts{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
-.ai-sc{padding:6px 12px;border-radius:20px;font-size:11px;font-weight:600;border:1px solid var(--bo);background:rgba(0,199,122,.06);color:var(--g2);cursor:pointer;white-space:nowrap;transition:all .2s}
-.ai-sc:hover{background:rgba(0,199,122,.14);border-color:rgba(0,199,122,.3)}
-.ai-key-warn{font-size:11px;color:var(--mu);text-align:center;padding:8px;background:rgba(255,215,0,.05);border:1px solid rgba(255,215,0,.15);border-radius:8px;margin-bottom:10px}
-.ai-key-warn a{color:var(--y);text-decoration:underline;cursor:pointer}
+.ai-shortcuts{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.ai-sc{padding:5px 11px;border-radius:20px;font-size:11px;font-weight:600;border:1px solid var(--bo);background:rgba(0,199,122,.05);color:var(--g2);cursor:pointer;white-space:nowrap;transition:all .2s}
+.ai-sc:active{background:rgba(0,199,122,.2)}
+.ai-setup{background:var(--bg2);border:1px solid rgba(255,215,0,.25);border-radius:12px;padding:16px;margin-bottom:12px}
+.ai-setup h4{font-size:13px;font-weight:700;color:var(--y);margin-bottom:8px}
+.ai-setup p{font-size:12px;color:var(--mu);line-height:1.6;margin-bottom:10px}
+.ai-setup input{width:100%;padding:10px 12px;background:var(--bg3);border:1.5px solid var(--bo);border-radius:9px;color:var(--tx);font-size:13px;font-family:monospace;outline:none;margin-bottom:8px}
+.ai-setup input:focus{border-color:var(--g2)}
+.ai-setup-save{width:100%;padding:11px;background:var(--g);border:none;border-radius:9px;color:#fff;font-size:14px;font-weight:700;cursor:pointer}
+.ai-tool-badge{display:inline-block;background:rgba(74,158,255,.1);color:#4A9EFF;border:1px solid rgba(74,158,255,.2);border-radius:6px;padding:2px 8px;font-size:10px;font-family:monospace;margin-bottom:4px}
 
 </style>
 </head>
@@ -254,24 +260,36 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:-apple-sy
 
     <!-- PANEL IA -->
     <div class="panel" id="p-ia">
-      <div id="ai-key-warn" class="ai-key-warn" style="display:none">
-        ⚠️ Clé API Anthropic manquante — <a onclick="goPanel('settings')">la configurer dans Réglages</a>
-      </div>
-      <div class="ai-shortcuts">
-        <div class="ai-sc" onclick="aiShortcut('Résume les leads du jour')">📊 Résumé du jour</div>
-        <div class="ai-sc" onclick="aiShortcut('Quels leads sont urgents à rappeler ?')">🚨 Urgents</div>
-        <div class="ai-sc" onclick="aiShortcut('Rédige un SMS de relance pour les leads non joignables')">📱 SMS relance</div>
-        <div class="ai-sc" onclick="aiShortcut('Donne-moi des conseils pour améliorer le taux de conversion')">💡 Conseils conversion</div>
-        <div class="ai-sc" onclick="aiShortcut('Analyse les villes avec le plus de leads')">📍 Analyse villes</div>
-        <div class="ai-sc" onclick="aiShortcut('Rédige un message WhatsApp de relance professionnel')">💬 WhatsApp relance</div>
-      </div>
-      <div class="ai-wrap">
-        <div class="ai-msgs" id="ai-msgs">
-          <div class="ai-msg bot">👋 Bonjour ! Je suis ton assistant PointSave.<br><br>Je connais tes leads en temps réel et je peux t'aider à :<br>• Analyser tes performances<br>• Rédiger des messages de relance<br>• Identifier les leads prioritaires<br>• Donner des conseils stratégiques<br><br>Comment puis-je t'aider ?</div>
+      <!-- Setup si pas de clé -->
+      <div id="ai-setup-box" style="display:none">
+        <div class="ai-setup">
+          <h4>🔑 Configuration requise</h4>
+          <p>Pour activer l'assistant IA gratuit, tu as besoin d'une clé API Google Gemini (100% gratuit, sans carte bancaire).<br><br>
+          1. Va sur <strong style="color:var(--g2)">aistudio.google.com</strong><br>
+          2. Clique <strong>Get API key</strong><br>
+          3. Copie la clé (format AIza...)</p>
+          <input type="password" id="ai-key-input" placeholder="AIzaSy...">
+          <input id="ai-repo-input" placeholder="ayoubabed827-sudo/pointsave" value="ayoubabed827-sudo/pointsave">
+          <input type="password" id="ai-gh-input" placeholder="Token GitHub ghp_...">
+          <button class="ai-setup-save" onclick="aiSaveSetup()">✅ Activer l'assistant</button>
         </div>
-        <div class="ai-input-row">
-          <textarea class="ai-input" id="ai-input" placeholder="Pose ta question..." rows="1" onkeydown="aiKeydown(event)" oninput="aiResize(this)"></textarea>
-          <button class="ai-send" id="ai-send" onclick="aiSend()">➤</button>
+      </div>
+      <!-- Interface chat -->
+      <div id="ai-chat-box" style="display:none">
+        <div class="ai-shortcuts" id="ai-shortcuts">
+          <div class="ai-sc" onclick="aiShortcut('Résume les leads du jour et dis-moi quoi faire en priorité')">📊 Résumé jour</div>
+          <div class="ai-sc" onclick="aiShortcut('Quels leads sont urgents à rappeler maintenant ?')">🚨 Urgents</div>
+          <div class="ai-sc" onclick="aiShortcut('Rédige 3 messages WhatsApp de relance pour les leads non joignables')">💬 WhatsApp relance</div>
+          <div class="ai-sc" onclick="aiShortcut('Lis le fichier index.html et dis-moi ce que tu peux améliorer pour le SEO')">🔍 Audit SEO</div>
+          <div class="ai-sc" onclick="aiShortcut('Ajoute un nouveau badge de confiance dans la section badges de index.html et publie sur GitHub')">⚡ Modifier le site</div>
+          <div class="ai-sc" onclick="aiShortcut('Liste tous les fichiers du repo GitHub pointsave')">📁 Voir fichiers</div>
+        </div>
+        <div class="ai-wrap">
+          <div class="ai-msgs" id="ai-msgs"></div>
+          <div class="ai-input-row">
+            <textarea class="ai-input" id="ai-input" rows="1" placeholder="Pose ta question ou donne une tâche..." onkeydown="aiKeydown(event)" oninput="aiAutosize(this)"></textarea>
+            <button class="ai-send" id="ai-send" onclick="aiRun()">➤</button>
+          </div>
         </div>
       </div>
     </div>
@@ -546,126 +564,310 @@ function td(){return new Date().toISOString().slice(0,10);}
 function mname(i){return['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'][i];}
 function toast(msg){var t=document.getElementById('toast');t.textContent=msg;t.classList.add('on');setTimeout(function(){t.classList.remove('on');},2500);}
 
-// ===== ASSISTANT IA =====
-var aiHistory = [];
 
-function aiGetKey(){
-  return localStorage.getItem('anthropic_key')||'';
-}
+// ═══════════════════════════════════════════════════════════════
+//  ASSISTANT IA — Gemini 1.5 Flash (GRATUIT) + GitHub tools
+// ═══════════════════════════════════════════════════════════════
+var aiConv = [];
+var aiBusy = false;
 
-function aiGetContext(){
-  var total=leads.length;
-  var nouveaux=leads.filter(function(l){return l.statut==='Nouveau';}).length;
-  var contactes=leads.filter(function(l){return l.statut==='Contacte';}).length;
-  var inscrits=leads.filter(function(l){return l.statut==='Inscrit au stage';}).length;
-  var nj=leads.filter(function(l){return l.statut==='Non joignable';}).length;
-  var ni=leads.filter(function(l){return l.statut==='Non interesse';}).length;
-  var today=new Date().toLocaleDateString('fr-FR');
-  var todayLeads=leads.filter(function(l){
-    return l.date&&l.date.startsWith(new Date().toLocaleDateString('fr-FR').split('/').reverse().join('-').substring(0,7));
-  });
-  var recentLeads=leads.slice(0,5).map(function(l){
-    return l.prenom+' '+l.nom+' ('+l.ville+') — '+l.statut+(l.note?' — Note: '+l.note:'');
-  }).join('\n');
-  return 'Tu es l\'assistant CRM de PointSave, un service de mise en relation pour stages de récupération de points de permis en Seine-et-Marne (77) autour de Meaux.\n\n'+
-    'DONNÉES EN TEMPS RÉEL ('+today+'):\n'+
-    '- Total leads: '+total+'\n'+
-    '- Nouveaux: '+nouveaux+'\n'+
-    '- Contactés: '+contactes+'\n'+
-    '- Inscrits au stage: '+inscrits+'\n'+
-    '- Non joignables: '+nj+'\n'+
-    '- Non intéressés: '+ni+'\n\n'+
-    '5 DERNIERS LEADS:\n'+recentLeads+'\n\n'+
-    'Réponds en français, de façon concise et professionnelle. Tu peux utiliser des emojis modérément.';
-}
-
-function aiResize(el){
-  el.style.height='auto';
-  el.style.height=Math.min(el.scrollHeight,120)+'px';
-}
-
-function aiKeydown(e){
-  if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();aiSend();}
-}
-
-function aiShortcut(txt){
-  document.getElementById('ai-input').value=txt;
-  aiSend();
-}
-
-async function aiSend(){
-  var key=aiGetKey();
+// ── Setup ──
+function aiInit(){
+  var key = localStorage.getItem('gemini_key');
   if(!key){
-    document.getElementById('ai-key-warn').style.display='block';
-    return;
+    document.getElementById('ai-setup-box').style.display='block';
+    document.getElementById('ai-chat-box').style.display='none';
+    var repo = document.getElementById('ai-repo-input');
+    var gh = document.getElementById('ai-gh-input');
+    if(repo) repo.value = localStorage.getItem('gh_repo')||'ayoubabed827-sudo/pointsave';
+    if(gh) gh.value = localStorage.getItem('gh_token')||'';
+  } else {
+    document.getElementById('ai-setup-box').style.display='none';
+    document.getElementById('ai-chat-box').style.display='block';
+    if(!aiConv.length) aiWelcome();
   }
-  var input=document.getElementById('ai-input');
-  var msg=input.value.trim();
-  if(!msg)return;
+}
+
+function aiSaveSetup(){
+  var key = document.getElementById('ai-key-input').value.trim();
+  var repo = document.getElementById('ai-repo-input').value.trim();
+  var gh = document.getElementById('ai-gh-input').value.trim();
+  if(!key){toast('Clé API manquante');return;}
+  localStorage.setItem('gemini_key', key);
+  if(repo) localStorage.setItem('gh_repo', repo);
+  if(gh) localStorage.setItem('gh_token', gh);
+  aiInit();
+}
+
+function aiWelcome(){
+  aiAppend('bot','👋 Assistant PointSave opérationnel !\n\nJe peux :\n• Analyser tes leads en temps réel\n• Lire et modifier les fichiers du site\n• Pusher sur GitHub et déclencher un déploiement\n• Rédiger des messages, analyser les stats\n• Répondre à n\'importe quelle question\n\nQue veux-tu faire ?');
+}
+
+// ── Tools disponibles ──
+var AI_TOOLS = [
+  {
+    name: 'get_leads',
+    description: 'Récupère tous les leads du CRM avec leurs statuts, villes et notes',
+    parameters: {type:'object',properties:{},required:[]}
+  },
+  {
+    name: 'github_read_file',
+    description: 'Lit le contenu d\'un fichier du repo GitHub pointsave (ex: index.html, crm.html, chelles.html)',
+    parameters: {type:'object',properties:{filename:{type:'string',description:'Nom du fichier ex: index.html'}},required:['filename']}
+  },
+  {
+    name: 'github_write_file',
+    description: 'Modifie ou crée un fichier sur GitHub et déclenche le déploiement Cloudflare automatiquement',
+    parameters: {type:'object',properties:{filename:{type:'string'},content:{type:'string'},commit_message:{type:'string'}},required:['filename','content','commit_message']}
+  },
+  {
+    name: 'github_list_files',
+    description: 'Liste tous les fichiers du repo GitHub',
+    parameters: {type:'object',properties:{},required:[]}
+  },
+  {
+    name: 'get_site_config',
+    description: 'Retourne la configuration du site: URL, repo GitHub, statut déploiement',
+    parameters: {type:'object',properties:{},required:[]}
+  }
+];
+
+// ── Exécution des tools ──
+async function aiExecTool(name, args){
+  var ghToken = localStorage.getItem('gh_token')||'';
+  var ghRepo = localStorage.getItem('gh_repo')||'ayoubabed827-sudo/pointsave';
+
+  if(name === 'get_leads'){
+    var stats = {
+      total: leads.length,
+      nouveaux: leads.filter(function(l){return l.statut==='Nouveau';}).length,
+      contactes: leads.filter(function(l){return l.statut==='Contacte';}).length,
+      inscrits: leads.filter(function(l){return l.statut==='Inscrit au stage';}).length,
+      non_joignables: leads.filter(function(l){return l.statut==='Non joignable';}).length,
+      non_interesses: leads.filter(function(l){return l.statut==='Non interesse';}).length
+    };
+    var recent = leads.slice(0,10).map(function(l){
+      return {prenom:l.prenom, nom:l.nom, ville:l.ville, statut:l.statut, date:l.date, note:l.note||''};
+    });
+    return JSON.stringify({stats:stats, derniers_leads:recent});
+  }
+
+  if(name === 'get_site_config'){
+    return JSON.stringify({
+      site_url: 'https://www.pointsave.fr',
+      github_repo: ghRepo,
+      cloudflare: 'Auto-déploiement à chaque push GitHub',
+      crm_url: 'https://www.pointsave.fr/crm.html'
+    });
+  }
+
+  if(name === 'github_list_files'){
+    if(!ghToken) return 'Erreur: token GitHub manquant dans la configuration';
+    try {
+      var r = await fetch('https://api.github.com/repos/'+ghRepo+'/contents/', {
+        headers:{'Authorization':'token '+ghToken,'Accept':'application/vnd.github.v3+json'}
+      });
+      var files = await r.json();
+      if(!Array.isArray(files)) return 'Erreur: '+JSON.stringify(files);
+      return files.map(function(f){return f.name+' ('+f.type+', '+Math.round(f.size/1024*10)/10+'kb)';}).join('\n');
+    } catch(e){ return 'Erreur: '+e.message; }
+  }
+
+  if(name === 'github_read_file'){
+    if(!ghToken) return 'Erreur: token GitHub manquant';
+    try {
+      var r = await fetch('https://api.github.com/repos/'+ghRepo+'/contents/'+args.filename, {
+        headers:{'Authorization':'token '+ghToken,'Accept':'application/vnd.github.v3+json'}
+      });
+      var data = await r.json();
+      if(!data.content) return 'Fichier non trouvé: '+args.filename;
+      var content = decodeURIComponent(escape(atob(data.content.replace(/\n/g,''))));
+      return content.substring(0, 8000) + (content.length > 8000 ? '\n...[tronqué, '+content.length+' chars total]' : '');
+    } catch(e){ return 'Erreur: '+e.message; }
+  }
+
+  if(name === 'github_write_file'){
+    if(!ghToken) return 'Erreur: token GitHub manquant';
+    try {
+      // Get current SHA
+      var r = await fetch('https://api.github.com/repos/'+ghRepo+'/contents/'+args.filename, {
+        headers:{'Authorization':'token '+ghToken,'Accept':'application/vnd.github.v3+json'}
+      });
+      var current = await r.json();
+      var sha = current.sha;
+      // Encode content
+      var encoded = btoa(unescape(encodeURIComponent(args.content)));
+      // Push
+      var putR = await fetch('https://api.github.com/repos/'+ghRepo+'/contents/'+args.filename, {
+        method:'PUT',
+        headers:{'Authorization':'token '+ghToken,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'},
+        body: JSON.stringify({
+          message: args.commit_message || 'Modifié via PointSave AI',
+          content: encoded,
+          sha: sha
+        })
+      });
+      var result = await putR.json();
+      if(result.content) return '✅ Fichier "'+args.filename+'" mis à jour sur GitHub. Déploiement Cloudflare en cours (~1 min). Commit: '+result.commit.sha.substring(0,7);
+      return 'Erreur: '+JSON.stringify(result);
+    } catch(e){ return 'Erreur: '+e.message; }
+  }
+
+  return 'Tool inconnu: '+name;
+}
+
+// ── Boucle agentique principale ──
+async function aiRun(){
+  if(aiBusy) return;
+  var input = document.getElementById('ai-input');
+  var msg = input.value.trim();
+  if(!msg) return;
+  var key = localStorage.getItem('gemini_key');
+  if(!key){aiInit();return;}
+
   input.value='';
   input.style.height='auto';
+  aiBusy=true;
   document.getElementById('ai-send').disabled=true;
 
-  // Add user message
-  aiAppendMsg(msg,'user');
-  aiHistory.push({role:'user',content:msg});
+  aiAppend('user', msg);
+  aiConv.push({role:'user',parts:[{text:msg}]});
 
-  // Loading
-  var loadId='ai-load-'+Date.now();
-  aiAppendMsg('...','bot loading',loadId);
+  var sysPrompt = 'Tu es l\'assistant IA de PointSave, un service de mise en relation pour stages de récupération de points de permis en Seine-et-Marne (77) autour de Meaux.\n\nTu as accès à des outils pour : lire/modifier les fichiers du site web, consulter les leads CRM, pusher sur GitHub (ce qui déclenche automatiquement le déploiement Cloudflare Pages).\n\nQuand on te demande de modifier le site, utilise github_read_file pour lire le fichier d\'abord, fais les modifications demandées, puis github_write_file pour publier. Réponds toujours en français.';
 
-  try{
-    var res=await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',
-      headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01'},
-      body:JSON.stringify({
-        model:'claude-opus-4-5',
-        max_tokens:1024,
-        system:aiGetContext(),
-        messages:aiHistory
-      })
-    });
-    var data=await res.json();
-    var reply=data.content&&data.content[0]?data.content[0].text:'Erreur : pas de réponse.';
-    // Replace loading msg
-    var loadEl=document.getElementById(loadId);
-    if(loadEl){loadEl.textContent=reply;loadEl.classList.remove('loading');}
-    aiHistory.push({role:'assistant',content:reply});
-    // Keep history short
-    if(aiHistory.length>20)aiHistory=aiHistory.slice(-20);
-  }catch(err){
-    var loadEl=document.getElementById(loadId);
-    if(loadEl){loadEl.textContent='❌ Erreur: '+err.message;loadEl.classList.remove('loading');}
+  var thinkId = 'think-'+Date.now();
+  aiAppend('bot thinking', '⟳ Réflexion en cours...', thinkId);
+
+  var maxTurns = 6;
+  var turn = 0;
+
+  while(turn < maxTurns){
+    turn++;
+    try {
+      var body = {
+        system_instruction:{parts:[{text:sysPrompt}]},
+        contents: aiConv,
+        tools:[{function_declarations:AI_TOOLS}],
+        generation_config:{temperature:0.7,max_output_tokens:2048}
+      };
+
+      var r = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key='+key, {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify(body)
+      });
+      var data = await r.json();
+
+      if(data.error){
+        aiUpdateMsg(thinkId, '❌ Erreur API: '+(data.error.message||JSON.stringify(data.error)), 'bot');
+        break;
+      }
+
+      var candidate = data.candidates&&data.candidates[0];
+      if(!candidate){aiUpdateMsg(thinkId,'❌ Pas de réponse','bot');break;}
+
+      var parts = candidate.content && candidate.content.parts || [];
+      var toolCalls = parts.filter(function(p){return p.functionCall;});
+      var textParts = parts.filter(function(p){return p.text;});
+
+      // Réponse texte finale
+      if(textParts.length && !toolCalls.length){
+        var finalText = textParts.map(function(p){return p.text;}).join('');
+        aiUpdateMsg(thinkId, finalText, 'bot');
+        aiConv.push({role:'model',parts:parts});
+        break;
+      }
+
+      // Appel d'outil
+      if(toolCalls.length){
+        aiConv.push({role:'model',parts:parts});
+        var toolResults = [];
+
+        for(var i=0;i<toolCalls.length;i++){
+          var tc = toolCalls[i].functionCall;
+          aiUpdateMsg(thinkId, '🔧 Exécution: '+tc.name+'...', 'bot thinking');
+          var result = await aiExecTool(tc.name, tc.args||{});
+          // Afficher le résultat de l'outil brièvement
+          var preview = result.length > 120 ? result.substring(0,120)+'...' : result;
+          aiAppend('tool', '['+tc.name+']\n'+preview);
+          toolResults.push({functionResponse:{name:tc.name,response:{result:result}}});
+        }
+        aiConv.push({role:'user',parts:toolResults});
+        continue;
+      }
+
+      // Finish sans texte
+      aiUpdateMsg(thinkId,'Traitement terminé.','bot');
+      break;
+
+    } catch(e){
+      aiUpdateMsg(thinkId,'❌ Erreur: '+e.message,'bot');
+      break;
+    }
   }
+
+  aiBusy=false;
   document.getElementById('ai-send').disabled=false;
+  if(aiConv.length > 40) aiConv = aiConv.slice(-30);
 }
 
-function aiAppendMsg(text,type,id){
-  var msgs=document.getElementById('ai-msgs');
-  var div=document.createElement('div');
-  div.className='ai-msg '+type;
-  div.textContent=text;
-  if(id)div.id=id;
-  msgs.appendChild(div);
-  msgs.scrollTop=msgs.scrollHeight;
+// ── Helpers UI ──
+function aiAppend(type, text, id){
+  var box = document.getElementById('ai-msgs');
+  var div = document.createElement('div');
+  div.className = 'ai-msg '+type;
+  div.textContent = text;
+  if(id) div.id = id;
+  box.appendChild(div);
+  box.scrollTop = box.scrollHeight;
+  return div;
+}
+function aiUpdateMsg(id, text, type){
+  var el = document.getElementById(id);
+  if(el){el.textContent=text;el.className='ai-msg '+(type||'bot');}
+}
+function aiAppend(type, text, id){
+  var box = document.getElementById('ai-msgs');
+  var div = document.createElement('div');
+  div.className = 'ai-msg '+type;
+  div.textContent = text;
+  if(id) div.id = id;
+  box.appendChild(div);
+  box.scrollTop = box.scrollHeight;
+  return div;
+}
+function aiShortcut(txt){
+  document.getElementById('ai-input').value = txt;
+  aiRun();
+}
+function aiKeydown(e){
+  if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();aiRun();}
+}
+function aiAutosize(el){
+  el.style.height='auto';
+  el.style.height=Math.min(el.scrollHeight,100)+'px';
 }
 
-// Patch saveSettings to also save API key
-var _origSaveSettings=saveSettings;
-saveSettings=function(){
-  _origSaveSettings();
-  var k=document.getElementById('s-apikey');
-  if(k&&k.value.trim())localStorage.setItem('anthropic_key',k.value.trim());
-  document.getElementById('ai-key-warn').style.display='none';
-};
-// Patch init to load api key in settings
-var _origInit=init;
-init=function(){
-  _origInit();
-  var k=document.getElementById('s-apikey');
-  if(k)k.value=aiGetKey();
+// ── Patch goPanel pour init IA ──
+var _goPanel_orig = goPanel;
+goPanel = function(name){
+  _goPanel_orig(name);
+  if(name==='ia') aiInit();
 };
 
+// ── Patch saveSettings pour clés IA ──
+var _saveSettings_orig = saveSettings;
+saveSettings = function(){
+  _saveSettings_orig();
+  var k = document.getElementById('s-apikey');
+  if(k && k.value.trim()){localStorage.setItem('gemini_key',k.value.trim());}
+};
+var _init_orig = init;
+init = function(){
+  _init_orig();
+  var k = document.getElementById('s-apikey');
+  if(k) k.value = localStorage.getItem('gemini_key')||'';
+};
 </script>
 </body>
 </html>
