@@ -1,0 +1,4 @@
+# Redirection apex → www
+https://pointsave.fr/* https://www.pointsave.fr/:splat 301
+http://pointsave.fr/* https://www.pointsave.fr/:splat 301
+http://www.pointsave.fr/* https://www.pointsave.fr/:splat 301
