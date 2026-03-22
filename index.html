@@ -821,4 +821,12 @@ document.getElementById('contactForm').addEventListener('submit',function(e){
 window.addEventListener('DOMContentLoaded',function(){
   if(!localStorage.getItem('ps_ck')){setTimeout(function(){document.getElementById('ck').classList.add('show');},2000);}
   var bO=new IntersectionObserver(function(en){en.forEach(function(e,i){if(e.isIntersecting){setTimeout(function(){e.target.classList.add('lit');},i*120);bO.unobserve(e.target);}});},{threshold:0.1});
-  document.querySelectorAll('[data-badge]').forEach(functio
+  document.querySelectorAll('[data-badge]').forEach(function(el){bO.observe(el);});
+  var o=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){e.target.classList.add('vis');o.unobserve(e.target);}});},{threshold:0.08});
+  document.querySelectorAll('.rev').forEach(function(el){o.observe(el);});
+  var st=document.getElementById('sticky');
+  window.addEventListener('scroll',function(){if(window.pageYOffset>400){st.classList.add('show');}else{st.classList.remove('show');}});
+});
+</script>
+</body>
+</html>
