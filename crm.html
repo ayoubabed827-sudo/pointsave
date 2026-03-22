@@ -36,7 +36,7 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:-apple-sy
 .tb-dot{position:absolute;top:5px;right:5px;width:7px;height:7px;border-radius:50%;background:var(--re);border:2px solid var(--bg2);display:none}
 .tb-dot.on{display:block}
 .content{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:calc(68px + env(safe-area-inset-bottom))}
-.panel{display:none;padding:14px}.panel.on{display:block}.panel.on#p-ia{display:flex;flex-direction:column;padding:0}
+.panel{display:none;padding:14px}.panel.on{display:block}
 .bnav{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px solid var(--bo);display:flex;padding-bottom:env(safe-area-inset-bottom)}
 .bn{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:9px 4px;cursor:pointer;background:none;border:none;color:var(--mu);font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.4px;position:relative}
 .bn.on{color:var(--g2)}.bn-ico{font-size:20px}
@@ -127,29 +127,23 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:-apple-sy
 .sync-btn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:10px;background:rgba(0,199,122,.08);border:1px solid rgba(0,199,122,.2);color:var(--g2);font-size:12px;font-weight:600;border-radius:9px;cursor:pointer;margin-bottom:12px}
 
 /* ===== PANEL IA ===== */
-.ai-wrap{display:flex;flex-direction:column;flex:1;min-height:0}
-.ai-msgs{flex:1;overflow-y:auto;padding:8px 0 4px;display:flex;flex-direction:column;gap:10px;-webkit-overflow-scrolling:touch;scroll-behavior:smooth}
-.ai-msg{max-width:90%;padding:11px 14px;border-radius:14px;font-size:13px;line-height:1.65;word-break:break-word}
+.ai-wrap{display:flex;flex-direction:column;height:calc(100vh - 130px);max-height:700px}
+.ai-msgs{flex:1;overflow-y:auto;padding:8px 0;display:flex;flex-direction:column;gap:10px;-webkit-overflow-scrolling:touch}
+.ai-msg{max-width:88%;padding:11px 14px;border-radius:14px;font-size:13px;line-height:1.6}
 .ai-msg.user{background:var(--g);color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
 .ai-msg.bot{background:var(--bg2);border:1px solid var(--bo);color:var(--tx);align-self:flex-start;border-bottom-left-radius:4px;white-space:pre-wrap}
-.ai-msg.tool{background:rgba(74,158,255,.07);border:1px solid rgba(74,158,255,.2);color:#4A9EFF;align-self:flex-start;font-size:11px;font-family:monospace;max-width:95%}
-.ai-msg.bot.thinking{color:var(--mu);font-style:italic;animation:pulse-o .8s ease-in-out infinite}
-@keyframes pulse-o{0%,100%{opacity:1}50%{opacity:.4}}
-.ai-input-row{display:flex;gap:8px;padding:8px 0 2px;border-top:1px solid var(--bo);margin-top:6px;flex-shrink:0}
-.ai-input{flex:1;background:var(--bg2);border:1.5px solid var(--bo);border-radius:12px;color:var(--tx);font-size:14px;padding:10px 13px;outline:none;font-family:inherit;resize:none;max-height:100px;overflow-y:auto}
+.ai-msg.bot.loading{color:var(--mu);font-style:italic}
+.ai-input-row{display:flex;gap:8px;padding:10px 0 4px;border-top:1px solid var(--bo);margin-top:8px}
+.ai-input{flex:1;background:var(--bg2);border:1.5px solid var(--bo);border-radius:12px;color:var(--tx);font-size:14px;padding:11px 14px;outline:none;font-family:inherit;resize:none}
 .ai-input:focus{border-color:var(--g2)}
-.ai-send{width:42px;height:42px;border-radius:11px;background:var(--g);border:none;color:#fff;font-size:18px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:background .2s;align-self:flex-end}
+.ai-send{width:44px;height:44px;border-radius:12px;background:var(--g);border:none;color:#fff;font-size:20px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.ai-send:hover{background:var(--g2)}
 .ai-send:disabled{background:var(--bg3);cursor:not-allowed}
-.ai-shortcuts{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
-.ai-sc{padding:5px 11px;border-radius:20px;font-size:11px;font-weight:600;border:1px solid var(--bo);background:rgba(0,199,122,.05);color:var(--g2);cursor:pointer;white-space:nowrap;transition:all .2s}
-.ai-sc:active{background:rgba(0,199,122,.2)}
-.ai-setup{background:var(--bg2);border:1px solid rgba(255,215,0,.25);border-radius:12px;padding:16px;margin-bottom:12px}
-.ai-setup h4{font-size:13px;font-weight:700;color:var(--y);margin-bottom:8px}
-.ai-setup p{font-size:12px;color:var(--mu);line-height:1.6;margin-bottom:10px}
-.ai-setup input{width:100%;padding:10px 12px;background:var(--bg3);border:1.5px solid var(--bo);border-radius:9px;color:var(--tx);font-size:13px;font-family:monospace;outline:none;margin-bottom:8px}
-.ai-setup input:focus{border-color:var(--g2)}
-.ai-setup-save{width:100%;padding:11px;background:var(--g);border:none;border-radius:9px;color:#fff;font-size:14px;font-weight:700;cursor:pointer}
-.ai-tool-badge{display:inline-block;background:rgba(74,158,255,.1);color:#4A9EFF;border:1px solid rgba(74,158,255,.2);border-radius:6px;padding:2px 8px;font-size:10px;font-family:monospace;margin-bottom:4px}
+.ai-shortcuts{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.ai-sc{padding:6px 12px;border-radius:20px;font-size:11px;font-weight:600;border:1px solid var(--bo);background:rgba(0,199,122,.06);color:var(--g2);cursor:pointer;white-space:nowrap;transition:all .2s}
+.ai-sc:hover{background:rgba(0,199,122,.14);border-color:rgba(0,199,122,.3)}
+.ai-key-warn{font-size:11px;color:var(--mu);text-align:center;padding:8px;background:rgba(255,215,0,.05);border:1px solid rgba(255,215,0,.15);border-radius:8px;margin-bottom:10px}
+.ai-key-warn a{color:var(--y);text-decoration:underline;cursor:pointer}
 
 </style>
 </head>
@@ -259,41 +253,25 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:-apple-sy
 
 
     <!-- PANEL IA -->
-    <div class="panel" id="p-ia" style="overflow:hidden">
-      <!-- Setup si pas de clé -->
-      <div id="ai-setup-box" style="display:none;overflow-y:auto;padding:14px">
-        <div class="ai-setup">
-          <h4>🔑 Configuration requise</h4>
-          <p>Deux APIs gratuites en cascade — si l'une est indisponible, l'autre prend le relais automatiquement.<br><br>
-          <strong style="color:var(--g2)">Groq (principal)</strong> → <strong>console.groq.com</strong> → API Keys<br>
-          <strong style="color:var(--mu)">Gemini (fallback)</strong> → <strong>aistudio.google.com</strong> → Get API key<br>
-          <strong style="color:var(--mu)">GitHub</strong> → déjà configuré ci-dessous</p>
-          <div style="font-size:11px;color:var(--g2);font-weight:700;margin-bottom:6px">1. Groq (principal — gratuit, stable)</div>
-          <input type="password" id="ai-groq-input" placeholder="gsk_...  ← console.groq.com">
-          <div style="font-size:11px;color:var(--mu);font-weight:700;margin:8px 0 4px">2. Gemini (fallback automatique — gratuit)</div>
-          <input type="password" id="ai-gemini-input" placeholder="AIzaSy...  ← aistudio.google.com">
-          <div style="font-size:11px;color:var(--mu);font-weight:700;margin:8px 0 4px">3. GitHub (pour modifier le site)</div>
-          <input type="password" id="ai-gh-input" placeholder="ghp_...  ← github.com/settings/tokens">
-          <input id="ai-repo-input" placeholder="ayoubabed827-sudo/pointsave">
-          <button class="ai-setup-save" onclick="aiSaveSetup()">✅ Activer l'assistant</button>
-        </div>
+    <div class="panel" id="p-ia">
+      <div id="ai-key-warn" class="ai-key-warn" style="display:none">
+        ⚠️ Clé API Anthropic manquante — <a onclick="goPanel('settings')">la configurer dans Réglages</a>
       </div>
-      <!-- Interface chat -->
-      <div id="ai-chat-box" style="display:none;flex-direction:column;flex:1;min-height:0;padding:14px;overflow:hidden">
-        <div class="ai-shortcuts" id="ai-shortcuts">
-          <div class="ai-sc" onclick="aiShortcut('Résume les leads du jour et dis-moi quoi faire en priorité')">📊 Résumé jour</div>
-          <div class="ai-sc" onclick="aiShortcut('Quels leads sont urgents à rappeler maintenant ?')">🚨 Urgents</div>
-          <div class="ai-sc" onclick="aiShortcut('Rédige 3 messages WhatsApp de relance pour les leads non joignables')">💬 WhatsApp relance</div>
-          <div class="ai-sc" onclick="aiShortcut('Lis le fichier index.html et dis-moi ce que tu peux améliorer pour le SEO')">🔍 Audit SEO</div>
-          <div class="ai-sc" onclick="aiShortcut('Ajoute un nouveau badge de confiance dans la section badges de index.html et publie sur GitHub')">⚡ Modifier le site</div>
-          <div class="ai-sc" onclick="aiShortcut('Liste tous les fichiers du repo GitHub pointsave')">📁 Voir fichiers</div>
+      <div class="ai-shortcuts">
+        <div class="ai-sc" onclick="aiShortcut('Résume les leads du jour')">📊 Résumé du jour</div>
+        <div class="ai-sc" onclick="aiShortcut('Quels leads sont urgents à rappeler ?')">🚨 Urgents</div>
+        <div class="ai-sc" onclick="aiShortcut('Rédige un SMS de relance pour les leads non joignables')">📱 SMS relance</div>
+        <div class="ai-sc" onclick="aiShortcut('Donne-moi des conseils pour améliorer le taux de conversion')">💡 Conseils conversion</div>
+        <div class="ai-sc" onclick="aiShortcut('Analyse les villes avec le plus de leads')">📍 Analyse villes</div>
+        <div class="ai-sc" onclick="aiShortcut('Rédige un message WhatsApp de relance professionnel')">💬 WhatsApp relance</div>
+      </div>
+      <div class="ai-wrap">
+        <div class="ai-msgs" id="ai-msgs">
+          <div class="ai-msg bot">👋 Bonjour ! Je suis ton assistant PointSave.<br><br>Je connais tes leads en temps réel et je peux t'aider à :<br>• Analyser tes performances<br>• Rédiger des messages de relance<br>• Identifier les leads prioritaires<br>• Donner des conseils stratégiques<br><br>Comment puis-je t'aider ?</div>
         </div>
-        <div class="ai-wrap">
-          <div class="ai-msgs" id="ai-msgs"></div>
-          <div class="ai-input-row">
-            <textarea class="ai-input" id="ai-input" rows="1" placeholder="Pose ta question ou donne une tâche..." onkeydown="aiKeydown(event)" oninput="aiAutosize(this)"></textarea>
-            <button class="ai-send" id="ai-send" onclick="aiRun()">➤</button>
-          </div>
+        <div class="ai-input-row">
+          <textarea class="ai-input" id="ai-input" placeholder="Pose ta question..." rows="1" onkeydown="aiKeydown(event)" oninput="aiResize(this)"></textarea>
+          <button class="ai-send" id="ai-send" onclick="aiSend()">➤</button>
         </div>
       </div>
     </div>
@@ -308,21 +286,6 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:-apple-sy
 </div>
 
 <script>
-// Magic link setup : crm.html#setup=BASE64 injecte les clés en localStorage
-(function(){
-  var hash = window.location.hash;
-  if(hash && hash.indexOf('#setup=') === 0){
-    try{
-      var data = JSON.parse(atob(hash.substring(7)));
-      if(data.groq)   localStorage.setItem('groq_key',   data.groq);
-      if(data.gemini) localStorage.setItem('gemini_key', data.gemini);
-      if(data.gh)     localStorage.setItem('gh_token',   data.gh);
-      if(data.repo)   localStorage.setItem('gh_repo',    data.repo);
-      window.location.hash = '';
-      window.location.reload();
-    }catch(e){}
-  }
-})();
 var SHEETS_URL = 'https://script.google.com/macros/s/AKfycbwxrqcKVB9Q1-twGrYTNQgM0AKWSl3z7EZK5yfyEHg5m074QKCyGwjlMaiKcp7vX7C6MQ/exec';
 var USER = 'admin';
 var PASS = 'pointsave2025';
@@ -575,394 +538,144 @@ function pdate(str){
   var p=s.split(' ');if(p.length<2)return null;
   var d=p[0].split('/');var t=p[1].split(':');
   if(d.length<3||t.length<2)return null;
+  return new Date(+d[2],+d[1]-1,+d[0],+t[0],+t[1]);
+}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function dl(c,n,type){var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([c],{type:type}));a.download=n;a.click();}
+function td(){return new Date().toISOString().slice(0,10);}
+function mname(i){return['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'][i];}
+function toast(msg){var t=document.getElementById('toast');t.textContent=msg;t.classList.add('on');setTimeout(function(){t.classList.remove('on');},2500);}
+
+
 // ═══════════════════════════════════════════════════════════════
 //  ASSISTANT IA — Groq (principal) + Gemini Flash-Lite (fallback)
 //  Gratuit · Stable · Agentique · GitHub intégré
 // ═══════════════════════════════════════════════════════════════
-var aiConv   = [];   // historique unifié
-var aiBusy   = false;
+var aiConv=[], aiBusy=false;
 
-// ── Clés ──────────────────────────────────────────────────────
-function aiKeys(){
-  return {
-    groq:   localStorage.getItem('groq_key')||'',
-    gemini: localStorage.getItem('gemini_key')||'',
-    gh:     localStorage.getItem('gh_token')||'',
-    repo:   localStorage.getItem('gh_repo')||'ayoubabed827-sudo/pointsave'
-  };
-}
+function aiKeys(){return{groq:localStorage.getItem('groq_key')||'',gemini:localStorage.getItem('gemini_key')||'',gh:localStorage.getItem('gh_token')||'',repo:localStorage.getItem('gh_repo')||'ayoubabed827-sudo/pointsave'};}
 
-// ── Init / Setup ──────────────────────────────────────────────
 function aiInit(){
-  var k = aiKeys();
-  var hasKey = k.groq || k.gemini;
-  document.getElementById('ai-setup-box').style.display  = hasKey ? 'none'  : 'block';
-  document.getElementById('ai-chat-box').style.display   = hasKey ? 'flex' : 'none';
-  if(hasKey && !aiConv.length) aiWelcome();
-  // Pré-remplir les champs setup
-  var gi = document.getElementById('ai-groq-input');
-  var gm = document.getElementById('ai-gemini-input');
-  var gh = document.getElementById('ai-gh-input');
-  var rp = document.getElementById('ai-repo-input');
-  if(gi) gi.value  = k.groq;
-  if(gm) gm.value  = k.gemini;
-  if(gh) gh.value  = k.gh;
-  if(rp) rp.value  = k.repo;
+  var k=aiKeys(), has=k.groq||k.gemini;
+  document.getElementById('ai-setup-box').style.display=has?'none':'block';
+  document.getElementById('ai-chat-box').style.display=has?'flex':'none';
+  if(has&&!aiConv.length)aiWelcome();
+  var gi=document.getElementById('ai-groq-input');
+  var gm=document.getElementById('ai-gemini-input');
+  var gh=document.getElementById('ai-gh-input');
+  var rp=document.getElementById('ai-repo-input');
+  if(gi)gi.value=k.groq;if(gm)gm.value=k.gemini;if(gh)gh.value=k.gh;if(rp)rp.value=k.repo;
 }
 
 function aiSaveSetup(){
-  var groq   = document.getElementById('ai-groq-input').value.trim();
-  var gemini = document.getElementById('ai-gemini-input').value.trim();
-  var gh     = document.getElementById('ai-gh-input').value.trim();
-  var repo   = document.getElementById('ai-repo-input').value.trim();
-  if(!groq && !gemini){ toast('Renseigne au moins une clé API'); return; }
-  if(groq)   localStorage.setItem('groq_key',   groq);
-  if(gemini) localStorage.setItem('gemini_key', gemini);
-  if(gh)     localStorage.setItem('gh_token',   gh);
-  if(repo)   localStorage.setItem('gh_repo',    repo);
-  aiInit();
-  toast('✅ Assistant IA activé !');
+  var g=document.getElementById('ai-groq-input').value.trim();
+  var m=document.getElementById('ai-gemini-input').value.trim();
+  var gh=document.getElementById('ai-gh-input').value.trim();
+  var rp=document.getElementById('ai-repo-input').value.trim();
+  if(!g&&!m){toast('Renseigne au moins une clé API');return;}
+  if(g)localStorage.setItem('groq_key',g);if(m)localStorage.setItem('gemini_key',m);
+  if(gh)localStorage.setItem('gh_token',gh);if(rp)localStorage.setItem('gh_repo',rp);
+  aiInit();toast('✅ Assistant IA activé !');
 }
 
 function aiWelcome(){
-  var k = aiKeys();
-  var provider = k.groq ? 'Groq (Llama 4)' : 'Gemini Flash-Lite';
-  var fallback  = k.groq && k.gemini ? ' + Gemini en fallback' : '';
-  aiAppend('bot',
-    '🤖 Assistant PointSave opérationnel — ' + provider + fallback + '\n\n' +
-    'Je peux :\n' +
-    '• Analyser tes leads en temps réel\n' +
-    '• Lire et modifier les fichiers du site\n' +
-    '• Pusher sur GitHub → déploiement Cloudflare auto\n' +
-    '• Rédiger des messages, analyser les stats\n' +
-    '• Répondre à n\'importe quelle question\n\n' +
-    'Que veux-tu faire ?'
-  );
+  var k=aiKeys();
+  aiAppend('bot','🤖 Assistant PointSave — '+(k.groq?'Groq (Llama 4)':'Gemini')+(k.groq&&k.gemini?' + Gemini fallback':'')+'\n\nJe peux :\n• Analyser tes leads en temps réel\n• Lire/modifier les fichiers du site\n• Pusher sur GitHub → déploiement auto\n• Rédiger des messages et analyser les stats\n\nQue veux-tu faire ?');
 }
 
-// ── Outils (format OpenAI — compatible Groq & Gemini via adaptateur) ──
-var AI_TOOLS_OAI = [
-  {
-    type:'function',
-    function:{
-      name:'get_leads',
-      description:'Récupère les leads CRM avec stats et 10 derniers',
-      parameters:{type:'object',properties:{},required:[]}
-    }
-  },
-  {
-    type:'function',
-    function:{
-      name:'github_list_files',
-      description:'Liste tous les fichiers du repo GitHub pointsave',
-      parameters:{type:'object',properties:{},required:[]}
-    }
-  },
-  {
-    type:'function',
-    function:{
-      name:'github_read_file',
-      description:'Lit le contenu d\'un fichier du repo GitHub (ex: index.html)',
-      parameters:{type:'object',properties:{filename:{type:'string',description:'Nom du fichier ex: index.html'}},required:['filename']}
-    }
-  },
-  {
-    type:'function',
-    function:{
-      name:'github_write_file',
-      description:'Modifie un fichier sur GitHub et déclenche le déploiement Cloudflare automatiquement',
-      parameters:{type:'object',properties:{filename:{type:'string'},content:{type:'string'},commit_message:{type:'string'}},required:['filename','content','commit_message']}
-    }
-  },
-  {
-    type:'function',
-    function:{
-      name:'get_site_config',
-      description:'Retourne la configuration du site: URL, repo, déploiement',
-      parameters:{type:'object',properties:{},required:[]}
-    }
+var AI_TOOLS=[{type:'function',function:{name:'get_leads',description:'Stats et 10 derniers leads CRM',parameters:{type:'object',properties:{},required:[]}}},{type:'function',function:{name:'github_list_files',description:'Liste les fichiers du repo GitHub',parameters:{type:'object',properties:{},required:[]}}},{type:'function',function:{name:'github_read_file',description:'Lit un fichier GitHub (ex: index.html)',parameters:{type:'object',properties:{filename:{type:'string'}},required:['filename']}}},{type:'function',function:{name:'github_write_file',description:'Modifie un fichier sur GitHub et déploie sur Cloudflare',parameters:{type:'object',properties:{filename:{type:'string'},content:{type:'string'},commit_message:{type:'string'}},required:['filename','content','commit_message']}}},{type:'function',function:{name:'get_site_config',description:'Config du site',parameters:{type:'object',properties:{},required:[]}}}];
+
+async function aiExecTool(name,args){
+  var k=aiKeys();
+  if(name==='get_leads'){
+    var s={total:leads.length,nouveaux:leads.filter(function(l){return l.statut==='Nouveau';}).length,contactes:leads.filter(function(l){return l.statut==='Contacte';}).length,inscrits:leads.filter(function(l){return l.statut==='Inscrit au stage';}).length,nj:leads.filter(function(l){return l.statut==='Non joignable';}).length};
+    return JSON.stringify({stats:s,recents:leads.slice(0,10).map(function(l){return{prenom:l.prenom,nom:l.nom,ville:l.ville,statut:l.statut,date:l.date};})});
   }
-];
-
-// Convertit les tools OAI → format Gemini
-function aiToolsToGemini(){
-  return [{function_declarations: AI_TOOLS_OAI.map(function(t){
-    return {name:t.function.name, description:t.function.description, parameters:t.function.parameters};
-  })}];
-}
-
-// ── Exécution des outils ──────────────────────────────────────
-async function aiExecTool(name, args){
-  var k = aiKeys();
-
-  if(name === 'get_leads'){
-    var s = {
-      total:leads.length,
-      nouveaux:   leads.filter(function(l){return l.statut==='Nouveau';}).length,
-      contactes:  leads.filter(function(l){return l.statut==='Contacte';}).length,
-      inscrits:   leads.filter(function(l){return l.statut==='Inscrit au stage';}).length,
-      non_joign:  leads.filter(function(l){return l.statut==='Non joignable';}).length,
-      non_inter:  leads.filter(function(l){return l.statut==='Non interesse';}).length
-    };
-    var recent = leads.slice(0,10).map(function(l){
-      return {prenom:l.prenom,nom:l.nom,ville:l.ville,statut:l.statut,date:l.date,note:l.note||''};
-    });
-    return JSON.stringify({statistiques:s, derniers_leads:recent});
+  if(name==='get_site_config') return JSON.stringify({site:'https://www.pointsave.fr',repo:k.repo,deploy:'Cloudflare Pages auto'});
+  if(name==='github_list_files'){
+    if(!k.gh)return 'Erreur: token GitHub manquant';
+    try{var r=await fetch('https://api.github.com/repos/'+k.repo+'/contents/',{headers:{Authorization:'token '+k.gh,Accept:'application/vnd.github.v3+json'}});var f=await r.json();return Array.isArray(f)?f.map(function(x){return x.name+' ('+x.type+')';}).join('\n'):'Erreur: '+JSON.stringify(f);}catch(e){return 'Erreur: '+e.message;}
   }
-
-  if(name === 'get_site_config'){
-    return JSON.stringify({
-      site_url:'https://www.pointsave.fr',
-      github_repo: k.repo,
-      deploiement:'Cloudflare Pages — auto à chaque push GitHub',
-      crm:'https://www.pointsave.fr/crm.html'
-    });
+  if(name==='github_read_file'){
+    if(!k.gh)return 'Erreur: token GitHub manquant';
+    try{var r=await fetch('https://api.github.com/repos/'+k.repo+'/contents/'+args.filename,{headers:{Authorization:'token '+k.gh,Accept:'application/vnd.github.v3+json'}});var d=await r.json();if(!d.content)return 'Introuvable: '+args.filename;var txt=decodeURIComponent(escape(atob(d.content.replace(/\n/g,''))));return txt.length>8000?txt.substring(0,8000)+'...[tronqué]':txt;}catch(e){return 'Erreur: '+e.message;}
   }
-
-  if(name === 'github_list_files'){
-    if(!k.gh) return 'Erreur: token GitHub non configuré';
-    try{
-      var r = await fetch('https://api.github.com/repos/'+k.repo+'/contents/',{
-        headers:{'Authorization':'token '+k.gh,'Accept':'application/vnd.github.v3+json'}
-      });
-      var files = await r.json();
-      if(!Array.isArray(files)) return 'Erreur: '+JSON.stringify(files);
-      return files.map(function(f){return f.name+' ('+f.type+', '+(f.size/1024).toFixed(1)+'kb)';}).join('\n');
-    }catch(e){return 'Erreur: '+e.message;}
+  if(name==='github_write_file'){
+    if(!k.gh)return 'Erreur: token GitHub manquant';
+    try{var r=await fetch('https://api.github.com/repos/'+k.repo+'/contents/'+args.filename,{headers:{Authorization:'token '+k.gh,Accept:'application/vnd.github.v3+json'}});var cur=await r.json();var put=await fetch('https://api.github.com/repos/'+k.repo+'/contents/'+args.filename,{method:'PUT',headers:{Authorization:'token '+k.gh,'Content-Type':'application/json',Accept:'application/vnd.github.v3+json'},body:JSON.stringify({message:args.commit_message||'Modifié via IA',content:btoa(unescape(encodeURIComponent(args.content))),sha:cur.sha})});var res=await put.json();return res.content?'✅ '+args.filename+' publié (commit '+res.commit.sha.substring(0,7)+')':'Erreur: '+JSON.stringify(res);}catch(e){return 'Erreur: '+e.message;}
   }
-
-  if(name === 'github_read_file'){
-    if(!k.gh) return 'Erreur: token GitHub non configuré';
-    try{
-      var r = await fetch('https://api.github.com/repos/'+k.repo+'/contents/'+args.filename,{
-        headers:{'Authorization':'token '+k.gh,'Accept':'application/vnd.github.v3+json'}
-      });
-      var data = await r.json();
-      if(!data.content) return 'Fichier introuvable: '+args.filename;
-      var content = decodeURIComponent(escape(atob(data.content.replace(/\n/g,''))));
-      return content.length > 8000 ? content.substring(0,8000)+'\n...[tronqué, '+content.length+' chars total]' : content;
-    }catch(e){return 'Erreur: '+e.message;}
-  }
-
-  if(name === 'github_write_file'){
-    if(!k.gh) return 'Erreur: token GitHub non configuré';
-    try{
-      var r = await fetch('https://api.github.com/repos/'+k.repo+'/contents/'+args.filename,{
-        headers:{'Authorization':'token '+k.gh,'Accept':'application/vnd.github.v3+json'}
-      });
-      var cur = await r.json();
-      var encoded = btoa(unescape(encodeURIComponent(args.content)));
-      var put = await fetch('https://api.github.com/repos/'+k.repo+'/contents/'+args.filename,{
-        method:'PUT',
-        headers:{'Authorization':'token '+k.gh,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'},
-        body:JSON.stringify({message:args.commit_message||'Modifié via PointSave AI',content:encoded,sha:cur.sha})
-      });
-      var res = await put.json();
-      if(res.content) return '✅ "'+args.filename+'" publié sur GitHub. Déploiement Cloudflare en cours (~1 min). Commit: '+res.commit.sha.substring(0,7);
-      return 'Erreur: '+JSON.stringify(res);
-    }catch(e){return 'Erreur: '+e.message;}
-  }
-
   return 'Outil inconnu: '+name;
 }
 
-// ── Système de prompt ──────────────────────────────────────────
-function aiSystemPrompt(){
-  return 'Tu es l\'assistant IA de PointSave, un service de mise en relation pour stages de récupération de points de permis en Seine-et-Marne (77) autour de Meaux. Tu as accès à des outils pour lire/modifier les fichiers du site, consulter les leads CRM en temps réel, et pusher sur GitHub ce qui déclenche automatiquement le déploiement Cloudflare Pages. Quand on te demande de modifier le site: lis d\'abord le fichier avec github_read_file, fais les modifications précises, puis publie avec github_write_file. Réponds toujours en français, sois concis et professionnel.';
+function aiSysPrompt(){return 'Tu es l\'assistant IA de PointSave (stages récupération points 77, Meaux). Tu peux lire/modifier les fichiers du site via GitHub et consulter les leads CRM. Pour modifier le site: lis d\'abord le fichier, fais les changements, puis publie. Réponds en français.';}
+
+async function aiCallGroq(msgs){var k=aiKeys();var b={model:'meta-llama/llama-4-scout-17b-16e-instruct',messages:msgs,max_tokens:2048,temperature:0.7,tools:AI_TOOLS};var r=await fetch('https://api.groq.com/openai/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+k.groq},body:JSON.stringify(b)});var d=await r.json();if(d.error)throw new Error('Groq: '+d.error.message);return d.choices[0].message;}
+
+async function aiCallGemini(msgs){
+  var k=aiKeys();
+  var contents=msgs.filter(function(m){return m.role!=='system';}).map(function(m){
+    if(m.role==='tool')return{role:'user',parts:[{functionResponse:{name:m.name,response:{result:m.content}}}]};
+    if(m.role==='assistant'&&m.tool_calls)return{role:'model',parts:m.tool_calls.map(function(tc){return{functionCall:{name:tc.function.name,args:JSON.parse(tc.function.arguments||'{}')}};})};
+    return{role:m.role==='assistant'?'model':'user',parts:[{text:m.content||''}]};
+  }).filter(function(m){return m.parts[0].text!==''||m.parts[0].functionCall||m.parts[0].functionResponse;});
+  var bodyG={system_instruction:{parts:[{text:aiSysPrompt()}]},contents:contents,tools:[{function_declarations:AI_TOOLS.map(function(t){return{name:t.function.name,description:t.function.description,parameters:t.function.parameters};})}],generation_config:{temperature:0.7,max_output_tokens:2048}};
+  var r=await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-lite:generateContent?key='+k.gemini,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(bodyG)});
+  var data=await r.json();if(data.error)throw new Error('Gemini: '+data.error.message);
+  var parts=data.candidates[0].content.parts;
+  var tcs=parts.filter(function(p){return p.functionCall;});
+  var txts=parts.filter(function(p){return p.text;});
+  if(tcs.length)return{role:'assistant',content:txts.map(function(p){return p.text;}).join(''),tool_calls:tcs.map(function(p,i){return{id:'tc_'+i,type:'function',function:{name:p.functionCall.name,arguments:JSON.stringify(p.functionCall.args||{})}};})};
+  return{role:'assistant',content:txts.map(function(p){return p.text;}).join('')};
 }
 
-// ── APPEL GROQ (format OpenAI) ────────────────────────────────
-async function aiCallGroq(messages, withTools){
-  var k = aiKeys();
-  var body = {
-    model: 'meta-llama/llama-4-scout-17b-16e-instruct',
-    messages: messages,
-    max_tokens: 2048,
-    temperature: 0.7
-  };
-  if(withTools) body.tools = AI_TOOLS_OAI;
-  var r = await fetch('https://api.groq.com/openai/v1/chat/completions',{
-    method:'POST',
-    headers:{'Content-Type':'application/json','Authorization':'Bearer '+k.groq},
-    body:JSON.stringify(body)
-  });
-  var data = await r.json();
-  if(data.error) throw new Error('Groq: '+data.error.message);
-  return data.choices[0].message;
-}
-
-// ── APPEL GEMINI (format Gemini, fallback) ───────────────────
-async function aiCallGemini(messages, withTools){
-  var k = aiKeys();
-  // Convertir messages OAI → Gemini
-  var contents = messages.filter(function(m){return m.role!=='system';}).map(function(m){
-    if(m.role==='tool'){
-      return {role:'user',parts:[{functionResponse:{name:m.name,response:{result:m.content}}}]};
-    }
-    if(m.role==='assistant' && m.tool_calls){
-      return {role:'model',parts: m.tool_calls.map(function(tc){
-        return {functionCall:{name:tc.function.name,args:JSON.parse(tc.function.arguments||'{}')}};
-      })};
-    }
-    return {role: m.role==='assistant'?'model':'user', parts:[{text:m.content||''}]};
-  }).filter(function(m){return m.parts[0].text !== '' || m.parts[0].functionCall || m.parts[0].functionResponse;});
-
-  var bodyG = {
-    system_instruction:{parts:[{text:aiSystemPrompt()}]},
-    contents: contents,
-    generation_config:{temperature:0.7,max_output_tokens:2048}
-  };
-  if(withTools) bodyG.tools = aiToolsToGemini();
-
-  var r = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-lite:generateContent?key='+k.gemini,{
-    method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(bodyG)
-  });
-  var data = await r.json();
-  if(data.error) throw new Error('Gemini: '+data.error.message);
-
-  var parts = data.candidates[0].content.parts;
-  var toolCalls = parts.filter(function(p){return p.functionCall;});
-  var textParts = parts.filter(function(p){return p.text;});
-
-  if(toolCalls.length){
-    return {
-      role:'assistant',
-      content: textParts.map(function(p){return p.text;}).join(''),
-      tool_calls: toolCalls.map(function(p,i){return {
-        id:'tc_'+i,
-        type:'function',
-        function:{name:p.functionCall.name, arguments:JSON.stringify(p.functionCall.args||{})}
-      };})
-    };
-  }
-  return {role:'assistant', content: textParts.map(function(p){return p.text;}).join('')};
-}
-
-// ── APPEL UNIFIÉ avec fallback automatique ──────────────────
-async function aiCall(messages, withTools){
-  var k = aiKeys();
-  // Essai Groq en premier
-  if(k.groq){
-    try{
-      return await aiCallGroq(messages, withTools);
-    }catch(e){
-      console.warn('Groq échoué, fallback Gemini:', e.message);
-      aiAppend('tool','⚠️ Groq indisponible → basculement sur Gemini...');
-      if(!k.gemini) throw new Error('Groq échoué et pas de clé Gemini configurée.');
-    }
-  }
-  // Fallback Gemini
-  if(k.gemini){
-    return await aiCallGemini(messages, withTools);
-  }
+async function aiCall(msgs){
+  var k=aiKeys();
+  if(k.groq){try{return await aiCallGroq(msgs);}catch(e){console.warn('Groq→Gemini:',e.message);aiAppend('tool','⚠️ Groq indisponible → Gemini...');if(!k.gemini)throw e;}}
+  if(k.gemini)return await aiCallGemini(msgs);
   throw new Error('Aucune clé API configurée.');
 }
 
-// ── BOUCLE AGENTIQUE PRINCIPALE ──────────────────────────────
 async function aiRun(){
-  if(aiBusy) return;
-  var input = document.getElementById('ai-input');
-  var msg   = input.value.trim();
-  if(!msg)  return;
-  var k     = aiKeys();
-  if(!k.groq && !k.gemini){ aiInit(); return; }
-
-  input.value='';
-  input.style.height='auto';
-  aiBusy=true;
-  document.getElementById('ai-send').disabled=true;
-
-  aiAppend('user', msg);
-
-  // Construire les messages (format OAI)
-  var messages = [{role:'system', content:aiSystemPrompt()}];
-  // Ajouter historique (max 20 derniers échanges)
-  var histStart = Math.max(0, aiConv.length-20);
-  for(var i=histStart;i<aiConv.length;i++) messages.push(aiConv[i]);
-  messages.push({role:'user', content:msg});
-
-  var thinkId = 'think-'+Date.now();
-  aiAppend('bot thinking','⟳ Réflexion en cours...', thinkId);
-
-  var maxTurns=6, turn=0;
-
-  while(turn<maxTurns){
+  if(aiBusy)return;
+  var input=document.getElementById('ai-input');
+  var msg=input.value.trim();if(!msg)return;
+  var k=aiKeys();if(!k.groq&&!k.gemini){aiInit();return;}
+  input.value='';input.style.height='auto';
+  aiBusy=true;document.getElementById('ai-send').disabled=true;
+  aiAppend('user',msg);
+  var msgs=[{role:'system',content:aiSysPrompt()}];
+  var hs=Math.max(0,aiConv.length-20);for(var i=hs;i<aiConv.length;i++)msgs.push(aiConv[i]);
+  msgs.push({role:'user',content:msg});
+  var tid='think-'+Date.now();aiAppend('bot thinking','⟳ Réflexion...',tid);
+  var maxT=6,turn=0;
+  while(turn<maxT){
     turn++;
     try{
-      var resp = await aiCall(messages, true);
-
-      // ── Réponse textuelle finale ──
-      if(!resp.tool_calls || !resp.tool_calls.length){
-        aiUpdateMsg(thinkId, resp.content||'(pas de réponse)', 'bot');
-        aiConv.push({role:'user',content:msg});
-        aiConv.push({role:'assistant',content:resp.content||''});
-        if(aiConv.length>40) aiConv=aiConv.slice(-30);
-        break;
+      var resp=await aiCall(msgs);
+      if(!resp.tool_calls||!resp.tool_calls.length){aiUpdateMsg(tid,resp.content||'(vide)','bot');aiConv.push({role:'user',content:msg});aiConv.push({role:'assistant',content:resp.content||''});if(aiConv.length>40)aiConv=aiConv.slice(-30);break;}
+      msgs.push(resp);var tmsgs=[];
+      for(var j=0;j<resp.tool_calls.length;j++){
+        var tc=resp.tool_calls[j],tn=tc.function.name,ta={};
+        try{ta=JSON.parse(tc.function.arguments||'{}');}catch(e){}
+        aiUpdateMsg(tid,'🔧 '+tn+'…','bot thinking');
+        var res=await aiExecTool(tn,ta);
+        aiAppend('tool','['+tn+']\n'+(res.length>100?res.substring(0,100)+'…':res));
+        tmsgs.push({role:'tool',tool_call_id:tc.id,name:tn,content:res});
       }
-
-      // ── Appels d'outils ──
-      messages.push(resp);
-      var toolMsgs = [];
-
-      for(var i=0;i<resp.tool_calls.length;i++){
-        var tc   = resp.tool_calls[i];
-        var name = tc.function.name;
-        var args = {};
-        try{ args = JSON.parse(tc.function.arguments||'{}'); }catch(e){}
-
-        aiUpdateMsg(thinkId,'🔧 '+name+'…','bot thinking');
-        var result = await aiExecTool(name, args);
-        var preview = result.length>100 ? result.substring(0,100)+'…' : result;
-        aiAppend('tool','['+name+']\n'+preview);
-
-        toolMsgs.push({role:'tool', tool_call_id:tc.id, name:name, content:result});
-      }
-
-      messages = messages.concat(toolMsgs);
-
-    }catch(e){
-      aiUpdateMsg(thinkId,'❌ '+e.message,'bot');
-      break;
-    }
+      msgs=msgs.concat(tmsgs);
+    }catch(e){aiUpdateMsg(tid,'❌ '+e.message,'bot');break;}
   }
-
-  aiBusy=false;
-  document.getElementById('ai-send').disabled=false;
+  aiBusy=false;document.getElementById('ai-send').disabled=false;
 }
 
-// ── UI helpers ────────────────────────────────────────────────
-function aiAppend(type, text, id){
-  var box=document.getElementById('ai-msgs');
-  var div=document.createElement('div');
-  div.className='ai-msg '+type;
-  div.textContent=text;
-  if(id) div.id=id;
-  box.appendChild(div);
-  box.scrollTop=box.scrollHeight;
-}
-function aiUpdateMsg(id,text,type){
-  var el=document.getElementById(id);
-  if(el){el.textContent=text;el.className='ai-msg '+(type||'bot');}
-}
-function aiShortcut(txt){
-  document.getElementById('ai-input').value=txt;
-  aiRun();
-}
-function aiKeydown(e){
-  if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();aiRun();}
-}
-function aiAutosize(el){
-  el.style.height='auto';
-  el.style.height=Math.min(el.scrollHeight,100)+'px';
-}
+function aiAppend(type,text,id){var box=document.getElementById('ai-msgs');var div=document.createElement('div');div.className='ai-msg '+type;div.textContent=text;if(id)div.id=id;box.appendChild(div);box.scrollTop=box.scrollHeight;}
+function aiUpdateMsg(id,text,type){var el=document.getElementById(id);if(el){el.textContent=text;el.className='ai-msg '+(type||'bot');}}
+function aiShortcut(txt){document.getElementById('ai-input').value=txt;aiRun();}
+function aiKeydown(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();aiRun();}}
+function aiAutosize(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,100)+'px';}
 
-// ── Patch goPanel ──────────────────────────────────────────────
 var _goPanel_orig=goPanel;
-goPanel=function(name){
-  _goPanel_orig(name);
-  if(name==='ia') aiInit();
-};
-
+goPanel=function(name){_goPanel_orig(name);if(name==='ia')aiInit();};
 </script>
 </body>
 </html>
