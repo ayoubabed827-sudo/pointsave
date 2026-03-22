@@ -68,12 +68,19 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:-apple-sy
 .act-call{background:rgba(0,199,122,.1);color:var(--g2);border:1px solid rgba(0,199,122,.2)!important}
 .act-stat{background:rgba(255,255,255,.05);color:var(--tx);border:1px solid var(--bo)!important}
 .act-ok{background:rgba(0,199,122,.1);color:var(--g2);border:1px solid rgba(0,199,122,.2)!important}
+.act-wa{background:rgba(37,211,102,.1);color:#25D366;border:1px solid rgba(37,211,102,.2)!important}
+.age-warn{display:inline-block;font-size:10px;color:#FF9500;font-weight:700;margin-left:4px}
+.kpi-rev{border-top-color:#FFD700!important}
+.rev-set{display:flex;align-items:center;gap:8px;margin-top:8px}
+.rev-set label{font-size:11px;color:var(--mu);flex:1}
+.rev-set input{width:60px;padding:5px 8px;background:var(--bg2);border:1px solid var(--bo);border-radius:7px;color:var(--tx);font-size:13px;text-align:center;outline:none}
 .badge{display:inline-flex;align-items:center;gap:3px;font-size:10px;font-weight:700;padding:3px 7px;border-radius:20px}
 .bn-n{background:rgba(255,215,0,.1);color:var(--y);border:1px solid rgba(255,215,0,.2)}
 .bn-c{background:rgba(74,158,255,.1);color:var(--bl);border:1px solid rgba(74,158,255,.2)}
 .bn-i{background:rgba(0,199,122,.1);color:var(--g2);border:1px solid rgba(0,199,122,.2)}
 .bn-nj{background:rgba(255,149,0,.1);color:var(--or);border:1px solid rgba(255,149,0,.2)}
 .bn-ni{background:rgba(255,68,68,.08);color:#FF6B6B;border:1px solid rgba(255,68,68,.15)}
+.bn-cv{background:rgba(255,215,0,.12);color:#FFD700;border:1px solid rgba(255,215,0,.25)}
 .srch{position:relative;margin-bottom:12px}
 .srch input{width:100%;padding:11px 12px 11px 36px;background:var(--bg2);border:1.5px solid var(--bo);border-radius:11px;color:var(--tx);font-size:14px;outline:none}
 .srch input:focus{border-color:var(--g2)}.srch input::placeholder{color:var(--mu)}
@@ -180,6 +187,7 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:-apple-sy
       <button class="mopt mopt-i" onclick="setStatut('Inscrit au stage')">✅ Inscrit au stage</button>
       <button class="mopt mopt-nj" onclick="setStatut('Non joignable')">📵 Non joignable</button>
       <button class="mopt mopt-ni" onclick="setStatut('Non interesse')">❌ Non intéressé</button>
+      <button class="mopt" style="background:rgba(255,215,0,.07);color:#FFD700;border-color:rgba(255,215,0,.2)" onclick="setStatut('Converti')">💰 Converti — lead vendu</button>
     </div>
     <button class="mcancel" onclick="closeModal()">Annuler</button>
   </div>
@@ -220,6 +228,7 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:-apple-sy
         <button class="pill" onclick="setF(this,'Inscrit au stage')">✅ Inscrits</button>
         <button class="pill" onclick="setF(this,'Non joignable')">📵 NJ</button>
         <button class="pill" onclick="setF(this,'Non interesse')">❌ NI</button>
+        <button class="pill" onclick="setF(this,'Converti')">💰 Convertis</button>
       </div>
       <div id="leads-list"></div>
     </div>
@@ -231,6 +240,8 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:-apple-sy
         <div class="dw"><canvas id="donut" width="88" height="88"></canvas><div class="dleg" id="dleg"></div></div>
       </div>
       <div class="scard"><div class="stit">📍 Top villes</div><div id="vbars"></div></div>
+      <div class="scard"><div class="stit">📡 Par source</div><div id="sbars"></div></div>
+      <div class="scard kpi-rev"><div class="stit">💰 Revenus estimés</div><div id="rev-block"></div><div class="rev-set"><label>Prix par lead converti (€)</label><input type="number" id="rev-prix" value="20" min="1" max="999" onchange="renderStats()"></div></div>
     </div>
 
     <div class="panel" id="p-settings">
@@ -276,6 +287,7 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:-apple-sy
           <div class="ai-sc" onclick="aiShortcut('Résume les leads du jour et dis-moi quoi faire en priorité')">📊 Résumé jour</div>
           <div class="ai-sc" onclick="aiShortcut('Quels leads sont urgents à rappeler maintenant ?')">🚨 Urgents</div>
           <div class="ai-sc" onclick="aiShortcut('Rédige 3 messages WhatsApp de relance pour les leads non joignables')">💬 WhatsApp</div>
+          <div class="ai-sc" onclick="aiShortcut('Combien de leads convertis ce mois ? Quel est le revenu estimé ?')">💰 Revenus</div>
           <div class="ai-sc" onclick="aiShortcut('Lis index.html et dis-moi ce que tu peux améliorer pour le SEO')">🔍 SEO</div>
           <div class="ai-sc" onclick="aiShortcut('Liste tous les fichiers du repo GitHub')">📁 Fichiers</div>
         </div>
@@ -424,11 +436,13 @@ function renderKPIs(){
   var tx=t>0?Math.round(ins/t*100):0;
   var now=new Date();
   var mo=leads.filter(function(l){var d=pdate(l.date);return d&&d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear();}).length;
+  var ncv=leads.filter(function(l){return l.statut==='Converti';}).length;
+  var prix20=parseFloat((document.getElementById('rev-prix')||{value:'20'}).value)||20;
   var kpis=[
     {l:'Total',v:t,s:'leads',c:'#00C77A'},
     {l:'Ce mois',v:mo,s:mname(now.getMonth()),c:'#FFD700'},
     {l:'Urgents',v:nv+nj,s:nv+' nv · '+nj+' NJ',c:'#FF9500'},
-    {l:'Conversion',v:tx+'%',s:ins+' inscrits',c:'#00C77A'}
+    {l:'💰 Revenus',v:(ncv*prix20)+'€',s:ncv+' convertis',c:'#FFD700'}
   ];
   var h=kpis.map(function(k){return '<div class="kpi" style="--kc:'+k.c+'"><div class="kpi-l">'+k.l+'</div><div class="kpi-v">'+k.v+'</div><div class="kpi-s">'+k.s+'</div></div>';}).join('');
   document.getElementById('kgrid').innerHTML=h;
@@ -473,17 +487,27 @@ function renderLeads(){
 }
 
 function makeCard(l,idx){
-  var bcls={'Nouveau':'bn-n urg','Contacte':'bn-c enc','Inscrit au stage':'bn-i ins','Non joignable':'bn-nj urg','Non interesse':'bn-ni'};
-  var bico={'Nouveau':'🟡','Contacte':'📞','Inscrit au stage':'✅','Non joignable':'📵','Non interesse':'❌'};
+  var bcls={'Nouveau':'bn-n urg','Contacte':'bn-c enc','Inscrit au stage':'bn-i ins','Non joignable':'bn-nj urg','Non interesse':'bn-ni','Converti':'bn-cv'};
+  var bico={'Nouveau':'🟡','Contacte':'📞','Inscrit au stage':'✅','Non joignable':'📵','Non interesse':'❌','Converti':'💰'};
   var parts=(bcls[l.statut]||'bn-n').split(' ');
+  // Age warning (>2h pour Nouveau/NJ)
+  var ageWarn='';
+  var dld=pdate(l.date);
+  if(dld&&(l.statut==='Nouveau'||l.statut==='Non joignable')){
+    var diffH=(new Date()-dld)/3600000;
+    if(diffH>2)ageWarn='<span class="age-warn">⚠️ '+Math.floor(diffH)+'h</span>';
+  }
+  var waMsg=encodeURIComponent('Bonjour '+l.prenom+', je vous contacte de PointSave suite à votre demande de stage de récupération de points près de '+l.ville+'. Êtes-vous toujours intéressé(e) ?');
+  var waTel=String(l.telephone).replace(/[\s\.\-]/g,'').replace(/^0/,'33');
   return '<div class="lcard '+(parts[1]||'')+'">'
-    +'<div class="lc-top"><div class="lc-name">'+l.prenom+' '+l.nom+'</div><div class="lc-date">'+String(l.date).split(' ')[0]+'</div></div>'
+    +'<div class="lc-top"><div class="lc-name">'+l.prenom+' '+l.nom+ageWarn+'</div><div class="lc-date">'+String(l.date).split(' ')[0]+'</div></div>'
     +'<div class="lc-row"><span class="lc-ville">📍 '+l.ville+'</span><a href="tel:'+String(l.telephone).replace(/[\s\.]/g,'')+'" class="lc-tel">'+l.telephone+'</a></div>'
     +'<div class="lc-row"><span class="badge '+parts[0]+'">'+bico[l.statut]+' '+l.statut+'</span><span class="lc-src">'+l.source+'</span></div>'
     +(l.note?'<div style="font-size:11px;color:var(--mu);margin-top:4px">💬 '+l.note+'</div>':'')
     +'<input class="note-i" placeholder="Note..." value="'+esc(l.note||'')+'" onchange="saveNote('+idx+',this.value)">'
     +'<div class="lc-acts">'
     +'<a href="tel:'+String(l.telephone).replace(/[\s\.]/g,'')+'" class="act act-call">📞 Appeler</a>'
+    +'<a href="https://wa.me/'+waTel+'?text='+waMsg+'" class="act act-wa" target="_blank">💬 WA</a>'
     +'<button class="act act-stat" onclick="openModal('+idx+')">Statut</button>'
     +(l.statut==='Nouveau'||l.statut==='Non joignable'?'<button class="act act-ok" onclick="qs('+idx+',\'Contacte\')">📞 OK</button>':'')
     +(l.statut==='Contacte'?'<button class="act act-ok" onclick="qs('+idx+',\'Inscrit au stage\')">✅</button>':'')
@@ -511,6 +535,37 @@ function renderStats(){
   document.getElementById('vbars').innerHTML=vs.map(function(v){
     return '<div class="brow"><div class="blbl">'+v+'</div><div class="btrk"><div class="bfil" style="width:'+Math.round(vc[v]/vm*100)+'%"></div></div><div class="bval">'+vc[v]+'</div></div>';
   }).join('');
+
+  // Sources
+  var sc={};leads.forEach(function(l){
+    var s=(l.source&&l.source.trim())||'Inconnu';
+    if(s==='formulaire'||s==='Formulaire')s='Formulaire';
+    else if(s.toLowerCase().includes('whatsapp'))s='WhatsApp';
+    else if(s.toLowerCase().includes('tel')||s.toLowerCase().includes('appel'))s='Téléphone';
+    else if(s.toLowerCase().includes('ads'))s='Google Ads';
+    sc[s]=(sc[s]||0)+1;
+  });
+  var ss=Object.keys(sc).sort(function(a,b){return sc[b]-sc[a];});
+  var sm=ss.length?sc[ss[0]]:1;
+  var srcCols={'Formulaire':'#00C77A','WhatsApp':'#25D366','Téléphone':'#4A9EFF','Google Ads':'#FFD700','Inconnu':'#6B9E85'};
+  var sbEl=document.getElementById('sbars');
+  if(sbEl)sbEl.innerHTML=ss.length?ss.map(function(s){
+    var col=srcCols[s]||'#6B9E85';
+    return '<div class="brow"><div class="blbl">'+s+'</div><div class="btrk"><div class="bfil" style="width:'+Math.round(sc[s]/sm*100)+'%;background:'+col+'"></div></div><div class="bval">'+sc[s]+'</div></div>';
+  }).join(''):'<div style="font-size:11px;color:var(--mu)">Aucune donnée source</div>';
+
+  // Revenus
+  var cv2=leads.filter(function(l){return l.statut==='Converti';}).length;
+  var prixEl=document.getElementById('rev-prix');
+  var prix=prixEl?parseFloat(prixEl.value)||20:20;
+  var rev=cv2*prix;
+  var cvMo=leads.filter(function(l){var d=pdate(l.date);return l.statut==='Converti'&&d&&d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear();}).length;
+  var revMo=cvMo*prix;
+  var rbEl=document.getElementById('rev-block');
+  if(rbEl)rbEl.innerHTML='<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:4px">'
+    +'<div style="text-align:center"><div style="font-size:22px;font-weight:800;color:#FFD700">'+rev+'€</div><div style="font-size:10px;color:var(--mu)">Total ('+cv2+' leads)</div></div>'
+    +'<div style="text-align:center"><div style="font-size:22px;font-weight:800;color:#FFD700">'+revMo+'€</div><div style="font-size:10px;color:var(--mu)">Ce mois ('+cvMo+')</div></div>'
+    +'</div>';
 }
 
 function updateDots(){
