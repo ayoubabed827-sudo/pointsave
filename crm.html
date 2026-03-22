@@ -125,6 +125,26 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:-apple-sy
 .empty{text-align:center;padding:36px 20px;color:var(--mu)}.empty-ico{font-size:32px;margin-bottom:8px}.empty-txt{font-size:13px}
 .loading{text-align:center;padding:40px 20px;color:var(--mu);font-size:13px}
 .sync-btn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:10px;background:rgba(0,199,122,.08);border:1px solid rgba(0,199,122,.2);color:var(--g2);font-size:12px;font-weight:600;border-radius:9px;cursor:pointer;margin-bottom:12px}
+
+/* ===== PANEL IA ===== */
+.ai-wrap{display:flex;flex-direction:column;height:calc(100vh - 130px);max-height:700px}
+.ai-msgs{flex:1;overflow-y:auto;padding:8px 0;display:flex;flex-direction:column;gap:10px;-webkit-overflow-scrolling:touch}
+.ai-msg{max-width:88%;padding:11px 14px;border-radius:14px;font-size:13px;line-height:1.6}
+.ai-msg.user{background:var(--g);color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
+.ai-msg.bot{background:var(--bg2);border:1px solid var(--bo);color:var(--tx);align-self:flex-start;border-bottom-left-radius:4px;white-space:pre-wrap}
+.ai-msg.bot.loading{color:var(--mu);font-style:italic}
+.ai-input-row{display:flex;gap:8px;padding:10px 0 4px;border-top:1px solid var(--bo);margin-top:8px}
+.ai-input{flex:1;background:var(--bg2);border:1.5px solid var(--bo);border-radius:12px;color:var(--tx);font-size:14px;padding:11px 14px;outline:none;font-family:inherit;resize:none}
+.ai-input:focus{border-color:var(--g2)}
+.ai-send{width:44px;height:44px;border-radius:12px;background:var(--g);border:none;color:#fff;font-size:20px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.ai-send:hover{background:var(--g2)}
+.ai-send:disabled{background:var(--bg3);cursor:not-allowed}
+.ai-shortcuts{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.ai-sc{padding:6px 12px;border-radius:20px;font-size:11px;font-weight:600;border:1px solid var(--bo);background:rgba(0,199,122,.06);color:var(--g2);cursor:pointer;white-space:nowrap;transition:all .2s}
+.ai-sc:hover{background:rgba(0,199,122,.14);border-color:rgba(0,199,122,.3)}
+.ai-key-warn{font-size:11px;color:var(--mu);text-align:center;padding:8px;background:rgba(255,215,0,.05);border:1px solid rgba(255,215,0,.15);border-radius:8px;margin-bottom:10px}
+.ai-key-warn a{color:var(--y);text-decoration:underline;cursor:pointer}
+
 </style>
 </head>
 <body>
@@ -231,10 +251,36 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:-apple-sy
     </div>
   </div>
 
+
+    <!-- PANEL IA -->
+    <div class="panel" id="p-ia">
+      <div id="ai-key-warn" class="ai-key-warn" style="display:none">
+        ⚠️ Clé API Anthropic manquante — <a onclick="goPanel('settings')">la configurer dans Réglages</a>
+      </div>
+      <div class="ai-shortcuts">
+        <div class="ai-sc" onclick="aiShortcut('Résume les leads du jour')">📊 Résumé du jour</div>
+        <div class="ai-sc" onclick="aiShortcut('Quels leads sont urgents à rappeler ?')">🚨 Urgents</div>
+        <div class="ai-sc" onclick="aiShortcut('Rédige un SMS de relance pour les leads non joignables')">📱 SMS relance</div>
+        <div class="ai-sc" onclick="aiShortcut('Donne-moi des conseils pour améliorer le taux de conversion')">💡 Conseils conversion</div>
+        <div class="ai-sc" onclick="aiShortcut('Analyse les villes avec le plus de leads')">📍 Analyse villes</div>
+        <div class="ai-sc" onclick="aiShortcut('Rédige un message WhatsApp de relance professionnel')">💬 WhatsApp relance</div>
+      </div>
+      <div class="ai-wrap">
+        <div class="ai-msgs" id="ai-msgs">
+          <div class="ai-msg bot">👋 Bonjour ! Je suis ton assistant PointSave.<br><br>Je connais tes leads en temps réel et je peux t'aider à :<br>• Analyser tes performances<br>• Rédiger des messages de relance<br>• Identifier les leads prioritaires<br>• Donner des conseils stratégiques<br><br>Comment puis-je t'aider ?</div>
+        </div>
+        <div class="ai-input-row">
+          <textarea class="ai-input" id="ai-input" placeholder="Pose ta question..." rows="1" onkeydown="aiKeydown(event)" oninput="aiResize(this)"></textarea>
+          <button class="ai-send" id="ai-send" onclick="aiSend()">➤</button>
+        </div>
+      </div>
+    </div>
+
   <div class="bnav">
     <button class="bn on" id="bn-dashboard" onclick="goPanel('dashboard')"><div class="bn-ico">🏠</div>Dashboard</button>
     <button class="bn" id="bn-leads" onclick="goPanel('leads')"><div class="bn-ico">👥</div>Leads<div class="bn-dot" id="bn-dot"></div></button>
     <button class="bn" id="bn-stats" onclick="goPanel('stats')"><div class="bn-ico">📊</div>Stats</button>
+    <button class="bn" id="bn-ia" onclick="goPanel('ia')"><div class="bn-ico">🤖</div>IA<div class="bn-dot" id="bn-dot-ia" style="display:none"></div></button>
     <button class="bn" id="bn-settings" onclick="goPanel('settings')"><div class="bn-ico">⚙️</div>Réglages</button>
   </div>
 </div>
@@ -499,6 +545,127 @@ function dl(c,n,type){var a=document.createElement('a');a.href=URL.createObjectU
 function td(){return new Date().toISOString().slice(0,10);}
 function mname(i){return['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'][i];}
 function toast(msg){var t=document.getElementById('toast');t.textContent=msg;t.classList.add('on');setTimeout(function(){t.classList.remove('on');},2500);}
+
+// ===== ASSISTANT IA =====
+var aiHistory = [];
+
+function aiGetKey(){
+  return localStorage.getItem('anthropic_key')||'';
+}
+
+function aiGetContext(){
+  var total=leads.length;
+  var nouveaux=leads.filter(function(l){return l.statut==='Nouveau';}).length;
+  var contactes=leads.filter(function(l){return l.statut==='Contacte';}).length;
+  var inscrits=leads.filter(function(l){return l.statut==='Inscrit au stage';}).length;
+  var nj=leads.filter(function(l){return l.statut==='Non joignable';}).length;
+  var ni=leads.filter(function(l){return l.statut==='Non interesse';}).length;
+  var today=new Date().toLocaleDateString('fr-FR');
+  var todayLeads=leads.filter(function(l){
+    return l.date&&l.date.startsWith(new Date().toLocaleDateString('fr-FR').split('/').reverse().join('-').substring(0,7));
+  });
+  var recentLeads=leads.slice(0,5).map(function(l){
+    return l.prenom+' '+l.nom+' ('+l.ville+') — '+l.statut+(l.note?' — Note: '+l.note:'');
+  }).join('\n');
+  return 'Tu es l\'assistant CRM de PointSave, un service de mise en relation pour stages de récupération de points de permis en Seine-et-Marne (77) autour de Meaux.\n\n'+
+    'DONNÉES EN TEMPS RÉEL ('+today+'):\n'+
+    '- Total leads: '+total+'\n'+
+    '- Nouveaux: '+nouveaux+'\n'+
+    '- Contactés: '+contactes+'\n'+
+    '- Inscrits au stage: '+inscrits+'\n'+
+    '- Non joignables: '+nj+'\n'+
+    '- Non intéressés: '+ni+'\n\n'+
+    '5 DERNIERS LEADS:\n'+recentLeads+'\n\n'+
+    'Réponds en français, de façon concise et professionnelle. Tu peux utiliser des emojis modérément.';
+}
+
+function aiResize(el){
+  el.style.height='auto';
+  el.style.height=Math.min(el.scrollHeight,120)+'px';
+}
+
+function aiKeydown(e){
+  if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();aiSend();}
+}
+
+function aiShortcut(txt){
+  document.getElementById('ai-input').value=txt;
+  aiSend();
+}
+
+async function aiSend(){
+  var key=aiGetKey();
+  if(!key){
+    document.getElementById('ai-key-warn').style.display='block';
+    return;
+  }
+  var input=document.getElementById('ai-input');
+  var msg=input.value.trim();
+  if(!msg)return;
+  input.value='';
+  input.style.height='auto';
+  document.getElementById('ai-send').disabled=true;
+
+  // Add user message
+  aiAppendMsg(msg,'user');
+  aiHistory.push({role:'user',content:msg});
+
+  // Loading
+  var loadId='ai-load-'+Date.now();
+  aiAppendMsg('...','bot loading',loadId);
+
+  try{
+    var res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01'},
+      body:JSON.stringify({
+        model:'claude-opus-4-5',
+        max_tokens:1024,
+        system:aiGetContext(),
+        messages:aiHistory
+      })
+    });
+    var data=await res.json();
+    var reply=data.content&&data.content[0]?data.content[0].text:'Erreur : pas de réponse.';
+    // Replace loading msg
+    var loadEl=document.getElementById(loadId);
+    if(loadEl){loadEl.textContent=reply;loadEl.classList.remove('loading');}
+    aiHistory.push({role:'assistant',content:reply});
+    // Keep history short
+    if(aiHistory.length>20)aiHistory=aiHistory.slice(-20);
+  }catch(err){
+    var loadEl=document.getElementById(loadId);
+    if(loadEl){loadEl.textContent='❌ Erreur: '+err.message;loadEl.classList.remove('loading');}
+  }
+  document.getElementById('ai-send').disabled=false;
+}
+
+function aiAppendMsg(text,type,id){
+  var msgs=document.getElementById('ai-msgs');
+  var div=document.createElement('div');
+  div.className='ai-msg '+type;
+  div.textContent=text;
+  if(id)div.id=id;
+  msgs.appendChild(div);
+  msgs.scrollTop=msgs.scrollHeight;
+}
+
+// Patch saveSettings to also save API key
+var _origSaveSettings=saveSettings;
+saveSettings=function(){
+  _origSaveSettings();
+  var k=document.getElementById('s-apikey');
+  if(k&&k.value.trim())localStorage.setItem('anthropic_key',k.value.trim());
+  document.getElementById('ai-key-warn').style.display='none';
+};
+// Patch init to load api key in settings
+var _origInit=init;
+init=function(){
+  _origInit();
+  var k=document.getElementById('s-apikey');
+  if(k)k.value=aiGetKey();
+};
+
 </script>
 </body>
 </html>
