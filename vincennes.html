@@ -534,7 +534,7 @@ body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;ove
           <div class="fg">
             <label>Quand souhaitez-vous être rappelé ?</label>
             <input type="hidden" id="f_moment" name="f_moment" value="Non précisé">
-            <button type="button" class="plan-btn" id="planBtn" onclick="openPlanning()" ontouchstart="this.ontouchstart=null;openPlanning()" onfocus="openPlanning()">
+            <button type="button" class="plan-btn" id="planBtn" onclick="openPlanning()">
               <span>📅</span><span id="planBtnTxt">Choisissez un créneau</span>
             </button>
           </div>
@@ -1055,7 +1055,7 @@ function initPlanning(){
     })(new Date(today.getFullYear(),today.getMonth(),today.getDate()+i));
   }
 }
-window.openPlanning=window.openPlanning=function(){
+window.openPlanning=function openPlanning(){
   var grid=document.getElementById('planningGrid');
   if(grid&&grid.children.length===0){initPlanning();}
   document.getElementById('planOverlay').classList.add('open');

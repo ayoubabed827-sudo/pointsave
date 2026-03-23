@@ -575,7 +575,7 @@ body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;ove
           <div class="fg">
             <label>Quand souhaitez-vous être rappelé ?</label>
             <input type="hidden" id="f_moment" name="f_moment" value="Non précisé">
-            <button type="button" class="plan-btn" id="planBtn" onclick="openPlanning()" ontouchstart="this.ontouchstart=null;openPlanning()" onfocus="openPlanning()">
+            <button type="button" class="plan-btn" id="planBtn" onclick="openPlanning()">
               <span class="plan-ico">📅</span>
               <span id="planBtnTxt">Choisissez un créneau</span>
             </button>
@@ -1127,7 +1127,7 @@ function initPlanning(){
     })(new Date(today.getFullYear(),today.getMonth(),today.getDate()+i));
   }
 }
-window.openPlanning=function(){
+function openPlanning(){
   var grid=document.getElementById('planningGrid');
   if(grid&&grid.children.length===0){initPlanning();}
   document.getElementById('planOverlay').classList.add('open');
@@ -1145,6 +1145,10 @@ function selectPlanAsap(){
 }
 document.addEventListener('DOMContentLoaded',function(){
   initPlanning();
+  var pb=document.getElementById('planBtn');
+  if(pb){
+    pb.addEventListener('touchend',function(e){e.preventDefault();openPlanning();});
+  }
   // Auto-ouvre le planning quand f_ville est rempli et qu'on quitte ce champ
   var villeInput=document.getElementById('f_ville');
   if(villeInput){
