@@ -1041,6 +1041,49 @@ function hideVilles(){
   var d=document.getElementById('villesDrop');
   if(d)d.style.display='none';
 }
+
+// INDEXNOW PING — une seule fois par semaine
+(function(){
+  var key='indexnow_pinged';
+  var last=localStorage.getItem(key);
+  var now=Date.now();
+  if(last && (now-parseInt(last)) < 7*24*3600*1000) return;
+  localStorage.setItem(key, now);
+  var urls=[
+    "https://www.pointsave.fr/",
+    "https://www.pointsave.fr/versailles.html",
+    "https://www.pointsave.fr/cergy.html",
+    "https://www.pointsave.fr/massy.html",
+    "https://www.pointsave.fr/vincennes.html",
+    "https://www.pointsave.fr/argenteuil.html",
+    "https://www.pointsave.fr/montreuil.html",
+    "https://www.pointsave.fr/nanterre.html",
+    "https://www.pointsave.fr/creteil.html",
+    "https://www.pointsave.fr/boulogne-billancourt.html",
+    "https://www.pointsave.fr/saint-denis.html",
+    "https://www.pointsave.fr/courbevoie.html",
+    "https://www.pointsave.fr/vitry-sur-seine.html",
+    "https://www.pointsave.fr/rueil-malmaison.html",
+    "https://www.pointsave.fr/champigny-sur-marne.html",
+    "https://www.pointsave.fr/colombes.html",
+    "https://www.pointsave.fr/asnieres-sur-seine.html",
+    "https://www.pointsave.fr/ivry-sur-seine.html",
+    "https://www.pointsave.fr/drancy.html",
+    "https://www.pointsave.fr/epinay-sur-seine.html",
+    "https://www.pointsave.fr/livry-gargan.html"
+  ];
+  fetch("https://api.indexnow.org/indexnow",{
+    method:"POST",
+    headers:{"Content-Type":"application/json; charset=utf-8"},
+    body:JSON.stringify({
+      host:"www.pointsave.fr",
+      key:"383232b6ca4d41f3a2f03594b4fd5a51",
+      keyLocation:"https://www.pointsave.fr/383232b6ca4d41f3a2f03594b4fd5a51.txt",
+      urlList:urls
+    })
+  }).catch(function(){});
+  fetch("https://www.bing.com/ping?sitemap=https%3A%2F%2Fwww.pointsave.fr%2Fsitemap.xml").catch(function(){});
+})();
 </script>
 <!-- PLANNING POPUP (hors form pour position:fixed correct) -->
 <div class="plan-overlay" id="planOverlay" onclick="closePlanning(event)">
