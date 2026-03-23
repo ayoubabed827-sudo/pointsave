@@ -1103,7 +1103,7 @@ function initPlanning(){
       sl.innerHTML=s.label+'<span class="sl">'+s.sub+'</span>';
       var dateStr=jours[d.getDay()]+' '+d.getDate()+'/'+(d.getMonth()<9?'0':'')+(d.getMonth()+1);
       sl.dataset.val=dateStr+' '+s.label+' ('+s.sub+')';
-      sl.onclick=function(){
+      var slFn=function(){
         document.querySelectorAll('.pslot').forEach(function(x){x.classList.remove('sel')});
         document.getElementById('planAsap').classList.remove('sel');
         this.classList.add('sel');
@@ -1112,6 +1112,8 @@ function initPlanning(){
         document.getElementById('planBtn').classList.add('filled');
         setTimeout(closePlanningDirect,350);
       };
+      sl.onclick=slFn;
+      sl.ontouchstart=function(e){e.preventDefault();slFn.call(this);};
       col.appendChild(sl);
     });
     grid.appendChild(col);
@@ -1163,7 +1165,7 @@ function filterVilles(val){
     res=VILLES_AC.filter(function(v){return normalizeStr(v).indexOf(n)!==-1;}).slice(0,8);
   }
   if(res.length===0){drop.innerHTML='<div class="ac-empty">Aucune ville trouvée</div>';drop.style.display='block';return;}
-  drop.innerHTML=res.map(function(v){return '<div onclick="pickVille(\''+v.replace(/'/g,"\\'")+'\')"; ontouchstart="pickVille(\''+v.replace(/'/g,"\\'")+'\')">'+v+'</div>';}).join('');
+  drop.innerHTML=res.map(function(v){return '<div onmousedown="pickVille(\''+v.replace(/'/g,"\\'")+'\')"; ontouchstart="pickVille(\''+v.replace(/'/g,"\\'")+'\')">'+v+'</div>';}).join('');
   drop.style.display='block';
 }
 function pickVille(v){
