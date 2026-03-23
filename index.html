@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+<script src="/ps-data.js"></script>
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({"gtm.start":new Date().getTime(),event:"gtm.js"});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!="dataLayer"?"&l="+l:"";j.async=true;j.src="https://www.googletagmanager.com/gtm.js?id="+i+dl;f.parentNode.insertBefore(j,f);})(window,document,"script","dataLayer","GTM-PQHZWD3R");</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1266,7 +1267,9 @@ function updateJauge(val){
 <script>
 /* PointSave - Fonctions interactives Safari-safe */
 (function(){
-  function norm(s){ return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,''); }
+  function norm(s){
+    return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
+  }
 
   window.filterVilles = function(val){
     var drop = document.getElementById('villesDrop');
@@ -1276,7 +1279,11 @@ function updateJauge(val){
     var n = norm(val);
     var res = LISTE.filter(function(v){ return norm(v).indexOf(n)===0; }).slice(0,8);
     if(!res.length) res = LISTE.filter(function(v){ return norm(v).indexOf(n)!==-1; }).slice(0,8);
-    if(!res.length){ drop.innerHTML='<div style="padding:10px;color:#888">Aucune ville trouvée</div>'; drop.style.display='block'; return; }
+    if(!res.length){
+      drop.innerHTML='<div style="padding:10px 16px;color:#888">Aucune ville trouvee</div>';
+      drop.style.display='block';
+      return;
+    }
     drop.innerHTML = res.map(function(v){
       return '<div class="ps-ac-item">'+v+'</div>';
     }).join('');
@@ -1288,6 +1295,7 @@ function updateJauge(val){
       }
       div.addEventListener('mousedown', doSelect);
       div.addEventListener('touchstart', doSelect, {passive:false});
+      div.addEventListener('click', doSelect);
     });
     drop.style.display = 'block';
   };
@@ -1302,7 +1310,6 @@ function updateJauge(val){
     }, 500);
   };
 
-  // Rétrocompatibilité
   window.pickVille = window.psPickVille;
 
   window.hideVilles = function(){
@@ -1310,6 +1317,7 @@ function updateJauge(val){
     if(d) d.style.display='none';
   };
 })();
+
 </script>
 
 <!-- PLANNING POPUP (hors form pour position:fixed correct) -->
