@@ -1073,9 +1073,8 @@ function filterVilles(val){
 function pickVille(v){
   document.getElementById('f_ville').value=v;
   document.getElementById('villesDrop').style.display='none';
-  setTimeout(function(){
-    if(!document.getElementById('f_moment').value)openPlanning();
-  },400);
+  apply(v);
+  setTimeout(function(){openPlanning();},400);
 }
 function hideVilles(){var d=document.getElementById('villesDrop');if(d)d.style.display='none';}
 document.addEventListener('DOMContentLoaded',function(){initPlanning();});
