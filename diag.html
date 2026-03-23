@@ -4,89 +4,60 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Diagnostic PointSave</title>
+<script src="/ps-data.js"></script>
 <style>
 body{background:#111;color:#fff;font-family:monospace;padding:15px;font-size:13px;}
-.ok{color:#00C77A;} .err{color:#ff4444;} .warn{color:#FFD700;}
+.ok{color:#00C77A;}.err{color:#ff4444;}.warn{color:#FFD700;}
 .box{background:#1a1a1a;padding:12px;border-radius:8px;margin:10px 0;border:1px solid #333;}
 input{width:100%;padding:10px;background:#222;border:1px solid #00875A;border-radius:6px;color:#fff;font-size:16px;box-sizing:border-box;margin:8px 0;}
-#drop{background:#222;border:1px solid #00875A;border-radius:0 0 6px 6px;display:none;}
-#drop div{padding:10px;border-bottom:1px solid #333;cursor:pointer;}
+#drop div{padding:10px;border-bottom:1px solid #333;background:#222;}
 button{width:100%;padding:12px;background:#00875A;color:#fff;border:none;border-radius:8px;font-size:15px;cursor:pointer;margin:8px 0;}
 </style>
 </head>
 <body>
-<h2>🔬 Diagnostic PointSave</h2>
-
+<h2>🔬 Diagnostic</h2>
 <div class="box" id="d1">Chargement...</div>
-
 <div class="box">
-<b>Test Autocomplete</b><br>
-<input type="text" id="ti" placeholder="Tapez P...">
-<div id="drop"></div>
-<div id="tres">Résultat: en attente</div>
+  <b>Test Autocomplete</b>
+  <input type="text" id="ti" placeholder="Tapez P...">
+  <div id="drop"></div>
+  <div id="tres">en attente</div>
 </div>
-
 <div class="box">
-<b>Test Planning</b><br>
-<button id="pbtn">Ouvrir Planning</button>
-<div id="pres">Résultat: en attente</div>
+  <b>Test Planning</b>
+  <button id="pbtn">Ouvrir Planning</button>
+  <div id="pres">en attente</div>
 </div>
-
 <div class="box" id="log"></div>
 
 <script>
-var log = document.getElementById('log');
-function L(msg, cls){
-  var d = document.createElement('div');
-  d.className = cls || '';
-  d.textContent = msg;
-  log.appendChild(d);
-}
+var L=function(m,c){var d=document.createElement('div');d.className=c||'';d.textContent=m;document.getElementById('log').appendChild(d);};
 
-// 1. Vérifier les variables globales
-L('=== VARIABLES GLOBALES ===');
-L('VILLES_AC: ' + (typeof VILLES_AC !== 'undefined' ? '✅ ' + VILLES_AC.length + ' entrées' : '❌ UNDEFINED'), typeof VILLES_AC !== 'undefined' ? 'ok' : 'err');
-L('window.VILLES_AC: ' + (typeof window.VILLES_AC !== 'undefined' ? '✅ ' + window.VILLES_AC.length + ' entrées' : '❌ UNDEFINED'), typeof window.VILLES_AC !== 'undefined' ? 'ok' : 'err');
-L('COMMUNES: ' + (typeof COMMUNES !== 'undefined' ? '✅ ' + COMMUNES.length + ' entrées' : '❌ UNDEFINED'), typeof COMMUNES !== 'undefined' ? 'ok' : 'err');
-L('window.COMMUNES: ' + (typeof window.COMMUNES !== 'undefined' ? '✅ present' : '❌ UNDEFINED'), typeof window.COMMUNES !== 'undefined' ? 'ok' : 'err');
-L('filterVilles: ' + (typeof filterVilles !== 'undefined' ? '✅' : '❌'), typeof filterVilles !== 'undefined' ? 'ok' : 'err');
-L('window.filterVilles: ' + (typeof window.filterVilles !== 'undefined' ? '✅' : '❌'), typeof window.filterVilles !== 'undefined' ? 'ok' : 'err');
-L('openPlanning: ' + (typeof openPlanning !== 'undefined' ? '✅' : '❌'), typeof openPlanning !== 'undefined' ? 'ok' : 'err');
-L('window.openPlanning: ' + (typeof window.openPlanning !== 'undefined' ? '✅' : '❌'), typeof window.openPlanning !== 'undefined' ? 'ok' : 'err');
-L('_psApply: ' + (typeof window._psApply !== 'undefined' ? '✅' : '❌'), typeof window._psApply !== 'undefined' ? 'ok' : 'err');
+window.onload=function(){
+  L('=== VARIABLES ===');
+  L('window.VILLES_AC: '+(typeof window.VILLES_AC!=='undefined'?'✅ '+window.VILLES_AC.length+' villes':'❌ UNDEFINED'),typeof window.VILLES_AC!=='undefined'?'ok':'err');
+  L('window.COMMUNES: '+(typeof window.COMMUNES!=='undefined'?'✅ '+window.COMMUNES.length+' villes':'❌ UNDEFINED'),typeof window.COMMUNES!=='undefined'?'ok':'err');
+  
+  var ok=typeof window.VILLES_AC!=='undefined'&&window.VILLES_AC.length>0;
+  document.getElementById('d1').innerHTML=ok?'<span class="ok">✅ Données OK: '+window.VILLES_AC.length+' villes</span>':'<span class="err">❌ Données manquantes!</span>';
 
-// 2. Résumé dans d1
-var d1 = document.getElementById('d1');
-var ok = typeof window.VILLES_AC !== 'undefined' && window.VILLES_AC.length > 0;
-d1.innerHTML = ok ? '<span class="ok">✅ VILLES_AC chargé: ' + window.VILLES_AC.length + ' villes</span>' : '<span class="err">❌ VILLES_AC manquant!</span>';
+  function norm(s){return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');}
 
-// 3. Test autocomplete
-document.getElementById('ti').oninput = function(){
-  var val = this.value;
-  var drop = document.getElementById('drop');
-  var tres = document.getElementById('tres');
-  var LISTE = window.VILLES_AC || [];
-  tres.textContent = 'LISTE: ' + LISTE.length + ' entrées, val="' + val + '"';
-  if(!val){ drop.style.display='none'; return; }
-  function norm(s){ return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,''); }
-  var n = norm(val);
-  var res = LISTE.filter(function(v){ return norm(v).indexOf(n)===0; }).slice(0,5);
-  L('Filtre "'+val+'": '+res.length+' résultats', res.length ? 'ok' : 'warn');
-  if(!res.length){ drop.innerHTML='<div style="padding:10px;color:#888">Aucune ville trouvée</div>'; drop.style.display='block'; return; }
-  drop.innerHTML = res.map(function(v){ return '<div>'+v+'</div>'; }).join('');
-  drop.style.display = 'block';
-  tres.textContent = 'Résultats: ' + res.join(', ');
-};
+  document.getElementById('ti').oninput=function(){
+    var val=this.value;
+    var drop=document.getElementById('drop');
+    var LISTE=window.VILLES_AC||[];
+    if(!val){drop.innerHTML='';return;}
+    var n=norm(val);
+    var res=LISTE.filter(function(v){return norm(v).indexOf(n)===0;}).slice(0,5);
+    L('Recherche "'+val+'": '+res.length+' résultats',res.length?'ok':'warn');
+    drop.innerHTML=res.map(function(v){return '<div>'+v+'</div>';}).join('');
+    document.getElementById('tres').textContent=res.length?'✅ Résultats: '+res.join(', '):'❌ Aucun résultat';
+  };
 
-// 4. Test planning
-document.getElementById('pbtn').onclick = function(){
-  document.getElementById('pres').textContent = 'Click reçu ✅';
-  L('Planning btn clicked', 'ok');
-};
-document.getElementById('pbtn').ontouchstart = function(e){
-  e.preventDefault();
-  document.getElementById('pres').textContent = 'TouchStart reçu ✅';
-  L('Planning btn touchstart', 'ok');
+  var btn=document.getElementById('pbtn');
+  btn.onclick=function(){document.getElementById('pres').textContent='✅ Click OK';L('Click OK','ok');};
+  btn.ontouchstart=function(e){e.preventDefault();document.getElementById('pres').textContent='✅ Touch OK';L('Touch OK','ok');};
 };
 </script>
 </body>
