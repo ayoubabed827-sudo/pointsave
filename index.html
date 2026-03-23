@@ -374,8 +374,8 @@ body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;ove
   <div class="ck-in">
     <p>🍪 Cookies utilisés pour analyser l'audience. <a onclick="openLegal('cookies')">En savoir plus</a></p>
     <div class="ck-btns">
-      <button class="ck-ok" onclick="localStorage.setItem('ps_ck2','ok');document.getElementById('ck').classList.remove('show')">Accepter</button>
-      <button class="ck-no" onclick="localStorage.setItem('ps_ck2','no');document.getElementById('ck').classList.remove('show')">Refuser</button>
+      <button class="ck-ok" onclick="localStorage.setItem('ps_ck3','ok');document.getElementById('ck').classList.remove('show')">Accepter</button>
+      <button class="ck-no" onclick="localStorage.setItem('ps_ck3','no');document.getElementById('ck').classList.remove('show')">Refuser</button>
     </div>
   </div>
 </div>
@@ -810,7 +810,7 @@ document.getElementById('contactForm').addEventListener('submit',function(e){
 
 // COOKIES + SCROLL + REVEAL
 window.addEventListener('DOMContentLoaded',function(){
-  if(!localStorage.getItem('ps_ck2')){setTimeout(function(){var el=document.getElementById('ck');if(el){el.style.display='block';el.classList.add('show');}},800);}
+  if(!localStorage.getItem('ps_ck3')){setTimeout(function(){var el=document.getElementById('ck');if(el){el.style.display='block';el.classList.add('show');}},800);}
   var bO=new IntersectionObserver(function(en){en.forEach(function(e,i){if(e.isIntersecting){setTimeout(function(){e.target.classList.add('lit');},i*120);bO.unobserve(e.target);}});},{threshold:0.1});
   document.querySelectorAll('[data-badge]').forEach(function(el){bO.observe(el);});
   var o=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){e.target.classList.add('vis');o.unobserve(e.target);}});},{threshold:0.08});
