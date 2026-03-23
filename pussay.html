@@ -270,15 +270,6 @@ body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;ove
 .mb p{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.7}
 .mb-call{display:flex;align-items:center;justify-content:center;gap:9px;background:var(--green);color:white;font-family:'Outfit',sans-serif;font-weight:800;font-size:18px;padding:14px 24px;border-radius:10px;text-decoration:none;margin-bottom:14px}
 .mb-back{background:none;border:none;color:var(--muted);font-size:12px;cursor:pointer;text-decoration:underline}
-/* COOKIES */
-.ck{position:fixed;bottom:72px;left:0;right:0;z-index:9990;background:var(--dark3);border-top:2px solid var(--border);padding:14px 20px;display:none;box-shadow:0 -4px 24px rgba(0,0,0,.4)}
-.ck.show{display:block}
-.ck-in{max-width:900px;margin:0 auto;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
-.ck-in p{font-size:12px;color:var(--muted);flex:1;min-width:200px;line-height:1.6}
-.ck-in p a{color:var(--green2);cursor:pointer}
-.ck-btns{display:flex;gap:8px;flex-shrink:0}
-.ck-ok{background:var(--green);color:white;font-family:'Outfit',sans-serif;font-weight:700;font-size:12px;padding:8px 20px;border-radius:8px;border:none;cursor:pointer}
-.ck-no{background:transparent;color:var(--muted);font-family:'Outfit',sans-serif;font-weight:600;font-size:12px;padding:8px 14px;border-radius:8px;border:1px solid var(--border);cursor:pointer}
 /* STICKY */
 .sticky{position:fixed;bottom:0;left:0;right:0;z-index:198;padding:10px 20px;background:rgba(9,15,13,.97);border-top:2px solid var(--green);backdrop-filter:blur(20px);transform:translateY(100%);transition:transform .4s ease}
 .sticky.show{transform:translateY(0)}
@@ -302,6 +293,39 @@ body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;ove
 .rev.vis{opacity:1;transform:translateY(0)}
 @media(max-width:760px){.nav{display:none}.burger{display:flex}.btn-wa-hdr{display:none}.wa-float{display:none}}
 @media(max-width:600px){.hero{padding:40px 16px 32px}.btn-main{padding:16px 20px;font-size:18px}.trust{gap:10px}.tb{font-size:11px}.g2{grid-template-columns:1fr}.fb{padding:18px}.sticky-in{flex-direction:column;gap:7px;text-align:center}.sticky-btns{justify-content:center}.ibox{flex-direction:column;text-align:center}.vt{font-size:11px;padding:4px 9px}.pt{width:40px;height:40px;font-size:15px}.ag,.bg{grid-template-columns:1fr}}
+
+/* PLANNING POPUP */
+.plan-btn{width:100%;padding:12px 16px;background:rgba(255,255,255,.03);border:1.5px solid var(--border);border-radius:10px;color:var(--muted);font-family:'Inter',sans-serif;font-size:14px;cursor:pointer;text-align:left;transition:border-color .2s;display:flex;align-items:center;gap:10px}
+.plan-btn.filled{color:white;border-color:var(--green2);background:rgba(0,135,90,.08)}
+.plan-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.8);z-index:10000;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px);padding:16px}
+.plan-overlay.open{display:flex}
+.plan-modal{background:#0F1A14;border-radius:16px;border:1.5px solid var(--green);width:100%;max-width:400px;max-height:70vh;overflow-y:auto;padding:20px 16px 24px;animation:fadeInP .2s ease;margin:auto;-webkit-overflow-scrolling:touch}
+@keyframes fadeInP{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+.plan-modal-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.plan-modal-hd h3{font-family:'Outfit',sans-serif;font-size:17px;font-weight:800;color:white}
+.plan-close{background:none;border:none;color:#6B9E85;font-size:22px;cursor:pointer;padding:0 4px}
+.plan-asap{width:100%;padding:12px;background:rgba(0,199,122,.1);border:1.5px solid rgba(0,199,122,.3);border-radius:10px;color:#00C77A;font-family:'Outfit',sans-serif;font-weight:700;font-size:15px;cursor:pointer;margin-bottom:14px;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px}
+.plan-asap:hover,.plan-asap.sel{background:#00875A;border-color:#00875A;color:white}
+.plan-scroll{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;-webkit-overflow-scrolling:touch;scrollbar-width:none;min-height:160px}
+.plan-scroll::-webkit-scrollbar{display:none}
+.pday{flex:0 0 auto;width:76px;border-radius:12px;background:rgba(255,255,255,.03);border:1.5px solid rgba(0,135,90,.2);overflow:hidden}
+.pday-hd{text-align:center;padding:8px 4px 5px;border-bottom:1px solid rgba(0,135,90,.2);background:rgba(255,255,255,.02)}
+.pday-hd .pd{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:#6B9E85}
+.pday-hd .pn{font-size:20px;font-weight:800;font-family:'Outfit',sans-serif;color:#E8F5F0}
+.pslot{padding:9px 4px;text-align:center;cursor:pointer;border-bottom:1px solid rgba(0,135,90,.2);font-size:11px;font-weight:600;color:#6B9E85;transition:all .15s;user-select:none}
+.pslot:last-child{border-bottom:none}
+.pslot:hover{background:rgba(0,135,90,.15);color:#00C77A}
+.pslot.sel{background:#00875A;color:white;font-weight:700}
+.pslot .sl{display:block;font-size:9px;opacity:.7;margin-top:2px}
+/* AUTOCOMPLETE VILLE */
+.ville-wrap{position:relative}
+.villes-drop{position:absolute;top:100%;left:0;right:0;background:#162B1F;border:1.5px solid #00C77A;border-radius:0 0 10px 10px;z-index:5000;max-height:200px;overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,.5)}
+.villes-drop div{padding:10px 14px;font-size:14px;color:#E8F5F0;cursor:pointer;border-bottom:1px solid rgba(0,135,90,.2);transition:background .15s}
+.villes-drop div:last-child{border-bottom:none}
+.villes-drop div:hover{background:rgba(0,135,90,.2);color:#00C77A}
+.villes-drop .ac-empty{color:#6B9E85;font-style:italic;cursor:default}
+/* SEO BLOCK */
+.seo-block{font-size:10px;color:#162B1F;line-height:1.4;padding:8px 12px;margin-top:4px;background:#0F1A14}
 </style>
 </head>
 <body>
@@ -329,16 +353,6 @@ body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;ove
   </div>
 </div>
 
-<!-- COOKIES -->
-<div class="ck" id="ck">
-  <div class="ck-in">
-    <p>🍪 Ce site utilise des cookies techniques. En continuant, vous acceptez notre <a onclick="openLegal('cookies')">politique de cookies</a>.</p>
-    <div class="ck-btns">
-      <button class="ck-ok" onclick="localStorage.setItem('ps_ck','ok');document.getElementById('ck').classList.remove('show')">Accepter</button>
-      <button class="ck-no" onclick="localStorage.setItem('ps_ck','no');document.getElementById('ck').classList.remove('show')">Refuser</button>
-    </div>
-  </div>
-</div>
 
 <!-- STRIP -->
 <div class="strip">
@@ -494,1290 +508,19 @@ body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;ove
             <div class="fg"><label>Nom</label><div class="iw"><span class="ico">👤</span><input type="text" id="f_nom" placeholder="Dupont" required></div></div>
           </div>
           <div class="fg"><label>Téléphone</label><div class="iw"><span class="ico"><svg class="ico-tel" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.07 1.15 2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.09a16 16 0 006.29 6.29l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 15.42z"/></svg></span><input type="tel" id="f_telephone" placeholder="06 xx xx xx xx" required></div></div>
-          <div class="fg"><label>Ville la plus proche</label><div class="iw"><span class="ico">📍</span>
-            <input type="text" id="f_ville" name="f_ville" required
-              placeholder="Tapez votre ville en Île-de-France..." value="Pussay"
-              list="villes-idf-list" autocomplete="off"
-              style="padding-left:12px">
-            <datalist id="villes-idf-list">
-  <option value="Abbéville-la-Rivière">
-  <option value="Ableiges">
-  <option value="Ablis">
-  <option value="Ablon-sur-Seine">
-  <option value="Achères">
-  <option value="Achères-la-Forêt">
-  <option value="Adainville">
-  <option value="Aigremont">
-  <option value="Aincourt">
-  <option value="Alfortville">
-  <option value="Allainville">
-  <option value="Ambleville">
-  <option value="Amenucourt">
-  <option value="Amillis">
-  <option value="Amponville">
-  <option value="Andelu">
-  <option value="Andilly">
-  <option value="Andrezel">
-  <option value="Andrésy">
-  <option value="Angerville">
-  <option value="Angervilliers">
-  <option value="Annet-sur-Marne">
-  <option value="Antony">
-  <option value="Arbonne-la-Forêt">
-  <option value="Arcueil">
-  <option value="Argenteuil">
-  <option value="Argentières">
-  <option value="Armentières-en-Brie">
-  <option value="Arnouville">
-  <option value="Arnouville-lès-Mantes">
-  <option value="Arpajon">
-  <option value="Arrancourt">
-  <option value="Arronville">
-  <option value="Arthies">
-  <option value="Arville">
-  <option value="Asnières-sur-Oise">
-  <option value="Asnières-sur-Seine">
-  <option value="Athis-Mons">
-  <option value="Attainville">
-  <option value="Aubepierre-Ozouer-le-Repos">
-  <option value="Aubergenville">
-  <option value="Aubervilliers">
-  <option value="Auffargis">
-  <option value="Aufferville">
-  <option value="Auffreville-Brasseuil">
-  <option value="Augers-en-Brie">
-  <option value="Aulnay-sous-Bois">
-  <option value="Aulnay-sur-Mauldre">
-  <option value="Aulnoy">
-  <option value="Auteuil">
-  <option value="Authon-la-Plaine">
-  <option value="Autouillet">
-  <option value="Auvernaux">
-  <option value="Auvers-Saint-Georges">
-  <option value="Auvers-sur-Oise">
-  <option value="Avernes">
-  <option value="Avon">
-  <option value="Avrainville">
-  <option value="Baby">
-  <option value="Bagneaux-sur-Loing">
-  <option value="Bagneux">
-  <option value="Bagnolet">
-  <option value="Baillet-en-France">
-  <option value="Bailly">
-  <option value="Bailly-Romainvilliers">
-  <option value="Ballainvilliers">
-  <option value="Ballancourt-sur-Essonne">
-  <option value="Balloy">
-  <option value="Bannost-Villegagnon">
-  <option value="Banthelu">
-  <option value="Barbey">
-  <option value="Barbizon">
-  <option value="Barcy">
-  <option value="Bassevelle">
-  <option value="Baulne">
-  <option value="Bazainville">
-  <option value="Bazemont">
-  <option value="Bazoches-lès-Bray">
-  <option value="Bazoches-sur-Guyonne">
-  <option value="Beauchamp">
-  <option value="Beauchery-Saint-Martin">
-  <option value="Beaumont-du-Gâtinais">
-  <option value="Beaumont-sur-Oise">
-  <option value="Beautheil-Saints">
-  <option value="Beauvoir">
-  <option value="Bellefontaine">
-  <option value="Bellot">
-  <option value="Belloy-en-France">
-  <option value="Bennecourt">
-  <option value="Bernay-Vilbert">
-  <option value="Bernes-sur-Oise">
-  <option value="Berville">
-  <option value="Bessancourt">
-  <option value="Beton-Bazoches">
-  <option value="Beynes">
-  <option value="Bezalles">
-  <option value="Bezons">
-  <option value="Bièvres">
-  <option value="Blandy">
-  <option value="Blandy">
-  <option value="Blaru">
-  <option value="Blennes">
-  <option value="Bobigny">
-  <option value="Boigneville">
-  <option value="Boinville-en-Mantois">
-  <option value="Boinville-le-Gaillard">
-  <option value="Boinvilliers">
-  <option value="Bois-Colombes">
-  <option value="Bois-d'Arcy">
-  <option value="Bois-Herpin">
-  <option value="Bois-le-Roi">
-  <option value="Boisdon">
-  <option value="Boisemont">
-  <option value="Boissets">
-  <option value="Boissettes">
-  <option value="Boissise-la-Bertrand">
-  <option value="Boissise-le-Roi">
-  <option value="Boissy-aux-Cailles">
-  <option value="Boissy-l'Aillerie">
-  <option value="Boissy-la-Rivière">
-  <option value="Boissy-le-Châtel">
-  <option value="Boissy-le-Cutté">
-  <option value="Boissy-le-Sec">
-  <option value="Boissy-Mauvoisin">
-  <option value="Boissy-Saint-Léger">
-  <option value="Boissy-sans-Avoir">
-  <option value="Boissy-sous-Saint-Yon">
-  <option value="Boitron">
-  <option value="Bombon">
-  <option value="Bondoufle">
-  <option value="Bondy">
-  <option value="Bonnelles">
-  <option value="Bonneuil-en-France">
-  <option value="Bonneuil-sur-Marne">
-  <option value="Bonnières-sur-Seine">
-  <option value="Bouafle">
-  <option value="Bouffémont">
-  <option value="Bougival">
-  <option value="Bougligny">
-  <option value="Boulancourt">
-  <option value="Bouleurs">
-  <option value="Boullay-les-Troux">
-  <option value="Boulogne-Billancourt">
-  <option value="Bouqueval">
-  <option value="Bouray-sur-Juine">
-  <option value="Bourdonné">
-  <option value="Bourg-la-Reine">
-  <option value="Bourron-Marlotte">
-  <option value="Boussy-Saint-Antoine">
-  <option value="Boutervilliers">
-  <option value="Boutigny">
-  <option value="Boutigny-sur-Essonne">
-  <option value="Bouville">
-  <option value="Bransles">
-  <option value="Bray-et-Lû">
-  <option value="Bray-sur-Seine">
-  <option value="Breuil-Bois-Robert">
-  <option value="Breuillet">
-  <option value="Breux-Jouy">
-  <option value="Brie-Comte-Robert">
-  <option value="Brignancourt">
-  <option value="Briis-sous-Forges">
-  <option value="Brières-les-Scellés">
-  <option value="Brou-sur-Chantereine">
-  <option value="Brouy">
-  <option value="Brueil-en-Vexin">
-  <option value="Brunoy">
-  <option value="Bruyères-le-Châtel">
-  <option value="Bruyères-sur-Oise">
-  <option value="Bry-sur-Marne">
-  <option value="Bréançon">
-  <option value="Bréau">
-  <option value="Brétigny-sur-Orge">
-  <option value="Bréval">
-  <option value="Buc">
-  <option value="Buchelay">
-  <option value="Buhy">
-  <option value="Bullion">
-  <option value="Buno-Bonnevaux">
-  <option value="Burcy">
-  <option value="Bures-sur-Yvette">
-  <option value="Bussières">
-  <option value="Bussy-Saint-Georges">
-  <option value="Bussy-Saint-Martin">
-  <option value="Buthiers">
-  <option value="Butry-sur-Oise">
-  <option value="Béhoust">
-  <option value="Béthemont-la-Forêt">
-  <option value="Cachan">
-  <option value="Cannes-Écluse">
-  <option value="Carnetin">
-  <option value="Carrières-sous-Poissy">
-  <option value="Carrières-sur-Seine">
-  <option value="Cergy">
-  <option value="Cernay-la-Ville">
-  <option value="Cerneux">
-  <option value="Cerny">
-  <option value="Cesson">
-  <option value="Cessoy-en-Montois">
-  <option value="Chailly-en-Bière">
-  <option value="Chailly-en-Brie">
-  <option value="Chaintreaux">
-  <option value="Chalautre-la-Grande">
-  <option value="Chalautre-la-Petite">
-  <option value="Chalifert">
-  <option value="Chalmaison">
-  <option value="Chalo-Saint-Mars">
-  <option value="Chalou-Moulineux">
-  <option value="Chamarande">
-  <option value="Chambourcy">
-  <option value="Chambry">
-  <option value="Chamigny">
-  <option value="Champagne-sur-Oise">
-  <option value="Champagne-sur-Seine">
-  <option value="Champcenest">
-  <option value="Champcueil">
-  <option value="Champdeuil">
-  <option value="Champeaux">
-  <option value="Champigny-sur-Marne">
-  <option value="Champlan">
-  <option value="Champmotteux">
-  <option value="Champs-sur-Marne">
-  <option value="Changis-sur-Marne">
-  <option value="Chanteloup-en-Brie">
-  <option value="Chanteloup-les-Vignes">
-  <option value="Chapet">
-  <option value="Charenton-le-Pont">
-  <option value="Charmentray">
-  <option value="Charmont">
-  <option value="Charny">
-  <option value="Chars">
-  <option value="Chartrettes">
-  <option value="Chartronges">
-  <option value="Chatignonville">
-  <option value="Chatou">
-  <option value="Chauconin-Neufmontiers">
-  <option value="Chauffour-lès-Étréchy">
-  <option value="Chauffry">
-  <option value="Chaufour-lès-Bonnières">
-  <option value="Chaumes-en-Brie">
-  <option value="Chaumontel">
-  <option value="Chaussy">
-  <option value="Chauvry">
-  <option value="Chavenay">
-  <option value="Chaville">
-  <option value="Chelles">
-  <option value="Chennevières-lès-Louvres">
-  <option value="Chennevières-sur-Marne">
-  <option value="Chenoise-Cucharmoy">
-  <option value="Chenou">
-  <option value="Cheptainville">
-  <option value="Chessy">
-  <option value="Chevannes">
-  <option value="Chevilly-Larue">
-  <option value="Chevrainvilliers">
-  <option value="Chevreuse">
-  <option value="Chevru">
-  <option value="Chevry-Cossigny">
-  <option value="Chevry-en-Sereine">
-  <option value="Chilly-Mazarin">
-  <option value="Choisel">
-  <option value="Choisy-en-Brie">
-  <option value="Choisy-le-Roi">
-  <option value="Château-Landon">
-  <option value="Châteaubleau">
-  <option value="Châteaufort">
-  <option value="Châtenay-en-France">
-  <option value="Châtenay-Malabry">
-  <option value="Châtenay-sur-Seine">
-  <option value="Châtenoy">
-  <option value="Châtillon">
-  <option value="Châtillon-la-Borde">
-  <option value="Châtres">
-  <option value="Chérence">
-  <option value="Citry">
-  <option value="Civry-la-Forêt">
-  <option value="Clairefontaine-en-Yvelines">
-  <option value="Clamart">
-  <option value="Claye-Souilly">
-  <option value="Clichy">
-  <option value="Clichy-sous-Bois">
-  <option value="Clos-Fontaine">
-  <option value="Cléry-en-Vexin">
-  <option value="Cocherel">
-  <option value="Coignières">
-  <option value="Collégien">
-  <option value="Colombes">
-  <option value="Combs-la-Ville">
-  <option value="Commeny">
-  <option value="Compans">
-  <option value="Conches-sur-Gondoire">
-  <option value="Condé-Sainte-Libiaire">
-  <option value="Condé-sur-Vesgre">
-  <option value="Condécourt">
-  <option value="Conflans-Sainte-Honorine">
-  <option value="Congerville-Thionville">
-  <option value="Congis-sur-Thérouanne">
-  <option value="Corbeil-Essonnes">
-  <option value="Corbreuse">
-  <option value="Cormeilles-en-Parisis">
-  <option value="Cormeilles-en-Vexin">
-  <option value="Coubert">
-  <option value="Coubron">
-  <option value="Couilly-Pont-aux-Dames">
-  <option value="Coulombs-en-Valois">
-  <option value="Coulommes">
-  <option value="Coulommiers">
-  <option value="Coupvray">
-  <option value="Courances">
-  <option value="Courbevoie">
-  <option value="Courcelles-en-Bassée">
-  <option value="Courcelles-sur-Viosne">
-  <option value="Courchamp">
-  <option value="Courdimanche">
-  <option value="Courdimanche-sur-Essonne">
-  <option value="Courgent">
-  <option value="Courpalay">
-  <option value="Courquetaine">
-  <option value="Courson-Monteloup">
-  <option value="Courtacon">
-  <option value="Courtomer">
-  <option value="Courtry">
-  <option value="Coutençon">
-  <option value="Coutevroult">
-  <option value="Cravent">
-  <option value="Crespières">
-  <option value="Crisenoy">
-  <option value="Croissy-Beaubourg">
-  <option value="Croissy-sur-Seine">
-  <option value="Crosne">
-  <option value="Crouy-sur-Ourcq">
-  <option value="Crèvecœur-en-Brie">
-  <option value="Crécy-la-Chapelle">
-  <option value="Crégy-lès-Meaux">
-  <option value="Créteil">
-  <option value="Cuisy">
-  <option value="Cély">
-  <option value="D'Huison-Longueville">
-  <option value="Dagny">
-  <option value="Dammarie-les-Lys">
-  <option value="Dammartin-en-Goële">
-  <option value="Dammartin-en-Serve">
-  <option value="Dammartin-sur-Tigeaux">
-  <option value="Dampierre-en-Yvelines">
-  <option value="Dampmart">
-  <option value="Dannemarie">
-  <option value="Dannemois">
-  <option value="Darvault">
-  <option value="Davron">
-  <option value="Deuil-la-Barre">
-  <option value="Dhuisy">
-  <option value="Diant">
-  <option value="Domont">
-  <option value="Donnemarie-Dontilly">
-  <option value="Dormelles">
-  <option value="Doue">
-  <option value="Dourdan">
-  <option value="Douy-la-Ramée">
-  <option value="Drancy">
-  <option value="Draveil">
-  <option value="Drocourt">
-  <option value="Dugny">
-  <option value="Eaubonne">
-  <option value="Ecquevilly">
-  <option value="Enghien-les-Bains">
-  <option value="Ennery">
-  <option value="Ermont">
-  <option value="Esbly">
-  <option value="Esmans">
-  <option value="Everly">
-  <option value="Faremoutiers">
-  <option value="Favières">
-  <option value="Favrieux">
-  <option value="Faÿ-lès-Nemours">
-  <option value="Ferrières-en-Brie">
-  <option value="Feucherolles">
-  <option value="Flacourt">
-  <option value="Flagy">
-  <option value="Fleury-en-Bière">
-  <option value="Fleury-Mérogis">
-  <option value="Flexanville">
-  <option value="Flins-Neuve-Église">
-  <option value="Flins-sur-Seine">
-  <option value="Follainville-Dennemont">
-  <option value="Fontaine-Fourches">
-  <option value="Fontaine-la-Rivière">
-  <option value="Fontaine-le-Port">
-  <option value="Fontainebleau">
-  <option value="Fontains">
-  <option value="Fontenailles">
-  <option value="Fontenay-aux-Roses">
-  <option value="Fontenay-en-Parisis">
-  <option value="Fontenay-le-Fleury">
-  <option value="Fontenay-le-Vicomte">
-  <option value="Fontenay-lès-Briis">
-  <option value="Fontenay-Mauvoisin">
-  <option value="Fontenay-Saint-Père">
-  <option value="Fontenay-sous-Bois">
-  <option value="Fontenay-Trésigny">
-  <option value="Forfry">
-  <option value="Forges">
-  <option value="Forges-les-Bains">
-  <option value="Fosses">
-  <option value="Fouju">
-  <option value="Franconville">
-  <option value="Freneuse">
-  <option value="Fresnes">
-  <option value="Fresnes-sur-Marne">
-  <option value="Fromont">
-  <option value="Frouville">
-  <option value="Frémainville">
-  <option value="Frémécourt">
-  <option value="Frépillon">
-  <option value="Frétoy">
-  <option value="Fublaines">
-  <option value="Féricy">
-  <option value="Férolles-Attilly">
-  <option value="Gagny">
-  <option value="Gaillon-sur-Montcient">
-  <option value="Galluis">
-  <option value="Gambais">
-  <option value="Gambaiseuil">
-  <option value="Garancières">
-  <option value="Garches">
-  <option value="Garentreville">
-  <option value="Gargenville">
-  <option value="Garges-lès-Gonesse">
-  <option value="Gastins">
-  <option value="Gazeran">
-  <option value="Genainville">
-  <option value="Gennevilliers">
-  <option value="Gentilly">
-  <option value="Germigny-l'Évêque">
-  <option value="Germigny-sous-Coulombs">
-  <option value="Gesvres-le-Chapitre">
-  <option value="Gif-sur-Yvette">
-  <option value="Giremoutiers">
-  <option value="Gironville">
-  <option value="Gironville-sur-Essonne">
-  <option value="Gometz-la-Ville">
-  <option value="Gometz-le-Châtel">
-  <option value="Gommecourt">
-  <option value="Gonesse">
-  <option value="Gouaix">
-  <option value="Goupillières">
-  <option value="Gournay-sur-Marne">
-  <option value="Goussainville">
-  <option value="Goussonville">
-  <option value="Gouvernes">
-  <option value="Grandchamp">
-  <option value="Grandpuits-Bailly-Carrois">
-  <option value="Gravon">
-  <option value="Gressey">
-  <option value="Gressy">
-  <option value="Gretz-Armainvilliers">
-  <option value="Grez-sur-Loing">
-  <option value="Grigny">
-  <option value="Grisy-les-Plâtres">
-  <option value="Grisy-Suisnes">
-  <option value="Grisy-sur-Seine">
-  <option value="Groslay">
-  <option value="Grosrouvre">
-  <option value="Guercheville">
-  <option value="Guermantes">
-  <option value="Guernes">
-  <option value="Guerville">
-  <option value="Guibeville">
-  <option value="Guignes">
-  <option value="Guigneville-sur-Essonne">
-  <option value="Guillerval">
-  <option value="Guiry-en-Vexin">
-  <option value="Guitrancourt">
-  <option value="Gurcy-le-Châtel">
-  <option value="Guyancourt">
-  <option value="Guérard">
-  <option value="Génicourt">
-  <option value="Haravilliers">
-  <option value="Hardricourt">
-  <option value="Hargeville">
-  <option value="Haute-Isle">
-  <option value="Hautefeuille">
-  <option value="Herbeville">
-  <option value="Herblay-sur-Seine">
-  <option value="Hermeray">
-  <option value="Hermé">
-  <option value="Hodent">
-  <option value="Hondevilliers">
-  <option value="Houdan">
-  <option value="Houilles">
-  <option value="Hédouville">
-  <option value="Héricy">
-  <option value="Hérouville-en-Vexin">
-  <option value="Ichy">
-  <option value="Igny">
-  <option value="Isles-les-Meldeuses">
-  <option value="Isles-lès-Villenoy">
-  <option value="Issou">
-  <option value="Issy-les-Moulineaux">
-  <option value="Itteville">
-  <option value="Iverny">
-  <option value="Ivry-sur-Seine">
-  <option value="Jablines">
-  <option value="Jagny-sous-Bois">
-  <option value="Jaignes">
-  <option value="Jambville">
-  <option value="Janville-sur-Juine">
-  <option value="Janvry">
-  <option value="Jaulnes">
-  <option value="Joinville-le-Pont">
-  <option value="Jossigny">
-  <option value="Jouarre">
-  <option value="Jouars-Pontchartrain">
-  <option value="Jouy-en-Josas">
-  <option value="Jouy-le-Châtel">
-  <option value="Jouy-le-Moutier">
-  <option value="Jouy-Mauvoisin">
-  <option value="Jouy-sur-Morin">
-  <option value="Juilly">
-  <option value="Jumeauville">
-  <option value="Jutigny">
-  <option value="Juvisy-sur-Orge">
-  <option value="Juziers">
-  <option value="L'Haÿ-les-Roses">
-  <option value="L'Isle-Adam">
-  <option value="L'Étang-la-Ville">
-  <option value="L'Île-Saint-Denis">
-  <option value="La Boissière-École">
-  <option value="La Brosse-Montceaux">
-  <option value="La Celle-les-Bordes">
-  <option value="La Celle-Saint-Cloud">
-  <option value="La Celle-sur-Morin">
-  <option value="La Chapelle-en-Vexin">
-  <option value="La Chapelle-Gauthier">
-  <option value="La Chapelle-Iger">
-  <option value="La Chapelle-la-Reine">
-  <option value="La Chapelle-Moutils">
-  <option value="La Chapelle-Rablais">
-  <option value="La Chapelle-Saint-Sulpice">
-  <option value="La Courneuve">
-  <option value="La Croix-en-Brie">
-  <option value="La Falaise">
-  <option value="La Ferté-Alais">
-  <option value="La Ferté-Gaucher">
-  <option value="La Ferté-sous-Jouarre">
-  <option value="La Forêt-le-Roi">
-  <option value="La Forêt-Sainte-Croix">
-  <option value="La Frette-sur-Seine">
-  <option value="La Garenne-Colombes">
-  <option value="La Genevraye">
-  <option value="La Grande-Paroisse">
-  <option value="La Haute-Maison">
-  <option value="La Hauteville">
-  <option value="La Houssaye-en-Brie">
-  <option value="La Madeleine-sur-Loing">
-  <option value="La Norville">
-  <option value="La Queue-en-Brie">
-  <option value="La Queue-les-Yvelines">
-  <option value="La Roche-Guyon">
-  <option value="La Rochette">
-  <option value="La Tombe">
-  <option value="La Trétoire">
-  <option value="La Verrière">
-  <option value="La Ville-du-Bois">
-  <option value="La Villeneuve-en-Chevrie">
-  <option value="Labbeville">
-  <option value="Lagny-sur-Marne">
-  <option value="Lainville-en-Vexin">
-  <option value="Larchant">
-  <option value="Lardy">
-  <option value="Lassy">
-  <option value="Laval-en-Brie">
-  <option value="Le Bellay-en-Vexin">
-  <option value="Le Blanc-Mesnil">
-  <option value="Le Bourget">
-  <option value="Le Chesnay-Rocquencourt">
-  <option value="Le Châtelet-en-Brie">
-  <option value="Le Coudray-Montceaux">
-  <option value="Le Heaulme">
-  <option value="Le Kremlin-Bicêtre">
-  <option value="Le Mesnil-Amelot">
-  <option value="Le Mesnil-Aubry">
-  <option value="Le Mesnil-le-Roi">
-  <option value="Le Mesnil-Saint-Denis">
-  <option value="Le Mée-sur-Seine">
-  <option value="Le Mérévillois">
-  <option value="Le Pecq">
-  <option value="Le Perchay">
-  <option value="Le Perray-en-Yvelines">
-  <option value="Le Perreux-sur-Marne">
-  <option value="Le Pin">
-  <option value="Le Plessis-aux-Bois">
-  <option value="Le Plessis-Bouchard">
-  <option value="Le Plessis-Feu-Aussoux">
-  <option value="Le Plessis-Gassot">
-  <option value="Le Plessis-l'Évêque">
-  <option value="Le Plessis-Luzarches">
-  <option value="Le Plessis-Placy">
-  <option value="Le Plessis-Pâté">
-  <option value="Le Plessis-Robinson">
-  <option value="Le Plessis-Trévise">
-  <option value="Le Port-Marly">
-  <option value="Le Pré-Saint-Gervais">
-  <option value="Le Raincy">
-  <option value="Le Tartre-Gaudran">
-  <option value="Le Tertre-Saint-Denis">
-  <option value="Le Thillay">
-  <option value="Le Tremblay-sur-Mauldre">
-  <option value="Le Val-Saint-Germain">
-  <option value="Le Vaudoué">
-  <option value="Le Vésinet">
-  <option value="Les Alluets-le-Roi">
-  <option value="Les Bréviaires">
-  <option value="Les Chapelles-Bourbon">
-  <option value="Les Clayes-sous-Bois">
-  <option value="Les Essarts-le-Roi">
-  <option value="Les Granges-le-Roi">
-  <option value="Les Lilas">
-  <option value="Les Loges-en-Josas">
-  <option value="Les Marêts">
-  <option value="Les Mesnuls">
-  <option value="Les Molières">
-  <option value="Les Mureaux">
-  <option value="Les Ormes-sur-Voulzie">
-  <option value="Les Pavillons-sous-Bois">
-  <option value="Les Ulis">
-  <option value="Les Écrennes">
-  <option value="Lescherolles">
-  <option value="Lesches">
-  <option value="Leudeville">
-  <option value="Leudon-en-Brie">
-  <option value="Leuville-sur-Orge">
-  <option value="Levallois-Perret">
-  <option value="Lieusaint">
-  <option value="Limay">
-  <option value="Limeil-Brévannes">
-  <option value="Limetz-Villez">
-  <option value="Limoges-Fourches">
-  <option value="Limours">
-  <option value="Linas">
-  <option value="Lisses">
-  <option value="Lissy">
-  <option value="Liverdy-en-Brie">
-  <option value="Livilliers">
-  <option value="Livry-Gargan">
-  <option value="Livry-sur-Seine">
-  <option value="Lizines">
-  <option value="Lizy-sur-Ourcq">
-  <option value="Lognes">
-  <option value="Lommoye">
-  <option value="Longjumeau">
-  <option value="Longnes">
-  <option value="Longperrier">
-  <option value="Longpont-sur-Orge">
-  <option value="Longuesse">
-  <option value="Longueville">
-  <option value="Longvilliers">
-  <option value="Lorrez-le-Bocage-Préaux">
-  <option value="Louan-Villegruis-Fontaine">
-  <option value="Louveciennes">
-  <option value="Louvres">
-  <option value="Luisetaines">
-  <option value="Lumigny-Nesles-Ormeaux">
-  <option value="Luzancy">
-  <option value="Luzarches">
-  <option value="Léchelle">
-  <option value="Lésigny">
-  <option value="Lévis-Saint-Nom">
-  <option value="Machault">
-  <option value="Maffliers">
-  <option value="Magnanville">
-  <option value="Magny-en-Vexin">
-  <option value="Magny-le-Hongre">
-  <option value="Magny-les-Hameaux">
-  <option value="Maincy">
-  <option value="Maison-Rouge">
-  <option value="Maisoncelles-en-Brie">
-  <option value="Maisoncelles-en-Gâtinais">
-  <option value="Maisons-Alfort">
-  <option value="Maisons-Laffitte">
-  <option value="Maisse">
-  <option value="Malakoff">
-  <option value="Mandres-les-Roses">
-  <option value="Mantes-la-Jolie">
-  <option value="Mantes-la-Ville">
-  <option value="Marchémoret">
-  <option value="Marcilly">
-  <option value="Marcoussis">
-  <option value="Marcq">
-  <option value="Mareil-en-France">
-  <option value="Mareil-le-Guyon">
-  <option value="Mareil-Marly">
-  <option value="Mareil-sur-Mauldre">
-  <option value="Mareuil-lès-Meaux">
-  <option value="Margency">
-  <option value="Marines">
-  <option value="Marles-en-Brie">
-  <option value="Marly-la-Ville">
-  <option value="Marly-le-Roi">
-  <option value="Marnes-la-Coquette">
-  <option value="Marolles-en-Beauce">
-  <option value="Marolles-en-Brie">
-  <option value="Marolles-en-Brie">
-  <option value="Marolles-en-Hurepoix">
-  <option value="Marolles-sur-Seine">
-  <option value="Mary-sur-Marne">
-  <option value="Massy">
-  <option value="Mauchamps">
-  <option value="Maudétour-en-Vexin">
-  <option value="Maule">
-  <option value="Maulette">
-  <option value="Mauperthuis">
-  <option value="Maurecourt">
-  <option value="Mauregard">
-  <option value="Maurepas">
-  <option value="May-en-Multien">
-  <option value="Meaux">
-  <option value="Meigneux">
-  <option value="Meilleray">
-  <option value="Melun">
-  <option value="Melz-sur-Seine">
-  <option value="Mennecy">
-  <option value="Menouville">
-  <option value="Menucourt">
-  <option value="Mespuits">
-  <option value="Messy">
-  <option value="Meudon">
-  <option value="Meulan-en-Yvelines">
-  <option value="Millemont">
-  <option value="Milly-la-Forêt">
-  <option value="Milon-la-Chapelle">
-  <option value="Misy-sur-Yonne">
-  <option value="Mitry-Mory">
-  <option value="Mittainville">
-  <option value="Moigny-sur-École">
-  <option value="Moisenay">
-  <option value="Moisselles">
-  <option value="Moisson">
-  <option value="Moissy-Cramayel">
-  <option value="Moncourt-Fromonville">
-  <option value="Mondeville">
-  <option value="Mondreville">
-  <option value="Mondreville">
-  <option value="Monnerville">
-  <option value="Mons-en-Montois">
-  <option value="Montainville">
-  <option value="Montalet-le-Bois">
-  <option value="Montceaux-lès-Meaux">
-  <option value="Montceaux-lès-Provins">
-  <option value="Montchauvet">
-  <option value="Montdauphin">
-  <option value="Montenils">
-  <option value="Montereau-Fault-Yonne">
-  <option value="Montereau-sur-le-Jard">
-  <option value="Montesson">
-  <option value="Montfermeil">
-  <option value="Montfort-l'Amaury">
-  <option value="Montgeron">
-  <option value="Montgeroult">
-  <option value="Montgé-en-Goële">
-  <option value="Monthyon">
-  <option value="Montigny-le-Bretonneux">
-  <option value="Montigny-le-Guesdier">
-  <option value="Montigny-Lencoup">
-  <option value="Montigny-lès-Cormeilles">
-  <option value="Montigny-sur-Loing">
-  <option value="Montlhéry">
-  <option value="Montlignon">
-  <option value="Montmachoux">
-  <option value="Montmagny">
-  <option value="Montmorency">
-  <option value="Montolivet">
-  <option value="Montreuil">
-  <option value="Montreuil-sur-Epte">
-  <option value="Montrouge">
-  <option value="Montry">
-  <option value="Montsoult">
-  <option value="Montévrain">
-  <option value="Morainvilliers">
-  <option value="Morangis">
-  <option value="Moret-Loing-et-Orvanne">
-  <option value="Morigny-Champigny">
-  <option value="Mormant">
-  <option value="Morsang-sur-Orge">
-  <option value="Morsang-sur-Seine">
-  <option value="Mortcerf">
-  <option value="Mortery">
-  <option value="Mouroux">
-  <option value="Mours">
-  <option value="Mousseaux-lès-Bray">
-  <option value="Mousseaux-sur-Seine">
-  <option value="Moussy">
-  <option value="Moussy-le-Neuf">
-  <option value="Moussy-le-Vieux">
-  <option value="Mouy-sur-Seine">
-  <option value="Mulcent">
-  <option value="Médan">
-  <option value="Ménerville">
-  <option value="Méricourt">
-  <option value="Mériel">
-  <option value="Mérobert">
-  <option value="Méry-sur-Marne">
-  <option value="Méry-sur-Oise">
-  <option value="Méré">
-  <option value="Mézières-sur-Seine">
-  <option value="Mézy-sur-Seine">
-  <option value="Nainville-les-Roches">
-  <option value="Nandy">
-  <option value="Nangis">
-  <option value="Nanteau-sur-Essonne">
-  <option value="Nanteau-sur-Lunain">
-  <option value="Nanterre">
-  <option value="Nanteuil-lès-Meaux">
-  <option value="Nanteuil-sur-Marne">
-  <option value="Nantouillet">
-  <option value="Neauphle-le-Château">
-  <option value="Neauphle-le-Vieux">
-  <option value="Neauphlette">
-  <option value="Nemours">
-  <option value="Nerville-la-Forêt">
-  <option value="Nesles-la-Vallée">
-  <option value="Neufmoutiers-en-Brie">
-  <option value="Neuilly-en-Vexin">
-  <option value="Neuilly-Plaisance">
-  <option value="Neuilly-sur-Marne">
-  <option value="Neuilly-sur-Seine">
-  <option value="Neuville-sur-Oise">
-  <option value="Nogent-sur-Marne">
-  <option value="Nointel">
-  <option value="Noiseau">
-  <option value="Noisiel">
-  <option value="Noisy-le-Grand">
-  <option value="Noisy-le-Roi">
-  <option value="Noisy-le-Sec">
-  <option value="Noisy-Rudignon">
-  <option value="Noisy-sur-Oise">
-  <option value="Noisy-sur-École">
-  <option value="Nonville">
-  <option value="Notre-Dame-de-la-Mer">
-  <option value="Noyen-sur-Seine">
-  <option value="Nozay">
-  <option value="Nucourt">
-  <option value="Nézel">
-  <option value="Obsonville">
-  <option value="Ocquerre">
-  <option value="Oinville-sur-Montcient">
-  <option value="Oissery">
-  <option value="Ollainville">
-  <option value="Omerville">
-  <option value="Oncy-sur-École">
-  <option value="Orcemont">
-  <option value="Orgerus">
-  <option value="Orgeval">
-  <option value="Orly">
-  <option value="Orly-sur-Morin">
-  <option value="Ormesson">
-  <option value="Ormesson-sur-Marne">
-  <option value="Ormoy">
-  <option value="Ormoy-la-Rivière">
-  <option value="Orphin">
-  <option value="Orsay">
-  <option value="Orsonville">
-  <option value="Orveau">
-  <option value="Orvilliers">
-  <option value="Osmoy">
-  <option value="Osny">
-  <option value="Othis">
-  <option value="Ozoir-la-Ferrière">
-  <option value="Ozouer-le-Voulgis">
-  <option value="Palaiseau">
-  <option value="Paley">
-  <option value="Pamfou">
-  <option value="Pantin">
-  <option value="Paray-Douaville">
-  <option value="Paray-Vieille-Poste">
-  <option value="Paris">
-  <option value="Parmain">
-  <option value="Paroy">
-  <option value="Passy-sur-Seine">
-  <option value="Pecqueuse">
-  <option value="Penchard">
-  <option value="Perdreauville">
-  <option value="Persan">
-  <option value="Perthes">
-  <option value="Pierre-Levée">
-  <option value="Pierrelaye">
-  <option value="Piscop">
-  <option value="Plaisir">
-  <option value="Plessis-Saint-Benoist">
-  <option value="Poigny">
-  <option value="Poigny-la-Forêt">
-  <option value="Poincy">
-  <option value="Poissy">
-  <option value="Poligny">
-  <option value="Pommeuse">
-  <option value="Pomponne">
-  <option value="Pontault-Combault">
-  <option value="Pontcarré">
-  <option value="Ponthévrard">
-  <option value="Pontoise">
-  <option value="Porcheville">
-  <option value="Presles">
-  <option value="Presles-en-Brie">
-  <option value="Pringy">
-  <option value="Provins">
-  <option value="Prunay-en-Yvelines">
-  <option value="Prunay-le-Temple">
-  <option value="Prunay-sur-Essonne">
-  <option value="Précy-sur-Marne">
-  <option value="Puiselet-le-Marais">
-  <option value="Puiseux-en-France">
-  <option value="Puiseux-Pontoise">
-  <option value="Puisieux">
-  <option value="Pussay">
-  <option value="Puteaux">
-  <option value="Pécy">
-  <option value="Périgny">
-  <option value="Pézarches">
-  <option value="Quiers">
-  <option value="Quincy-sous-Sénart">
-  <option value="Quincy-Voisins">
-  <option value="Raizeux">
-  <option value="Rambouillet">
-  <option value="Rampillon">
-  <option value="Rebais">
-  <option value="Recloses">
-  <option value="Remauville">
-  <option value="Rennemoulin">
-  <option value="Reuil-en-Brie">
-  <option value="Richarville">
-  <option value="Richebourg">
-  <option value="Ris-Orangis">
-  <option value="Rochefort-en-Yvelines">
-  <option value="Roinville">
-  <option value="Roinvilliers">
-  <option value="Roissy-en-Brie">
-  <option value="Roissy-en-France">
-  <option value="Rolleboise">
-  <option value="Romainville">
-  <option value="Ronquerolles">
-  <option value="Rosay">
-  <option value="Rosny-sous-Bois">
-  <option value="Rosny-sur-Seine">
-  <option value="Rouilly">
-  <option value="Rouvres">
-  <option value="Rozay-en-Brie">
-  <option value="Rubelles">
-  <option value="Rueil-Malmaison">
-  <option value="Rumont">
-  <option value="Rungis">
-  <option value="Rupéreux">
-  <option value="Réau">
-  <option value="Sablonnières">
-  <option value="Saclas">
-  <option value="Saclay">
-  <option value="Sagy">
-  <option value="Sailly">
-  <option value="Saint-Arnoult-en-Yvelines">
-  <option value="Saint-Aubin">
-  <option value="Saint-Augustin">
-  <option value="Saint-Barthélemy">
-  <option value="Saint-Brice">
-  <option value="Saint-Brice-sous-Forêt">
-  <option value="Saint-Chéron">
-  <option value="Saint-Clair-sur-Epte">
-  <option value="Saint-Cloud">
-  <option value="Saint-Cyr-en-Arthies">
-  <option value="Saint-Cyr-l'École">
-  <option value="Saint-Cyr-la-Rivière">
-  <option value="Saint-Cyr-sous-Dourdan">
-  <option value="Saint-Cyr-sur-Morin">
-  <option value="Saint-Denis">
-  <option value="Saint-Denis-lès-Rebais">
-  <option value="Saint-Escobille">
-  <option value="Saint-Fargeau-Ponthierry">
-  <option value="Saint-Fiacre">
-  <option value="Saint-Forget">
-  <option value="Saint-Germain-de-la-Grange">
-  <option value="Saint-Germain-en-Laye">
-  <option value="Saint-Germain-Laval">
-  <option value="Saint-Germain-Laxis">
-  <option value="Saint-Germain-lès-Arpajon">
-  <option value="Saint-Germain-lès-Corbeil">
-  <option value="Saint-Germain-sous-Doue">
-  <option value="Saint-Germain-sur-Morin">
-  <option value="Saint-Germain-sur-École">
-  <option value="Saint-Gervais">
-  <option value="Saint-Gratien">
-  <option value="Saint-Hilaire">
-  <option value="Saint-Hilarion">
-  <option value="Saint-Hilliers">
-  <option value="Saint-Illiers-la-Ville">
-  <option value="Saint-Illiers-le-Bois">
-  <option value="Saint-Jean-de-Beauregard">
-  <option value="Saint-Jean-les-Deux-Jumeaux">
-  <option value="Saint-Just-en-Brie">
-  <option value="Saint-Lambert">
-  <option value="Saint-Leu-la-Forêt">
-  <option value="Saint-Loup-de-Naud">
-  <option value="Saint-Léger">
-  <option value="Saint-Léger-en-Yvelines">
-  <option value="Saint-Mammès">
-  <option value="Saint-Mandé">
-  <option value="Saint-Mard">
-  <option value="Saint-Mars-Vieux-Maisons">
-  <option value="Saint-Martin-de-Bréthencourt">
-  <option value="Saint-Martin-des-Champs">
-  <option value="Saint-Martin-des-Champs">
-  <option value="Saint-Martin-du-Boschet">
-  <option value="Saint-Martin-du-Tertre">
-  <option value="Saint-Martin-en-Bière">
-  <option value="Saint-Martin-la-Garenne">
-  <option value="Saint-Maur-des-Fossés">
-  <option value="Saint-Maurice">
-  <option value="Saint-Maurice-Montcouronne">
-  <option value="Saint-Mesmes">
-  <option value="Saint-Michel-sur-Orge">
-  <option value="Saint-Méry">
-  <option value="Saint-Nom-la-Bretèche">
-  <option value="Saint-Ouen-en-Brie">
-  <option value="Saint-Ouen-l'Aumône">
-  <option value="Saint-Ouen-sur-Morin">
-  <option value="Saint-Ouen-sur-Seine">
-  <option value="Saint-Pathus">
-  <option value="Saint-Pierre-du-Perray">
-  <option value="Saint-Pierre-lès-Nemours">
-  <option value="Saint-Prix">
-  <option value="Saint-Rémy-de-la-Vanne">
-  <option value="Saint-Rémy-l'Honoré">
-  <option value="Saint-Rémy-lès-Chevreuse">
-  <option value="Saint-Sauveur-lès-Bray">
-  <option value="Saint-Sauveur-sur-École">
-  <option value="Saint-Siméon">
-  <option value="Saint-Soupplets">
-  <option value="Saint-Sulpice-de-Favières">
-  <option value="Saint-Thibault-des-Vignes">
-  <option value="Saint-Vrain">
-  <option value="Saint-Witz">
-  <option value="Saint-Yon">
-  <option value="Sainte-Aulde">
-  <option value="Sainte-Colombe">
-  <option value="Sainte-Geneviève-des-Bois">
-  <option value="Sainte-Mesme">
-  <option value="Saintry-sur-Seine">
-  <option value="Salins">
-  <option value="Sammeron">
-  <option value="Samois-sur-Seine">
-  <option value="Samoreau">
-  <option value="Sancy">
-  <option value="Sancy-lès-Provins">
-  <option value="Sannois">
-  <option value="Santeny">
-  <option value="Santeuil">
-  <option value="Sarcelles">
-  <option value="Sartrouville">
-  <option value="Saulx-les-Chartreux">
-  <option value="Saulx-Marchais">
-  <option value="Savigny-le-Temple">
-  <option value="Savigny-sur-Orge">
-  <option value="Savins">
-  <option value="Saâcy-sur-Marne">
-  <option value="Sceaux">
-  <option value="Seine-Port">
-  <option value="Senlisse">
-  <option value="Sept-Sorts">
-  <option value="Septeuil">
-  <option value="Seraincourt">
-  <option value="Sermaise">
-  <option value="Serris">
-  <option value="Servon">
-  <option value="Seugy">
-  <option value="Sevran">
-  <option value="Signy-Signets">
-  <option value="Sigy">
-  <option value="Sivry-Courtry">
-  <option value="Sognolles-en-Montois">
-  <option value="Soignolles-en-Brie">
-  <option value="Soindres">
-  <option value="Soisy-Bouy">
-  <option value="Soisy-sous-Montmorency">
-  <option value="Soisy-sur-Seine">
-  <option value="Soisy-sur-École">
-  <option value="Solers">
-  <option value="Sonchamp">
-  <option value="Souppes-sur-Loing">
-  <option value="Sourdun">
-  <option value="Souzy-la-Briche">
-  <option value="Stains">
-  <option value="Sucy-en-Brie">
-  <option value="Suresnes">
-  <option value="Survilliers">
-  <option value="Sèvres">
-  <option value="Tacoignières">
-  <option value="Tancrou">
-  <option value="Taverny">
-  <option value="Tessancourt-sur-Aubette">
-  <option value="Theuville">
-  <option value="Thiais">
-  <option value="Thieux">
-  <option value="Thiverval-Grignon">
-  <option value="Thoiry">
-  <option value="Thomery">
-  <option value="Thorigny-sur-Marne">
-  <option value="Thoury-Férottes">
-  <option value="Théméricourt">
-  <option value="Thénisy">
-  <option value="Tigeaux">
-  <option value="Tigery">
-  <option value="Tilly">
-  <option value="Torcy">
-  <option value="Torfou">
-  <option value="Touquin">
-  <option value="Tournan-en-Brie">
-  <option value="Tousson">
-  <option value="Toussus-le-Noble">
-  <option value="Trappes">
-  <option value="Tremblay-en-France">
-  <option value="Treuzy-Levelay">
-  <option value="Triel-sur-Seine">
-  <option value="Trilbardou">
-  <option value="Trilport">
-  <option value="Trocy-en-Multien">
-  <option value="Ury">
-  <option value="Us">
-  <option value="Ussy-sur-Marne">
-  <option value="Vaires-sur-Marne">
-  <option value="Valence-en-Brie">
-  <option value="Valenton">
-  <option value="Vallangoujard">
-  <option value="Valmondois">
-  <option value="Valpuiseaux">
-  <option value="Vanves">
-  <option value="Vanvillé">
-  <option value="Varennes-Jarcy">
-  <option value="Varennes-sur-Seine">
-  <option value="Varreddes">
-  <option value="Vaucourtois">
-  <option value="Vaucresson">
-  <option value="Vaudherland">
-  <option value="Vaudoy-en-Brie">
-  <option value="Vaugrigneuse">
-  <option value="Vauhallan">
-  <option value="Vaujours">
-  <option value="Vauréal">
-  <option value="Vaux-le-Pénil">
-  <option value="Vaux-sur-Lunain">
-  <option value="Vaux-sur-Seine">
-  <option value="Vayres-sur-Essonne">
-  <option value="Vendrest">
-  <option value="Verdelot">
-  <option value="Verneuil-l'Étang">
-  <option value="Verneuil-sur-Seine">
-  <option value="Vernou-la-Celle-sur-Seine">
-  <option value="Vernouillet">
-  <option value="Verrières-le-Buisson">
-  <option value="Versailles">
-  <option value="Vert">
-  <option value="Vert-le-Grand">
-  <option value="Vert-le-Petit">
-  <option value="Vert-Saint-Denis">
-  <option value="Viarmes">
-  <option value="Vicq">
-  <option value="Videlles">
-  <option value="Vieille-Église-en-Yvelines">
-  <option value="Vienne-en-Arthies">
-  <option value="Vieux-Champagne">
-  <option value="Vignely">
-  <option value="Vigneux-sur-Seine">
-  <option value="Vigny">
-  <option value="Villabé">
-  <option value="Villaines-sous-Bois">
-  <option value="Ville-d'Avray">
-  <option value="Ville-Saint-Jacques">
-  <option value="Villebon-sur-Yvette">
-  <option value="Villebéon">
-  <option value="Villecerf">
-  <option value="Villeconin">
-  <option value="Villecresnes">
-  <option value="Villejuif">
-  <option value="Villejust">
-  <option value="Villemareuil">
-  <option value="Villemaréchal">
-  <option value="Villemer">
-  <option value="Villemoisson-sur-Orge">
-  <option value="Villemomble">
-  <option value="Villenauxe-la-Petite">
-  <option value="Villeneuve-la-Garenne">
-  <option value="Villeneuve-le-Comte">
-  <option value="Villeneuve-le-Roi">
-  <option value="Villeneuve-les-Bordes">
-  <option value="Villeneuve-Saint-Denis">
-  <option value="Villeneuve-Saint-Georges">
-  <option value="Villeneuve-sous-Dammartin">
-  <option value="Villeneuve-sur-Auvers">
-  <option value="Villeneuve-sur-Bellot">
-  <option value="Villennes-sur-Seine">
-  <option value="Villenoy">
-  <option value="Villeparisis">
-  <option value="Villepinte">
-  <option value="Villepreux">
-  <option value="Villeron">
-  <option value="Villeroy">
-  <option value="Villers-en-Arthies">
-  <option value="Villetaneuse">
-  <option value="Villette">
-  <option value="Villevaudé">
-  <option value="Villiers-Adam">
-  <option value="Villiers-en-Bière">
-  <option value="Villiers-le-Bel">
-  <option value="Villiers-le-Bâcle">
-  <option value="Villiers-le-Mahieu">
-  <option value="Villiers-le-Sec">
-  <option value="Villiers-Saint-Frédéric">
-  <option value="Villiers-Saint-Georges">
-  <option value="Villiers-sous-Grez">
-  <option value="Villiers-sur-Marne">
-  <option value="Villiers-sur-Morin">
-  <option value="Villiers-sur-Orge">
-  <option value="Villiers-sur-Seine">
-  <option value="Villuis">
-  <option value="Vimpelles">
-  <option value="Vinantes">
-  <option value="Vincennes">
-  <option value="Vincy-Manœuvre">
-  <option value="Viroflay">
-  <option value="Viry-Châtillon">
-  <option value="Vitry-sur-Seine">
-  <option value="Voinsles">
-  <option value="Voisenon">
-  <option value="Voisins-le-Bretonneux">
-  <option value="Voulangis">
-  <option value="Voulton">
-  <option value="Voulx">
-  <option value="Vulaines-lès-Provins">
-  <option value="Vulaines-sur-Seine">
-  <option value="Vélizy-Villacoublay">
-  <option value="Vémars">
-  <option value="Vétheuil">
-  <option value="Wissous">
-  <option value="Wy-dit-Joli-Village">
-  <option value="Yerres">
-  <option value="Yèbles">
-  <option value="Écharcon">
-  <option value="Échouboulains">
-  <option value="Écouen">
-  <option value="Égligny">
-  <option value="Égly">
-  <option value="Égreville">
-  <option value="Élancourt">
-  <option value="Émancé">
-  <option value="Émerainville">
-  <option value="Épiais-lès-Louvres">
-  <option value="Épiais-Rhus">
-  <option value="Épinay-Champlâtreux">
-  <option value="Épinay-sous-Sénart">
-  <option value="Épinay-sur-Orge">
-  <option value="Épinay-sur-Seine">
-  <option value="Épône">
-  <option value="Éragny-sur-Oise">
-  <option value="Étampes">
-  <option value="Étiolles">
-  <option value="Étréchy">
-  <option value="Étrépilly">
-  <option value="Évecquemont">
-  <option value="Évry-Courcouronnes">
-  <option value="Évry-Grégy-sur-Yerre">
-  <option value="Ézanville">
-            </datalist>
-          </div></div>
-          <div class="fg"><label>Quand souhaitez-vous être rappelé ?</label><div class="iw"><span class="ico">🕐</span>
-            <select id="f_moment" required>
-              <option value="" disabled selected>Choisissez un créneau</option>
-              <option>Le plus tôt possible</option>
-              <option>Ce matin (avant 12h)</option>
-              <option>Cet après-midi (12h-17h)</option>
-              <option>Ce soir (après 17h)</option>
-              <option>Demain matin</option>
-            </select>
-          </div></div>
+          <div class="fg ville-wrap"><label>Ville la plus proche</label>
+            <div class="iw"><span class="ico"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#00C77A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
+              <input type="text" id="f_ville" name="f_ville" required placeholder="Votre ville..." autocomplete="off" oninput="filterVilles(this.value)" onfocus="filterVilles(this.value)" onblur="setTimeout(hideVilles,200)">
+            </div>
+            <div id="villesDrop" class="villes-drop" style="display:none"></div>
+          </div>
+          <div class="fg">
+            <label>Quand souhaitez-vous être rappelé ?</label>
+            <input type="hidden" id="f_moment" name="f_moment" required>
+            <button type="button" class="plan-btn" id="planBtn" onclick="openPlanning()" onfocus="openPlanning()">
+              <span>📅</span><span id="planBtnTxt">Choisissez un créneau</span>
+            </button>
+          </div>
           <div class="consent-box">
             <label class="consent-label">
               <input type="checkbox" id="f_consent" required>
@@ -1937,7 +680,6 @@ body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;ove
     <button onclick="openLegal('mentions')">📜 Mentions légales</button>
     <button onclick="openLegal('cgu')">📄 CGU</button>
     <button onclick="openLegal('confidentialite')">🔒 Confidentialité</button>
-    <button onclick="openLegal('cookies')">🍪 Cookies</button>
   </div>
   <div class="fc2">&copy; 2026 PointSave &mdash; Stage récupération de points agréé près de <span id="dyn-footer">Pussay</span></div>
 </footer>
@@ -2037,8 +779,7 @@ document.getElementById('contactForm').addEventListener('submit',function(e){
 
 // COOKIES + SCROLL + REVEAL
 window.addEventListener('DOMContentLoaded',function(){
-  if(!localStorage.getItem('ps_ck')){setTimeout(function(){document.getElementById('ck').classList.add('show');},2000);}
-  var bO=new IntersectionObserver(function(en){en.forEach(function(e,i){if(e.isIntersecting){setTimeout(function(){e.target.classList.add('lit');},i*120);bO.unobserve(e.target);}});},{threshold:0.1});
+    var bO=new IntersectionObserver(function(en){en.forEach(function(e,i){if(e.isIntersecting){setTimeout(function(){e.target.classList.add('lit');},i*120);bO.unobserve(e.target);}});},{threshold:0.1});
   document.querySelectorAll('[data-badge]').forEach(function(el){bO.observe(el);});
   var o=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){e.target.classList.add('vis');o.unobserve(e.target);}});},{threshold:0.08});
   document.querySelectorAll('.rev').forEach(function(el){o.observe(el);});
@@ -2206,5 +947,86 @@ if(document.readyState==='loading'){
 }
 })();
 </script>
-</body>
+<!-- PLANNING POPUP -->
+<div class="plan-overlay" id="planOverlay" onclick="closePlanning(event)">
+  <div class="plan-modal">
+    <div class="plan-modal-hd">
+      <h3>📅 Choisissez un créneau</h3>
+      <button class="plan-close" onclick="closePlanningDirect()">✕</button>
+    </div>
+    <button type="button" class="plan-asap" id="planAsap" onclick="selectPlanAsap()">⚡ Le plus tôt possible</button>
+    <div class="plan-scroll" id="planningGrid"></div>
+  </div>
+</div>
+
+<script>
+
+// PLANNING POPUP
+function initPlanning(){
+  var grid=document.getElementById('planningGrid');
+  if(!grid)return;
+  var jours=['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];
+  var slots=[{label:'Matin',sub:'9h-12h'},{label:'Après-midi',sub:'12h-17h'},{label:'Soir',sub:'17h-20h'}];
+  var today=new Date();
+  for(var i=0;i<7;i++){
+    var d=new Date(today);d.setDate(today.getDate()+i);
+    var col=document.createElement('div');col.className='pday';
+    var hd=document.createElement('div');hd.className='pday-hd';
+    hd.innerHTML='<div class="pd">'+jours[d.getDay()]+'</div><div class="pn">'+d.getDate()+'</div>';
+    col.appendChild(hd);
+    slots.forEach(function(s){
+      var sl=document.createElement('div');sl.className='pslot';
+      sl.innerHTML=s.label+'<span class="sl">'+s.sub+'</span>';
+      var dateStr=jours[d.getDay()]+' '+d.getDate()+'/'+(d.getMonth()<9?'0':'')+(d.getMonth()+1);
+      sl.dataset.val=dateStr+' '+s.label+' ('+s.sub+')';
+      sl.onclick=function(){
+        document.querySelectorAll('.pslot').forEach(function(x){x.classList.remove('sel')});
+        document.getElementById('planAsap').classList.remove('sel');
+        this.classList.add('sel');
+        document.getElementById('f_moment').value=this.dataset.val;
+        document.getElementById('planBtnTxt').textContent='📅 '+this.dataset.val;
+        document.getElementById('planBtn').classList.add('filled');
+        setTimeout(closePlanningDirect,350);
+      };
+      col.appendChild(sl);
+    });
+    grid.appendChild(col);
+  }
+}
+function openPlanning(){document.getElementById('planOverlay').classList.add('open');document.body.style.overflow='hidden';}
+function closePlanningDirect(){document.getElementById('planOverlay').classList.remove('open');document.body.style.overflow='';}
+function closePlanning(e){if(e.target===document.getElementById('planOverlay'))closePlanningDirect();}
+function selectPlanAsap(){
+  document.querySelectorAll('.pslot').forEach(function(x){x.classList.remove('sel')});
+  document.getElementById('planAsap').classList.add('sel');
+  document.getElementById('f_moment').value='Le plus tôt possible';
+  document.getElementById('planBtnTxt').textContent='⚡ Le plus tôt possible';
+  document.getElementById('planBtn').classList.add('filled');
+  setTimeout(closePlanningDirect,350);
+}
+// AUTOCOMPLETE VILLE
+var VILLES_AC=['Abbéville-la-Rivière','Ableiges','Ablis','Ablon-sur-Seine','Achères','Achères-la-Forêt','Adainville','Aigremont','Aincourt','Alfortville','Allainville','Ambleville','Amenucourt','Amillis','Amponville','Andelu','Andilly','Andrezel','Andrésy','Angerville','Angervilliers','Annet-sur-Marne','Antony','Arbonne-la-Forêt','Arcueil','Argenteuil','Argentières','Armentières-en-Brie','Arnouville','Arnouville-lès-Mantes','Arpajon','Arrancourt','Arronville','Arthies','Arville','Asnières-sur-Oise','Asnières-sur-Seine','Athis-Mons','Attainville','Aubepierre-Ozouer-le-Repos','Aubergenville','Aubervilliers','Auffargis','Aufferville','Auffreville-Brasseuil','Augers-en-Brie','Aulnay-sous-Bois','Aulnay-sur-Mauldre','Aulnoy','Auteuil','Authon-la-Plaine','Autouillet','Auvernaux','Auvers-Saint-Georges','Auvers-sur-Oise','Avernes','Avon','Avrainville','Baby','Bagneaux-sur-Loing','Bagneux','Bagnolet','Baillet-en-France','Bailly','Bailly-Romainvilliers','Ballainvilliers','Ballancourt-sur-Essonne','Balloy','Bannost-Villegagnon','Banthelu','Barbey','Barbizon','Barcy','Bassevelle','Baulne','Bazainville','Bazemont','Bazoches-lès-Bray','Bazoches-sur-Guyonne','Beauchamp','Beauchery-Saint-Martin','Beaumont-du-Gâtinais','Beaumont-sur-Oise','Beautheil-Saints','Beauvoir','Bellefontaine','Bellot','Belloy-en-France','Bennecourt','Bernay-Vilbert','Bernes-sur-Oise','Berville','Bessancourt','Beton-Bazoches','Beynes','Bezalles','Bezons','Bièvres','Blandy','Blaru','Blennes','Bobigny','Boigneville','Boinville-en-Mantois','Boinville-le-Gaillard','Boinvilliers','Bois-Colombes','Bois-Herpin','Bois-d\'Arcy','Bois-le-Roi','Boisdon','Boisemont','Boissets','Boissettes','Boissise-la-Bertrand','Boissise-le-Roi','Boissy-Mauvoisin','Boissy-Saint-Léger','Boissy-aux-Cailles','Boissy-l\'Aillerie','Boissy-la-Rivière','Boissy-le-Châtel','Boissy-le-Cutté','Boissy-le-Sec','Boissy-sans-Avoir','Boissy-sous-Saint-Yon','Boitron','Bombon','Bondoufle','Bondy','Bonnelles','Bonneuil-en-France','Bonneuil-sur-Marne','Bonnières-sur-Seine','Bouafle','Bouffémont','Bougival','Bougligny','Boulancourt','Bouleurs','Boullay-les-Troux','Boulogne-Billancourt','Bouqueval','Bouray-sur-Juine','Bourdonné','Bourg-la-Reine','Bourron-Marlotte','Boussy-Saint-Antoine','Boutervilliers','Boutigny','Boutigny-sur-Essonne','Bouville','Bransles','Bray-et-Lû','Bray-sur-Seine','Breuil-Bois-Robert','Breuillet','Breux-Jouy','Brie-Comte-Robert','Brignancourt','Briis-sous-Forges','Brières-les-Scellés','Brou-sur-Chantereine','Brouy','Brueil-en-Vexin','Brunoy','Bruyères-le-Châtel','Bruyères-sur-Oise','Bry-sur-Marne','Bréançon','Bréau','Brétigny-sur-Orge','Bréval','Buc','Buchelay','Buhy','Bullion','Buno-Bonnevaux','Burcy','Bures-sur-Yvette','Bussières','Bussy-Saint-Georges','Bussy-Saint-Martin','Buthiers','Butry-sur-Oise','Béhoust','Béthemont-la-Forêt','Cachan','Cannes-Écluse','Carnetin','Carrières-sous-Poissy','Carrières-sur-Seine','Cergy','Cernay-la-Ville','Cerneux','Cerny','Cesson','Cessoy-en-Montois','Chailly-en-Bière','Chailly-en-Brie','Chaintreaux','Chalautre-la-Grande','Chalautre-la-Petite','Chalifert','Chalmaison','Chalo-Saint-Mars','Chalou-Moulineux','Chamarande','Chambourcy','Chambry','Chamigny','Champagne-sur-Oise','Champagne-sur-Seine','Champcenest','Champcueil','Champdeuil','Champeaux','Champigny-sur-Marne','Champlan','Champmotteux','Champs-sur-Marne','Changis-sur-Marne','Chanteloup-en-Brie','Chanteloup-les-Vignes','Chapet','Charenton-le-Pont','Charmentray','Charmont','Charny','Chars','Chartrettes','Chartronges','Chatignonville','Chatou','Chauconin-Neufmontiers','Chauffour-lès-Étréchy','Chauffry','Chaufour-lès-Bonnières','Chaumes-en-Brie','Chaumontel','Chaussy','Chauvry','Chavenay','Chaville','Chelles','Chennevières-lès-Louvres','Chennevières-sur-Marne','Chenoise-Cucharmoy','Chenou','Cheptainville','Chessy','Chevannes','Chevilly-Larue','Chevrainvilliers','Chevreuse','Chevru','Chevry-Cossigny','Chevry-en-Sereine','Chilly-Mazarin','Choisel','Choisy-en-Brie','Choisy-le-Roi','Château-Landon','Châteaubleau','Châteaufort','Châtenay-Malabry','Châtenay-en-France','Châtenay-sur-Seine','Châtenoy','Châtillon','Châtillon-la-Borde','Châtres','Chérence','Citry','Civry-la-Forêt','Clairefontaine-en-Yvelines','Clamart','Claye-Souilly','Clichy','Clichy-sous-Bois','Clos-Fontaine','Cléry-en-Vexin','Cocherel','Coignières','Collégien','Colombes','Combs-la-Ville','Commeny','Compans','Conches-sur-Gondoire','Condé-Sainte-Libiaire','Condé-sur-Vesgre','Condécourt','Conflans-Sainte-Honorine','Congerville-Thionville','Congis-sur-Thérouanne','Corbeil-Essonnes','Corbreuse','Cormeilles-en-Parisis','Cormeilles-en-Vexin','Coubert','Coubron','Couilly-Pont-aux-Dames','Coulombs-en-Valois','Coulommes','Coulommiers','Coupvray','Courances','Courbevoie','Courcelles-en-Bassée','Courcelles-sur-Viosne','Courchamp','Courdimanche','Courdimanche-sur-Essonne','Courgent','Courpalay','Courquetaine','Courson-Monteloup','Courtacon','Courtomer','Courtry','Coutençon','Coutevroult','Cravent','Crespières','Crisenoy','Croissy-Beaubourg','Croissy-sur-Seine','Crosne','Crouy-sur-Ourcq','Crèvecœur-en-Brie','Crécy-la-Chapelle','Crégy-lès-Meaux','Créteil','Cuisy','Cély','D\'Huison-Longueville','Dagny','Dammarie-les-Lys','Dammartin-en-Goële','Dammartin-en-Serve','Dammartin-sur-Tigeaux','Dampierre-en-Yvelines','Dampmart','Dannemarie','Dannemois','Darvault','Davron','Deuil-la-Barre','Dhuisy','Diant','Domont','Donnemarie-Dontilly','Dormelles','Doue','Dourdan','Douy-la-Ramée','Drancy','Draveil','Drocourt','Dugny','Eaubonne','Ecquevilly','Enghien-les-Bains','Ennery','Ermont','Esbly','Esmans','Everly','Faremoutiers','Favières','Favrieux','Faÿ-lès-Nemours','Ferrières-en-Brie','Feucherolles','Flacourt','Flagy','Fleury-Mérogis','Fleury-en-Bière','Flexanville','Flins-Neuve-Église','Flins-sur-Seine','Follainville-Dennemont','Fontaine-Fourches','Fontaine-la-Rivière','Fontaine-le-Port','Fontainebleau','Fontains','Fontenailles','Fontenay-Mauvoisin','Fontenay-Saint-Père','Fontenay-Trésigny','Fontenay-aux-Roses','Fontenay-en-Parisis','Fontenay-le-Fleury','Fontenay-le-Vicomte','Fontenay-lès-Briis','Fontenay-sous-Bois','Forfry','Forges','Forges-les-Bains','Fosses','Fouju','Franconville','Freneuse','Fresnes','Fresnes-sur-Marne','Fromont','Frouville','Frémainville','Frémécourt','Frépillon','Frétoy','Fublaines','Féricy','Férolles-Attilly','Gagny','Gaillon-sur-Montcient','Galluis','Gambais','Gambaiseuil','Garancières','Garches','Garentreville','Gargenville','Garges-lès-Gonesse','Gastins','Gazeran','Genainville','Gennevilliers','Gentilly','Germigny-l\'Évêque','Germigny-sous-Coulombs','Gesvres-le-Chapitre','Gif-sur-Yvette','Giremoutiers','Gironville','Gironville-sur-Essonne','Gometz-la-Ville','Gometz-le-Châtel','Gommecourt','Gonesse','Gouaix','Goupillières','Gournay-sur-Marne','Goussainville','Goussonville','Gouvernes','Grandchamp','Grandpuits-Bailly-Carrois','Gravon','Gressey','Gressy','Gretz-Armainvilliers','Grez-sur-Loing','Grigny','Grisy-Suisnes','Grisy-les-Plâtres','Grisy-sur-Seine','Groslay','Grosrouvre','Guercheville','Guermantes','Guernes','Guerville','Guibeville','Guignes','Guigneville-sur-Essonne','Guillerval','Guiry-en-Vexin','Guitrancourt','Gurcy-le-Châtel','Guyancourt','Guérard','Génicourt','Haravilliers','Hardricourt','Hargeville','Haute-Isle','Hautefeuille','Herbeville','Herblay-sur-Seine','Hermeray','Hermé','Hodent','Hondevilliers','Houdan','Houilles','Hédouville','Héricy','Hérouville-en-Vexin','Ichy','Igny','Isles-les-Meldeuses','Isles-lès-Villenoy','Issou','Issy-les-Moulineaux','Itteville','Iverny','Ivry-sur-Seine','Jablines','Jagny-sous-Bois','Jaignes','Jambville','Janville-sur-Juine','Janvry','Jaulnes','Joinville-le-Pont','Jossigny','Jouarre','Jouars-Pontchartrain','Jouy-Mauvoisin','Jouy-en-Josas','Jouy-le-Châtel','Jouy-le-Moutier','Jouy-sur-Morin','Juilly','Jumeauville','Jutigny','Juvisy-sur-Orge','Juziers','L\'Haÿ-les-Roses','L\'Isle-Adam','L\'Étang-la-Ville','L\'Île-Saint-Denis','La Boissière-École','La Brosse-Montceaux','La Celle-Saint-Cloud','La Celle-les-Bordes','La Celle-sur-Morin','La Chapelle-Gauthier','La Chapelle-Iger','La Chapelle-Moutils','La Chapelle-Rablais','La Chapelle-Saint-Sulpice','La Chapelle-en-Vexin','La Chapelle-la-Reine','La Courneuve','La Croix-en-Brie','La Falaise','La Ferté-Alais','La Ferté-Gaucher','La Ferté-sous-Jouarre','La Forêt-Sainte-Croix','La Forêt-le-Roi','La Frette-sur-Seine','La Garenne-Colombes','La Genevraye','La Grande-Paroisse','La Haute-Maison','La Hauteville','La Houssaye-en-Brie','La Madeleine-sur-Loing','La Norville','La Queue-en-Brie','La Queue-les-Yvelines','La Roche-Guyon','La Rochette','La Tombe','La Trétoire','La Verrière','La Ville-du-Bois','La Villeneuve-en-Chevrie','Labbeville','Lagny-sur-Marne','Lainville-en-Vexin','Larchant','Lardy','Lassy','Laval-en-Brie','Le Bellay-en-Vexin','Le Blanc-Mesnil','Le Bourget','Le Chesnay-Rocquencourt','Le Châtelet-en-Brie','Le Coudray-Montceaux','Le Heaulme','Le Kremlin-Bicêtre','Le Mesnil-Amelot','Le Mesnil-Aubry','Le Mesnil-Saint-Denis','Le Mesnil-le-Roi','Le Mée-sur-Seine','Le Mérévillois','Le Pecq','Le Perchay','Le Perray-en-Yvelines','Le Perreux-sur-Marne','Le Pin','Le Plessis-Bouchard','Le Plessis-Feu-Aussoux','Le Plessis-Gassot','Le Plessis-Luzarches','Le Plessis-Placy','Le Plessis-Pâté','Le Plessis-Robinson','Le Plessis-Trévise','Le Plessis-aux-Bois','Le Plessis-l\'Évêque','Le Port-Marly','Le Pré-Saint-Gervais','Le Raincy','Le Tartre-Gaudran','Le Tertre-Saint-Denis','Le Thillay','Le Tremblay-sur-Mauldre','Le Val-Saint-Germain','Le Vaudoué','Le Vésinet','Les Alluets-le-Roi','Les Bréviaires','Les Chapelles-Bourbon','Les Clayes-sous-Bois','Les Essarts-le-Roi','Les Granges-le-Roi','Les Lilas','Les Loges-en-Josas','Les Marêts','Les Mesnuls','Les Molières','Les Mureaux','Les Ormes-sur-Voulzie','Les Pavillons-sous-Bois','Les Ulis','Les Écrennes','Lescherolles','Lesches','Leudeville','Leudon-en-Brie','Leuville-sur-Orge','Levallois-Perret','Lieusaint','Limay','Limeil-Brévannes','Limetz-Villez','Limoges-Fourches','Limours','Linas','Lisses','Lissy','Liverdy-en-Brie','Livilliers','Livry-Gargan','Livry-sur-Seine','Lizines','Lizy-sur-Ourcq','Lognes','Lommoye','Longjumeau','Longnes','Longperrier','Longpont-sur-Orge','Longuesse','Longueville','Longvilliers','Lorrez-le-Bocage-Préaux','Louan-Villegruis-Fontaine','Louveciennes','Louvres','Luisetaines','Lumigny-Nesles-Ormeaux','Luzancy','Luzarches','Léchelle','Lésigny','Lévis-Saint-Nom','Machault','Maffliers','Magnanville','Magny-en-Vexin','Magny-le-Hongre','Magny-les-Hameaux','Maincy','Maison-Rouge','Maisoncelles-en-Brie','Maisoncelles-en-Gâtinais','Maisons-Alfort','Maisons-Laffitte','Maisse','Malakoff','Mandres-les-Roses','Mantes-la-Jolie','Mantes-la-Ville','Marchémoret','Marcilly','Marcoussis','Marcq','Mareil-Marly','Mareil-en-France','Mareil-le-Guyon','Mareil-sur-Mauldre','Mareuil-lès-Meaux','Margency','Marines','Marles-en-Brie','Marly-la-Ville','Marly-le-Roi','Marnes-la-Coquette','Marolles-en-Beauce','Marolles-en-Brie','Marolles-en-Hurepoix','Marolles-sur-Seine','Mary-sur-Marne','Massy','Mauchamps','Maudétour-en-Vexin','Maule','Maulette','Mauperthuis','Maurecourt','Mauregard','Maurepas','May-en-Multien','Meaux','Meigneux','Meilleray','Melun','Melz-sur-Seine','Mennecy','Menouville','Menucourt','Mespuits','Messy','Meudon','Meulan-en-Yvelines','Millemont','Milly-la-Forêt','Milon-la-Chapelle','Misy-sur-Yonne','Mitry-Mory','Mittainville','Moigny-sur-École','Moisenay','Moisselles','Moisson','Moissy-Cramayel','Moncourt-Fromonville','Mondeville','Mondreville','Monnerville','Mons-en-Montois','Montainville','Montalet-le-Bois','Montceaux-lès-Meaux','Montceaux-lès-Provins','Montchauvet','Montdauphin','Montenils','Montereau-Fault-Yonne','Montereau-sur-le-Jard','Montesson','Montfermeil','Montfort-l\'Amaury','Montgeron','Montgeroult','Montgé-en-Goële','Monthyon','Montigny-Lencoup','Montigny-le-Bretonneux','Montigny-le-Guesdier','Montigny-lès-Cormeilles','Montigny-sur-Loing','Montlhéry','Montlignon','Montmachoux','Montmagny','Montmorency','Montolivet','Montreuil','Montreuil-sur-Epte','Montrouge','Montry','Montsoult','Montévrain','Morainvilliers','Morangis','Moret-Loing-et-Orvanne','Morigny-Champigny','Mormant','Morsang-sur-Orge','Morsang-sur-Seine','Mortcerf','Mortery','Mouroux','Mours','Mousseaux-lès-Bray','Mousseaux-sur-Seine','Moussy','Moussy-le-Neuf','Moussy-le-Vieux','Mouy-sur-Seine','Mulcent','Médan','Ménerville','Méricourt','Mériel','Mérobert','Méry-sur-Marne','Méry-sur-Oise','Méré','Mézières-sur-Seine','Mézy-sur-Seine','Nainville-les-Roches','Nandy','Nangis','Nanteau-sur-Essonne','Nanteau-sur-Lunain','Nanterre','Nanteuil-sur-Marne','Nantouillet','Neauphle-le-Château','Neauphle-le-Vieux','Neauphlette','Nemours','Nerville-la-Forêt','Nesles-la-Vallée','Neufmoutiers-en-Brie','Neuilly-Plaisance','Neuilly-en-Vexin','Neuilly-sur-Marne','Neuilly-sur-Seine','Neuville-sur-Oise','Nogent-sur-Marne','Nointel','Noiseau','Noisiel','Noisy-Rudignon','Noisy-le-Grand','Noisy-le-Roi','Noisy-le-Sec','Noisy-sur-Oise','Noisy-sur-École','Nonville','Notre-Dame-de-la-Mer','Noyen-sur-Seine','Nozay','Nucourt','Nézel','Obsonville','Ocquerre','Oinville-sur-Montcient','Oissery','Ollainville','Omerville','Oncy-sur-École','Orcemont','Orgerus','Orgeval','Orly','Orly-sur-Morin','Ormesson','Ormesson-sur-Marne','Ormoy','Ormoy-la-Rivière','Orphin','Orsay','Orsonville','Orveau','Orvilliers','Osmoy','Osny','Othis','Ozoir-la-Ferrière','Ozouer-le-Voulgis','Palaiseau','Paley','Pamfou','Pantin','Paray-Douaville','Paray-Vieille-Poste','Paris','Parmain','Paroy','Passy-sur-Seine','Pecqueuse','Penchard','Perdreauville','Persan','Perthes','Pierre-Levée','Pierrelaye','Piscop','Plaisir','Plessis-Saint-Benoist','Poigny','Poigny-la-Forêt','Poincy','Poissy','Poligny','Pommeuse','Pomponne','Pontault-Combault','Pontcarré','Ponthévrard','Pontoise','Porcheville','Presles','Presles-en-Brie','Pringy','Provins','Prunay-en-Yvelines','Prunay-le-Temple','Prunay-sur-Essonne','Précy-sur-Marne','Puiselet-le-Marais','Puiseux-Pontoise','Puiseux-en-France','Puisieux','Pussay','Puteaux','Pécy','Périgny','Pézarches','Quiers','Quincy-Voisins','Quincy-sous-Sénart','Raizeux','Rambouillet','Rampillon','Rebais','Recloses','Remauville','Rennemoulin','Reuil-en-Brie','Richarville','Richebourg','Ris-Orangis','Rochefort-en-Yvelines','Roinville','Roinvilliers','Roissy-en-Brie','Roissy-en-France','Rolleboise','Romainville','Ronquerolles','Rosay','Rosny-sous-Bois','Rosny-sur-Seine','Rouilly','Rouvres','Rozay-en-Brie','Rubelles','Rueil-Malmaison','Rumont','Rungis','Rupéreux','Réau','Sablonnières','Saclas','Saclay','Sagy','Sailly','Saint-Arnoult-en-Yvelines','Saint-Aubin','Saint-Augustin','Saint-Barthélemy','Saint-Brice','Saint-Brice-sous-Forêt','Saint-Chéron','Saint-Clair-sur-Epte','Saint-Cloud','Saint-Cyr-en-Arthies','Saint-Cyr-l\'École','Saint-Cyr-la-Rivière','Saint-Cyr-sous-Dourdan','Saint-Cyr-sur-Morin','Saint-Denis','Saint-Denis-lès-Rebais','Saint-Escobille','Saint-Fargeau-Ponthierry','Saint-Fiacre','Saint-Forget','Saint-Germain-Laval','Saint-Germain-Laxis','Saint-Germain-de-la-Grange','Saint-Germain-en-Laye','Saint-Germain-lès-Arpajon','Saint-Germain-lès-Corbeil','Saint-Germain-sous-Doue','Saint-Germain-sur-Morin','Saint-Germain-sur-École','Saint-Gervais','Saint-Gratien','Saint-Hilaire','Saint-Hilarion','Saint-Hilliers','Saint-Illiers-la-Ville','Saint-Illiers-le-Bois','Saint-Jean-de-Beauregard','Saint-Jean-les-Deux-Jumeaux','Saint-Just-en-Brie','Saint-Lambert','Saint-Leu-la-Forêt','Saint-Loup-de-Naud','Saint-Léger','Saint-Léger-en-Yvelines','Saint-Mammès','Saint-Mandé','Saint-Mard','Saint-Mars-Vieux-Maisons','Saint-Martin-de-Bréthencourt','Saint-Martin-des-Champs','Saint-Martin-du-Boschet','Saint-Martin-du-Tertre','Saint-Martin-en-Bière','Saint-Martin-la-Garenne','Saint-Maur-des-Fossés','Saint-Maurice','Saint-Maurice-Montcouronne','Saint-Mesmes','Saint-Michel-sur-Orge','Saint-Méry','Saint-Nom-la-Bretèche','Saint-Ouen-en-Brie','Saint-Ouen-l\'Aumône','Saint-Ouen-sur-Morin','Saint-Ouen-sur-Seine','Saint-Pathus','Saint-Pierre-du-Perray','Saint-Pierre-lès-Nemours','Saint-Prix','Saint-Rémy-de-la-Vanne','Saint-Rémy-l\'Honoré','Saint-Rémy-lès-Chevreuse','Saint-Sauveur-lès-Bray','Saint-Sauveur-sur-École','Saint-Siméon','Saint-Soupplets','Saint-Sulpice-de-Favières','Saint-Thibault-des-Vignes','Saint-Vrain','Saint-Witz','Saint-Yon','Sainte-Aulde','Sainte-Colombe','Sainte-Geneviève-des-Bois','Sainte-Mesme','Saintry-sur-Seine','Salins','Sammeron','Samois-sur-Seine','Samoreau','Sancy','Sancy-lès-Provins','Sannois','Santeny','Santeuil','Sarcelles','Sartrouville','Saulx-Marchais','Saulx-les-Chartreux','Savigny-le-Temple','Savigny-sur-Orge','Savins','Saâcy-sur-Marne','Sceaux','Seine-Port','Senlisse','Sept-Sorts','Septeuil','Seraincourt','Sermaise','Serris','Servon','Seugy','Sevran','Signy-Signets','Sigy','Sivry-Courtry','Sognolles-en-Montois','Soignolles-en-Brie','Soindres','Soisy-Bouy','Soisy-sous-Montmorency','Soisy-sur-Seine','Soisy-sur-École','Solers','Sonchamp','Souppes-sur-Loing','Sourdun','Souzy-la-Briche','Stains','Sucy-en-Brie','Suresnes','Survilliers','Sèvres','Tacoignières','Tancrou','Taverny','Tessancourt-sur-Aubette','Theuville','Thiais','Thieux','Thiverval-Grignon','Thoiry','Thomery','Thorigny-sur-Marne','Thoury-Férottes','Théméricourt','Thénisy','Tigeaux','Tigery','Tilly','Torcy','Torfou','Touquin','Tournan-en-Brie','Tousson','Toussus-le-Noble','Trappes','Tremblay-en-France','Treuzy-Levelay','Triel-sur-Seine','Trilbardou','Trilport','Trocy-en-Multien','Ury','Us','Ussy-sur-Marne','Vaires-sur-Marne','Valence-en-Brie','Valenton','Vallangoujard','Valmondois','Valpuiseaux','Vanves','Vanvillé','Varennes-Jarcy','Varennes-sur-Seine','Varreddes','Vaucourtois','Vaucresson','Vaudherland','Vaudoy-en-Brie','Vaugrigneuse','Vauhallan','Vaujours','Vauréal','Vaux-le-Pénil','Vaux-sur-Lunain','Vaux-sur-Seine','Vayres-sur-Essonne','Vendrest','Verdelot','Verneuil-l\'Étang','Verneuil-sur-Seine','Vernou-la-Celle-sur-Seine','Vernouillet','Verrières-le-Buisson','Versailles','Vert','Vert-Saint-Denis','Vert-le-Grand','Vert-le-Petit','Viarmes','Vicq','Videlles','Vieille-Église-en-Yvelines','Vienne-en-Arthies','Vieux-Champagne','Vignely','Vigneux-sur-Seine','Vigny','Villabé','Villaines-sous-Bois','Ville-Saint-Jacques','Ville-d\'Avray','Villebon-sur-Yvette','Villebéon','Villecerf','Villeconin','Villecresnes','Villejuif','Villejust','Villemareuil','Villemaréchal','Villemer','Villemoisson-sur-Orge','Villemomble','Villenauxe-la-Petite','Villeneuve-Saint-Denis','Villeneuve-Saint-Georges','Villeneuve-la-Garenne','Villeneuve-le-Comte','Villeneuve-le-Roi','Villeneuve-les-Bordes','Villeneuve-sous-Dammartin','Villeneuve-sur-Auvers','Villeneuve-sur-Bellot','Villennes-sur-Seine','Villenoy','Villeparisis','Villepinte','Villepreux','Villeron','Villeroy','Villers-en-Arthies','Villetaneuse','Villette','Villevaudé','Villiers-Adam','Villiers-Saint-Frédéric','Villiers-Saint-Georges','Villiers-en-Bière','Villiers-le-Bel','Villiers-le-Bâcle','Villiers-le-Mahieu','Villiers-le-Sec','Villiers-sous-Grez','Villiers-sur-Marne','Villiers-sur-Morin','Villiers-sur-Orge','Villiers-sur-Seine','Villuis','Vimpelles','Vinantes','Vincennes','Vincy-Manœuvre','Viroflay','Viry-Châtillon','Vitry-sur-Seine','Voinsles','Voisenon','Voisins-le-Bretonneux','Voulangis','Voulton','Voulx','Vulaines-lès-Provins','Vulaines-sur-Seine','Vélizy-Villacoublay','Vémars','Vétheuil','Wissous','Wy-dit-Joli-Village','Yerres','Yèbles','Écharcon','Échouboulains','Écouen','Égligny','Égly','Égreville','Élancourt','Émancé','Émerainville','Épiais-Rhus','Épiais-lès-Louvres','Épinay-Champlâtreux','Épinay-sous-Sénart','Épinay-sur-Orge','Épinay-sur-Seine','Épône','Éragny-sur-Oise','Étampes','Étiolles','Étréchy','Étrépilly','Évecquemont','Évry-Courcouronnes','Évry-Grégy-sur-Yerre','Ézanville'];
+function normalizeStr(s){return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');}
+function filterVilles(val){
+  var drop=document.getElementById('villesDrop');
+  if(!val||val.length<1){drop.style.display='none';return;}
+  var n=normalizeStr(val);
+  var res=VILLES_AC.filter(function(v){return normalizeStr(v).indexOf(n)===0;}).slice(0,8);
+  if(res.length===0)res=VILLES_AC.filter(function(v){return normalizeStr(v).indexOf(n)!==-1;}).slice(0,8);
+  if(res.length===0){drop.innerHTML='<div class="ac-empty">Aucune ville trouvée</div>';drop.style.display='block';return;}
+  drop.innerHTML=res.map(function(v){return '<div onclick="pickVille(\''+v.replace(/'/g,"\\'")+'\')" >'+v+'</div>';}).join('');
+  drop.style.display='block';
+}
+function pickVille(v){
+  document.getElementById('f_ville').value=v;
+  document.getElementById('villesDrop').style.display='none';
+  setTimeout(function(){
+    if(!document.getElementById('f_moment').value)openPlanning();
+  },400);
+}
+function hideVilles(){var d=document.getElementById('villesDrop');if(d)d.style.display='none';}
+document.addEventListener('DOMContentLoaded',function(){initPlanning();});
+
+</script>
+<div class="seo-block" aria-hidden="true">Stage récupération points Pussay — Centre agréé préfecture près de Pussay. Récupérez jusqu'à 4 points sur votre permis de conduire en 2 jours. Stage volontaire agréé Île-de-France. Conducteurs de Pussay et communes voisines acceptés. Inscription rapide, places disponibles. Permis points Pussay département pussay. Stage permis à points Pussay Île-de-France. Récupération points permis Pussay. Formation sécurité routière Pussay.</div></body>
 </html>
