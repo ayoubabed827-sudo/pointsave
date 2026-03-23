@@ -152,6 +152,20 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:-apple-sy
 .ai-key-warn{font-size:11px;color:var(--mu);text-align:center;padding:8px;background:rgba(255,215,0,.05);border:1px solid rgba(255,215,0,.15);border-radius:8px;margin-bottom:10px}
 .ai-key-warn a{color:var(--y);text-decoration:underline;cursor:pointer}
 
+
+/* SCORE URGENCE */
+.score-badge{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;font-family:'Outfit',sans-serif;font-weight:900;font-size:13px;flex-shrink:0;border:2px solid transparent}
+.score-0,.score-1,.score-2,.score-3{background:rgba(0,199,122,.12);color:#00C77A;border-color:rgba(0,199,122,.3)}
+.score-4,.score-5,.score-6{background:rgba(255,149,0,.12);color:#FF9500;border-color:rgba(255,149,0,.3)}
+.score-7,.score-8{background:rgba(255,107,107,.15);color:#FF6B6B;border-color:rgba(255,107,107,.3)}
+.score-9,.score-10{background:rgba(255,50,50,.2);color:#FF3232;border-color:rgba(255,50,50,.5);animation:pulseScore .8s infinite alternate}
+@keyframes pulseScore{from{box-shadow:0 0 0 0 rgba(255,50,50,.4)}to{box-shadow:0 0 0 6px rgba(255,50,50,0)}}
+.score-label{font-size:9px;color:var(--mu);margin-left:3px;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+.lc-score{display:flex;align-items:center;gap:4px;margin-left:auto}
+/* Tri par score */
+.sort-bar{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}
+.sort-btn{font-size:11px;padding:4px 10px;border-radius:6px;border:1px solid var(--brd);background:rgba(255,255,255,.03);color:var(--mu);cursor:pointer;transition:all .2s}
+.sort-btn.active{background:var(--acc);color:white;border-color:var(--acc)}
 </style>
 </head>
 <body>
@@ -229,6 +243,10 @@ html,body{height:100%;background:var(--bg);color:var(--tx);font-family:-apple-sy
         <button class="pill" onclick="setF(this,'Non joignable')">📵 NJ</button>
         <button class="pill" onclick="setF(this,'Non interesse')">❌ NI</button>
         <button class="pill" onclick="setF(this,'Converti')">💰 Convertis</button>
+      </div>
+      <div class="sort-bar">
+        <button class="sort-btn active" data-sort="date" onclick="setSortMode('date')">📅 Par date</button>
+        <button class="sort-btn" data-sort="score" onclick="setSortMode('score')">🔥 Par urgence</button>
       </div>
       <div id="leads-list"></div>
     </div>
@@ -418,6 +436,57 @@ function checkNewLeads(data){
   lastLeadCount = data.length;
 }
 
+
+// SCORE D'URGENCE (0-10)
+function calcScore(l){
+  var score = 0;
+  var now = new Date();
+  var dld = pdate(l.date);
+  var diffH = dld ? (now - dld) / 3600000 : 0;
+
+  // Statut (base)
+  if(l.statut === 'Nouveau') score += 4;
+  else if(l.statut === 'Non joignable') score += 3;
+  else if(l.statut === 'Contacte') score += 1;
+  else if(l.statut === 'Inscrit au stage') score += 0;
+  else return 0; // Converti/Non intéressé = score 0
+
+  // Ancienneté
+  if(diffH > 24) score += 3;
+  else if(diffH > 6) score += 2;
+  else if(diffH > 2) score += 1;
+
+  // Créneau urgent
+  var moment = (l.moment || '').toLowerCase();
+  if(moment.indexOf('possible') !== -1) score += 2;
+  else if(moment.indexOf('matin') !== -1) score += 1;
+
+  // Source (WhatsApp = déjà très motivé)
+  if(l.source === 'WhatsApp') score += 1;
+
+  // Téléphone renseigné
+  if(!l.telephone || l.telephone.length < 8) score -= 2;
+
+  return Math.min(10, Math.max(0, score));
+}
+
+function scoreLabel(s){
+  if(s >= 9) return '🔴 Critique';
+  if(s >= 7) return '🟠 Urgent';
+  if(s >= 4) return '🟡 Moyen';
+  return '🟢 Faible';
+}
+
+var sortMode = 'date'; // 'date' | 'score'
+function setSortMode(mode){
+  sortMode = mode;
+  document.querySelectorAll('.sort-btn').forEach(function(b){
+    b.classList.toggle('active', b.dataset.sort === mode);
+  });
+  renderLeads();
+  renderUrgents();
+}
+
 // ===== RENDER =====
 function renderAll(){
   renderKPIs();
@@ -468,7 +537,7 @@ function renderTimeline(){
 }
 
 function renderUrgents(){
-  var urg=leads.filter(function(l){return l.statut==='Nouveau'||l.statut==='Non joignable';}).slice(0,3);
+  var urg=leads.filter(function(l){return l.statut==='Nouveau'||l.statut==='Non joignable';}).sort(function(a,b){return calcScore(b)-calcScore(a);}).slice(0,3);
   document.getElementById('urg-list').innerHTML=urg.length
     ?urg.map(function(l){return makeCard(l,leads.indexOf(l));}).join('')
     :'<div class="empty"><div class="empty-ico">🎉</div><div class="empty-txt">Aucun rappel urgent !</div></div>';
@@ -481,6 +550,9 @@ function renderLeads(){
     var mq=!q||(l.prenom+' '+l.nom+' '+l.ville+' '+l.telephone).toLowerCase().indexOf(q)>=0;
     return mf&&mq;
   });
+  if(sortMode==='score'){
+    f=f.slice().sort(function(a,b){return calcScore(b)-calcScore(a);});
+  }
   document.getElementById('leads-list').innerHTML=f.length
     ?f.map(function(l){return makeCard(l,leads.indexOf(l));}).join('')
     :'<div class="empty"><div class="empty-ico">🔍</div><div class="empty-txt">Aucun résultat</div></div>';
@@ -499,8 +571,9 @@ function makeCard(l,idx){
   }
   var waMsg=encodeURIComponent('Bonjour '+l.prenom+', je vous contacte de PointSave suite à votre demande de stage de récupération de points près de '+l.ville+'. Êtes-vous toujours intéressé(e) ?');
   var waTel=String(l.telephone).replace(/[\s\.\-]/g,'').replace(/^0/,'33');
+  var sc=calcScore(l);
   return '<div class="lcard '+(parts[1]||'')+'">'
-    +'<div class="lc-top"><div class="lc-name">'+l.prenom+' '+l.nom+ageWarn+'</div><div class="lc-date">'+String(l.date).split(' ')[0]+'</div></div>'
+    +'<div class="lc-top"><div class="lc-name">'+l.prenom+' '+l.nom+ageWarn+'</div><div class="lc-score"><span class="score-badge score-'+sc+'" title="'+scoreLabel(sc)+'">'+sc+'</span></div><div class="lc-date">'+String(l.date).split(' ')[0]+'</div></div>'
     +'<div class="lc-row"><span class="lc-ville">📍 '+l.ville+'</span><a href="tel:'+String(l.telephone).replace(/[\s\.]/g,'')+'" class="lc-tel">'+l.telephone+'</a></div>'
     +'<div class="lc-row"><span class="badge '+parts[0]+'">'+bico[l.statut]+' '+l.statut+'</span><span class="lc-src">'+l.source+'</span></div>'
     +(l.note?'<div style="font-size:11px;color:var(--mu);margin-top:4px">💬 '+l.note+'</div>':'')
