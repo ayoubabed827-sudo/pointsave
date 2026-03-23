@@ -919,7 +919,7 @@ document.getElementById('contactForm').addEventListener('submit',function(e){
   document.body.style.overflow='hidden';
   document.getElementById('contactForm').reset();
   btn.disabled=false;
-  btn.textContent='📨 Envoyer ma demande de rappel';
+  btn.textContent='\uD83D\uDCE8 Envoyer ma demande de rappel';
   if(typeof gtag!=='undefined'){gtag('event','form_submit',{event_category:'Lead',event_label:'Formulaire soumis'});}
   fetch(APPS_SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)}).catch(function(){});
 });
@@ -1127,7 +1127,7 @@ function initPlanning(){
           var asap=document.getElementById('planAsap');if(asap)asap.classList.remove('sel');
           sl.classList.add('sel');
           var fm=document.getElementById('f_moment');if(fm)fm.value=val;
-          var bt=document.getElementById('planBtnTxt');if(bt)bt.textContent='📅 '+val;
+          var bt=document.getElementById('planBtnTxt');if(bt)bt.textContent='\uD83D\uDCC5 '+val;
           var pb=document.getElementById('planBtn');if(pb)pb.classList.add('filled');
           setTimeout(function(){if(typeof closePlanningDirect==='function')closePlanningDirect();},350);
         }
@@ -1151,7 +1151,7 @@ window.selectPlanAsap=function(){
   document.querySelectorAll('.pslot').forEach(function(x){x.classList.remove('sel')});
   document.getElementById('planAsap').classList.add('sel');
   document.getElementById('f_moment').value='Le plus tôt possible';
-  document.getElementById('planBtnTxt').textContent='⚡ Le plus tôt possible';
+  document.getElementById('planBtnTxt').textContent='\u26A1 Le plus tôt possible';
   document.getElementById('planBtn').classList.add('filled');
   setTimeout(closePlanningDirect,350);
 }
@@ -1256,31 +1256,31 @@ function updateJauge(val){
     msg.style.background = 'rgba(255,50,50,.12)';
     msg.style.color = '#FF3232';
     msg.style.border = '1px solid rgba(255,50,50,.3)';
-    msg.innerHTML = '🚨 <strong>Permis invalidé !</strong> Vous devez repasser l'examen complet après 6 mois minimum.';
+    msg.innerHTML = '\uD83D\uDEA8 <strong>Permis invalidé !</strong> Vous devez repasser l'examen complet après 6 mois minimum.';
     lbl.textContent = 'Situation critique';
   } else if(val <= 3){
     msg.style.background = 'rgba(255,50,50,.1)';
     msg.style.color = '#FF6B6B';
     msg.style.border = '1px solid rgba(255,50,50,.2)';
-    msg.innerHTML = '🔴 <strong>Danger immédiat !</strong> Une seule infraction peut invalider votre permis. <a href="#formulaire" style="color:#FF6B6B;font-weight:900" onclick="document.getElementById('formulaire').scrollIntoView({behavior:'smooth'});return false;">Réservez un stage maintenant →</a>';
+    msg.innerHTML = '\uD83D\uDD34 <strong>Danger immédiat !</strong> Une seule infraction peut invalider votre permis. <a href="#formulaire" style="color:#FF6B6B;font-weight:900" onclick="document.getElementById('formulaire').scrollIntoView({behavior:'smooth'});return false;">Réservez un stage maintenant →</a>';
     lbl.textContent = 'Solde critique';
   } else if(val <= 6){
     msg.style.background = 'rgba(255,149,0,.1)';
     msg.style.color = '#FF9500';
     msg.style.border = '1px solid rgba(255,149,0,.2)';
-    msg.innerHTML = '🟠 <strong>Solde faible.</strong> Vous êtes éligible à un stage — récupérez jusqu'à 4 points avant qu'il ne soit trop tard. <a href="#formulaire" style="color:#FF9500;font-weight:900" onclick="document.getElementById('formulaire').scrollIntoView({behavior:'smooth'});return false;">Je veux un stage →</a>';
+    msg.innerHTML = '\uD83D\uDFE0 <strong>Solde faible.</strong> Vous êtes éligible à un stage — récupérez jusqu'à 4 points avant qu'il ne soit trop tard. <a href="#formulaire" style="color:#FF9500;font-weight:900" onclick="document.getElementById('formulaire').scrollIntoView({behavior:'smooth'});return false;">Je veux un stage →</a>';
     lbl.textContent = 'Solde insuffisant';
   } else if(val <= 9){
     msg.style.background = 'rgba(255,215,0,.08)';
     msg.style.color = '#FFD700';
     msg.style.border = '1px solid rgba(255,215,0,.2)';
-    msg.innerHTML = '🟡 <strong>Solde correct mais surveillé.</strong> Anticipez avant une prochaine infraction. Un stage préventif est possible.';
+    msg.innerHTML = '\uD83D\uDFE1 <strong>Solde correct mais surveillé.</strong> Anticipez avant une prochaine infraction. Un stage préventif est possible.';
     lbl.textContent = 'Solde à surveiller';
   } else {
     msg.style.background = 'rgba(0,199,122,.08)';
     msg.style.color = '#00C77A';
     msg.style.border = '1px solid rgba(0,199,122,.2)';
-    msg.innerHTML = '✅ <strong>Bon solde !</strong> Continuez à conduire prudemment. Pensez à vérifier votre solde tous les 6 mois.';
+    msg.innerHTML = '\u2705 <strong>Bon solde !</strong> Continuez à conduire prudemment. Pensez à vérifier votre solde tous les 6 mois.';
     lbl.textContent = 'Bonne situation';
   }
 }
