@@ -1079,6 +1079,7 @@ function init(){
   }
 }
 
+window._psApply=apply;
 if(document.readyState==='loading'){
   document.addEventListener('DOMContentLoaded',init);
 }else{
@@ -1172,7 +1173,7 @@ function filterVilles(val){
 function pickVille(v){
   document.getElementById('f_ville').value=v;
   document.getElementById('villesDrop').style.display='none';
-  apply(v);
+  if(typeof window._psApply==='function')window._psApply(v);
   setTimeout(function(){openPlanning();},400);
 }
 function hideVilles(){
