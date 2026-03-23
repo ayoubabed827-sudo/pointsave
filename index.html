@@ -587,7 +587,7 @@ window.addEventListener('unhandledrejection',function(e){
           <div class="fg">
             <label>Quand souhaitez-vous être rappelé ?</label>
             <input type="hidden" id="f_moment" name="f_moment" value="Non précisé">
-            <button type="button" class="plan-btn" id="planBtn" onclick="openPlanning()">
+            <button type="button" class="plan-btn" id="planBtn" onclick="window.openPlanning&&window.openPlanning()">
               <span class="plan-ico">📅</span>
               <span id="planBtnTxt">Choisissez un créneau</span>
             </button>
@@ -1139,15 +1139,15 @@ function initPlanning(){
     })(new Date(today.getFullYear(),today.getMonth(),today.getDate()+i));
   }
 }
-function openPlanning(){
+window.openPlanning=function(){
   var grid=document.getElementById('planningGrid');
   if(grid&&grid.children.length===0){initPlanning();}
   document.getElementById('planOverlay').classList.add('open');
   document.body.style.overflow='hidden';
 }
-function closePlanningDirect(){document.getElementById('planOverlay').classList.remove('open');document.body.style.overflow='';}
-function closePlanning(e){if(e.target===document.getElementById('planOverlay'))closePlanningDirect();}
-function selectPlanAsap(){
+window.closePlanningDirect=function(){document.getElementById('planOverlay').classList.remove('open');document.body.style.overflow='';}
+window.closePlanning=function(e){if(e.target===document.getElementById('planOverlay'))closePlanningDirect();}
+window.selectPlanAsap=function(){
   document.querySelectorAll('.pslot').forEach(function(x){x.classList.remove('sel')});
   document.getElementById('planAsap').classList.add('sel');
   document.getElementById('f_moment').value='Le plus tôt possible';
@@ -1159,7 +1159,7 @@ document.addEventListener('DOMContentLoaded',function(){
   initPlanning();
   var pb=document.getElementById('planBtn');
   if(pb){
-    pb.addEventListener('touchend',function(e){e.preventDefault();openPlanning();});
+    pb.addEventListener('touchend',function(e){e.preventDefault();if(window.openPlanning)window.openPlanning();});
   }
   // Auto-ouvre le planning quand f_ville est rempli et qu'on quitte ce champ
   var villeInput=document.getElementById('f_ville');
@@ -1342,13 +1342,13 @@ function updateJauge(val){
 </script>
 
 <!-- PLANNING POPUP (hors form pour position:fixed correct) -->
-<div class="plan-overlay" id="planOverlay" onclick="closePlanning(event)">
+<div class="plan-overlay" id="planOverlay" onclick="window.closePlanning&&window.closePlanning(event)">
   <div class="plan-modal">
     <div class="plan-modal-hd">
       <h3>📅 Choisissez un créneau</h3>
-      <button class="plan-close" onclick="closePlanningDirect()">✕</button>
+      <button class="plan-close" onclick="window.closePlanningDirect&&window.closePlanningDirect()">✕</button>
     </div>
-    <button type="button" class="plan-asap" id="planAsap" onclick="selectPlanAsap()">⚡ Le plus tôt possible</button>
+    <button type="button" class="plan-asap" id="planAsap" onclick="window.selectPlanAsap&&window.selectPlanAsap()">⚡ Le plus tôt possible</button>
     <div class="plan-scroll" id="planningGrid"></div>
   </div>
 </div>

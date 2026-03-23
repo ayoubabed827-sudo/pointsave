@@ -525,7 +525,7 @@ body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;ove
           <div class="fg">
             <label>Quand souhaitez-vous être rappelé ?</label>
             <input type="hidden" id="f_moment" name="f_moment" value="Non précisé">
-            <button type="button" class="plan-btn" id="planBtn" onclick="openPlanning()">
+            <button type="button" class="plan-btn" id="planBtn" onclick="window.openPlanning&&window.openPlanning()">
               <span>📅</span><span id="planBtnTxt">Choisissez un créneau</span>
             </button>
           </div>
@@ -965,13 +965,13 @@ if(document.readyState==='loading'){
 })();
 </script>
 <!-- PLANNING POPUP -->
-<div class="plan-overlay" id="planOverlay" onclick="closePlanning(event)">
+<div class="plan-overlay" id="planOverlay" onclick="window.closePlanning&&window.closePlanning(event)">
   <div class="plan-modal">
     <div class="plan-modal-hd">
       <h3>📅 Choisissez un créneau</h3>
-      <button class="plan-close" onclick="closePlanningDirect()">✕</button>
+      <button class="plan-close" onclick="window.closePlanningDirect&&window.closePlanningDirect()">✕</button>
     </div>
-    <button type="button" class="plan-asap" id="planAsap" onclick="selectPlanAsap()">⚡ Le plus tôt possible</button>
+    <button type="button" class="plan-asap" id="planAsap" onclick="window.selectPlanAsap&&window.selectPlanAsap()">⚡ Le plus tôt possible</button>
     <div class="plan-scroll" id="planningGrid"></div>
   </div>
 </div>
@@ -1023,9 +1023,9 @@ window.openPlanning=function openPlanning(){
   document.getElementById('planOverlay').classList.add('open');
   document.body.style.overflow='hidden';
 }
-function closePlanningDirect(){document.getElementById('planOverlay').classList.remove('open');document.body.style.overflow='';}
-function closePlanning(e){if(e.target===document.getElementById('planOverlay'))closePlanningDirect();}
-function selectPlanAsap(){
+window.closePlanningDirect=function(){document.getElementById('planOverlay').classList.remove('open');document.body.style.overflow='';}
+window.closePlanning=function(e){if(e.target===document.getElementById('planOverlay'))closePlanningDirect();}
+window.selectPlanAsap=function(){
   document.querySelectorAll('.pslot').forEach(function(x){x.classList.remove('sel')});
   document.getElementById('planAsap').classList.add('sel');
   document.getElementById('f_moment').value='Le plus tôt possible';
