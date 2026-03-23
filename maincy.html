@@ -517,7 +517,7 @@ body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;ove
           <div class="fg"><label>Téléphone</label><div class="iw"><span class="ico"><svg class="ico-tel" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.07 1.15 2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.09a16 16 0 006.29 6.29l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 15.42z"/></svg></span><input type="tel" id="f_telephone" placeholder="06 xx xx xx xx" required></div></div>
           <div class="fg ville-wrap"><label>Ville la plus proche</label>
             <div class="iw"><span class="ico"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#00C77A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
-              <input type="text" id="f_ville" name="f_ville" required placeholder="Votre ville..." autocomplete="off" oninput="filterVilles(this.value)" onfocus="filterVilles(this.value)" onblur="setTimeout(hideVilles,400)">
+              <input type="text" id="f_ville" name="f_ville" required placeholder="Votre ville..." autocomplete="off" oninput="filterVilles(this.value)" onfocus="filterVilles(this.value)" onblur="setTimeout(hideVilles,500)">
             </div>
             <div id="villesDrop" class="villes-drop" style="display:none"></div>
           </div>
@@ -1037,7 +1037,7 @@ function filterVilles(val){
   var res=VILLES_AC.filter(function(v){return normalizeStr(v).indexOf(n)===0;}).slice(0,8);
   if(res.length===0)res=VILLES_AC.filter(function(v){return normalizeStr(v).indexOf(n)!==-1;}).slice(0,8);
   if(res.length===0){drop.innerHTML='<div class="ac-empty">Aucune ville trouvée</div>';drop.style.display='block';return;}
-  drop.innerHTML=res.map(function(v){return '<div onmousedown=\"pickVille(\''+v.replace(/'/g,"\\'")+'\')" >'+v+'</div>';}).join('');
+  drop.innerHTML=res.map(function(v){var esc=v.replace(/'/g,"\\'");return '<div onclick="pickVille(\''+esc+'\')" ontouchstart="pickVille(\''+esc+'\');event.preventDefault()">'+v+'</div>';}).join('');
   drop.style.display='block';
 }
 function pickVille(v){
