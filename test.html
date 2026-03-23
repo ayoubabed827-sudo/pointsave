@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Test PointSave</title>
+<style>
+body{background:#0a1a14;color:white;font-family:sans-serif;padding:20px;}
+.wrap{position:relative;max-width:400px;}
+input{width:100%;padding:12px;background:#162B1F;border:1px solid #00875A;border-radius:8px;color:white;font-size:16px;box-sizing:border-box;}
+#drop{position:absolute;top:100%;left:0;right:0;background:#162B1F;border:1px solid #00875A;border-radius:0 0 8px 8px;z-index:999;display:none;}
+#drop div{padding:12px;cursor:pointer;font-size:16px;}
+#drop div:active{background:#00875A;}
+#result{margin-top:20px;padding:10px;background:#162B1F;border-radius:8px;}
+.btn{display:block;width:100%;padding:14px;background:#00875A;color:white;border:none;border-radius:8px;font-size:16px;cursor:pointer;margin-top:10px;}
+/* PLANNING */
+.overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.8);z-index:10000;display:none;align-items:center;justify-content:center;}
+.overlay.open{display:flex;}
+.modal{background:#162B1F;border-radius:12px;padding:20px;width:90%;max-width:380px;}
+.slot{padding:12px;border:1px solid #00875A;border-radius:8px;margin:8px 0;cursor:pointer;font-size:15px;}
+.slot:active,.slot.sel{background:#00875A;}
+</style>
+</head>
+<body>
+<h2>Test Autocomplete</h2>
+<div class="wrap">
+  <input type="text" id="f_ville" placeholder="Tapez une ville..." 
+    autocomplete="off"
+    oninput="filtrer(this.value)"
+    onfocus="filtrer(this.value)"
+    onblur="setTimeout(function(){document.getElementById('drop').style.display='none'},300)">
+  <div id="drop"></div>
+</div>
+<div id="result">Ville choisie: <span id="chosen">aucune</span></div>
+
+<h2>Test Planning</h2>
+<button class="btn" onclick="document.getElementById('planOverlay').classList.add('open')">
+  Ouvrir le planning
+</button>
+
+<div class="overlay" id="planOverlay" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal">
+    <h3>Choisissez un créneau</h3>
+    <div id="slots"></div>
+    <button class="btn" onclick="document.getElementById('planOverlay').classList.remove('open')">Fermer</button>
+  </div>
+</div>
+
+<script>
+var VILLES = ['Paris','Meaux','Créteil','Versailles','Évry-Courcouronnes','Nanterre','Montreuil','Saint-Denis','Massy','Cergy'];
+
+function norm(s){return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');}
+
+function filtrer(val){
+  var drop = document.getElementById('drop');
+  if(!val){drop.style.display='none';return;}
+  var res = VILLES.filter(function(v){return norm(v).indexOf(norm(val))===0;});
+  if(!res.length){drop.style.display='none';return;}
+  drop.innerHTML = res.map(function(v){
+    return '<div onmousedown="choisir(\''+v+'\')" ontouchstart="choisir(\''+v+'\');event.preventDefault()">'+v+'</div>';
+  }).join('');
+  drop.style.display='block';
+}
+
+function choisir(v){
+  document.getElementById('f_ville').value=v;
+  document.getElementById('drop').style.display='none';
+  document.getElementById('chosen').textContent=v;
+}
+
+// Init planning slots
+var slots = document.getElementById('slots');
+['Lun 24/03 Matin','Lun 24/03 Après-midi','Mar 25/03 Matin','Mar 25/03 Soir'].forEach(function(s){
+  var div = document.createElement('div');
+  div.className='slot';
+  div.textContent=s;
+  var fn = function(){
+    document.querySelectorAll('.slot').forEach(function(x){x.classList.remove('sel')});
+    div.classList.add('sel');
+    alert('Créneau sélectionné: '+s);
+    setTimeout(function(){document.getElementById('planOverlay').classList.remove('open');},400);
+  };
+  div.onclick=fn;
+  div.ontouchstart=function(e){e.preventDefault();fn();};
+  slots.appendChild(div);
+});
+</script>
+</body>
+</html>
