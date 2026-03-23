@@ -337,6 +337,10 @@ body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;ove
 .villes-drop div:last-child{border-bottom:none}
 .villes-drop div:hover,.villes-drop div.ac-sel{background:rgba(0,135,90,.2);color:var(--green2)}
 .villes-drop .ac-empty{color:var(--muted);font-style:italic;cursor:default}
+
+/* VILLE WRAP */
+.ville-wrap{position:relative}
+.ville-wrap .villes-drop{top:calc(100% - 4px)}
 </style>
 </head>
 <body>
@@ -529,12 +533,14 @@ body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;ove
             <div class="fg"><label>Nom</label><div class="iw"><span class="ico">👤</span><input type="text" id="f_nom" placeholder="Dupont" required></div></div>
           </div>
           <div class="fg"><label>Téléphone</label><div class="iw"><span class="ico"><svg class="ico-tel" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.07 1.15 2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.09a16 16 0 006.29 6.29l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 15.42z"/></svg></span><input type="tel" id="f_telephone" placeholder="06 xx xx xx xx" required></div></div>
-          <div class="fg" style="position:relative"><label>Ville la plus proche</label>
-            <input type="text" id="f_ville" name="f_ville" required
-              placeholder="Votre ville..."
-              autocomplete="off" oninput="filterVilles(this.value)" onfocus="filterVilles(this.value)" onblur="setTimeout(hideVilles,200)"
-              style="padding:12px 14px;width:100%;background:rgba(255,255,255,.03);border:1.5px solid var(--border);border-radius:10px;color:white;font-family:'Inter',sans-serif;font-size:14px;outline:none;-webkit-appearance:none">
-          <div id="villesDrop" class="villes-drop" style="display:none"></div>
+          <div class="fg ville-wrap"><label>Ville la plus proche</label>
+            <div class="iw">
+              <span class="ico"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="var(--green2)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
+              <input type="text" id="f_ville" name="f_ville" required
+                placeholder="Votre ville..."
+                autocomplete="off" oninput="filterVilles(this.value)" onfocus="filterVilles(this.value)" onblur="setTimeout(hideVilles,200)">
+            </div>
+            <div id="villesDrop" class="villes-drop" style="display:none"></div>
           </div>
           <div class="fg">
             <label>Quand souhaitez-vous être rappelé ?</label>
@@ -543,17 +549,6 @@ body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;ove
               <span class="plan-ico">📅</span>
               <span id="planBtnTxt">Choisissez un créneau</span>
             </button>
-          </div>
-          <!-- PLANNING POPUP -->
-          <div class="plan-overlay" id="planOverlay" onclick="closePlanning(event)">
-            <div class="plan-modal">
-              <div class="plan-modal-hd">
-                <h3>📅 Choisissez un créneau</h3>
-                <button class="plan-close" onclick="closePlanningDirect()">✕</button>
-              </div>
-              <button type="button" class="plan-asap" id="planAsap" onclick="selectPlanAsap()">⚡ Le plus tôt possible</button>
-              <div class="plan-scroll" id="planningGrid"></div>
-            </div>
           </div>
           <div class="consent-box">
             <label class="consent-label">
@@ -1068,5 +1063,16 @@ function hideVilles(){
   if(d)d.style.display='none';
 }
 </script>
+<!-- PLANNING POPUP (hors form pour position:fixed correct) -->
+<div class="plan-overlay" id="planOverlay" onclick="closePlanning(event)">
+  <div class="plan-modal">
+    <div class="plan-modal-hd">
+      <h3>📅 Choisissez un créneau</h3>
+      <button class="plan-close" onclick="closePlanningDirect()">✕</button>
+    </div>
+    <button type="button" class="plan-asap" id="planAsap" onclick="selectPlanAsap()">⚡ Le plus tôt possible</button>
+    <div class="plan-scroll" id="planningGrid"></div>
+  </div>
+</div>
 </body>
 </html>
