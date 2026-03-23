@@ -566,7 +566,7 @@ body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;ove
               <span class="ico"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="var(--green2)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
               <input type="text" id="f_ville" name="f_ville" required
                 placeholder="Votre ville..."
-                autocomplete="off" oninput="filterVilles(this.value)" onfocus="filterVilles(this.value)" onblur="setTimeout(hideVilles,200)">
+                autocomplete="off" oninput="filterVilles(this.value)" onfocus="filterVilles(this.value)" onblur="setTimeout(hideVilles,400)">
             </div>
             <div id="villesDrop" class="villes-drop" style="display:none"></div>
           </div>
@@ -746,9 +746,7 @@ body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;ove
       </div>
 
       <div class="wsolde-cta">
-        <a href="https://telepoints.interieur.gouv.fr" target="_blank" rel="noopener" class="wsolde-btn-primary">
-          🔍 Vérifier mon solde officiellement
-        </a>
+        <a href="#formulaire" class="wsolde-btn-primary" onclick="document.getElementById('formulaire').scrollIntoView({behavior:'smooth'});return false;">📋 Récupérer mes points — rappel gratuit</a>
         <a href="#formulaire" class="wsolde-btn-secondary" onclick="document.getElementById('formulaire').scrollIntoView({behavior:'smooth'});return false;">
           📋 Mon solde est faible — je veux un stage
         </a>
@@ -1119,7 +1117,12 @@ function initPlanning(){
     grid.appendChild(col);
   }
 }
-function openPlanning(){document.getElementById('planOverlay').classList.add('open');document.body.style.overflow='hidden';}
+function openPlanning(){
+  var grid=document.getElementById('planningGrid');
+  if(grid&&grid.children.length===0){initPlanning();}
+  document.getElementById('planOverlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
 function closePlanningDirect(){document.getElementById('planOverlay').classList.remove('open');document.body.style.overflow='';}
 function closePlanning(e){if(e.target===document.getElementById('planOverlay'))closePlanningDirect();}
 function selectPlanAsap(){
@@ -1160,7 +1163,7 @@ function filterVilles(val){
     res=VILLES_AC.filter(function(v){return normalizeStr(v).indexOf(n)!==-1;}).slice(0,8);
   }
   if(res.length===0){drop.innerHTML='<div class="ac-empty">Aucune ville trouvée</div>';drop.style.display='block';return;}
-  drop.innerHTML=res.map(function(v){return '<div onclick="pickVille(\''+v.replace(/'/g,"\\'")+'\')">'+v+'</div>';}).join('');
+  drop.innerHTML=res.map(function(v){return '<div onclick="pickVille(\''+v.replace(/'/g,"\\'")+'\')"; ontouchstart="pickVille(\''+v.replace(/'/g,"\\'")+'\')">'+v+'</div>';}).join('');
   drop.style.display='block';
 }
 function pickVille(v){
