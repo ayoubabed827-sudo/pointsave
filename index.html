@@ -1093,33 +1093,38 @@ function initPlanning(){
   var grid=document.getElementById('planningGrid');
   if(!grid)return;
   var jours=['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];
-  var slots=[{label:'Matin',sub:'9h-12h'},{label:'Après-midi',sub:'12h-17h'},{label:'Soir',sub:'17h-20h'}];
+  var slots=[{label:'Matin',sub:'9h-12h'},{label:'Apres-midi',sub:'12h-17h'},{label:'Soir',sub:'17h-20h'}];
   var today=new Date();
+  grid.innerHTML='';
   for(var i=0;i<7;i++){
-    var d=new Date(today);d.setDate(today.getDate()+i);
-    var col=document.createElement('div');col.className='pday';
-    var hd=document.createElement('div');hd.className='pday-hd';
-    hd.innerHTML='<div class="pd">'+jours[d.getDay()]+'</div><div class="pn">'+d.getDate()+'</div>';
-    col.appendChild(hd);
-    slots.forEach(function(s){
-      var sl=document.createElement('div');sl.className='pslot';
-      sl.innerHTML=s.label+'<span class="sl">'+s.sub+'</span>';
-      var dateStr=jours[d.getDay()]+' '+d.getDate()+'/'+(d.getMonth()<9?'0':'')+(d.getMonth()+1);
-      sl.dataset.val=dateStr+' '+s.label+' ('+s.sub+')';
-      var slFn=function(){
-        document.querySelectorAll('.pslot').forEach(function(x){x.classList.remove('sel')});
-        document.getElementById('planAsap').classList.remove('sel');
-        this.classList.add('sel');
-        document.getElementById('f_moment').value=this.dataset.val;
-        document.getElementById('planBtnTxt').textContent='📅 '+this.dataset.val;
-        document.getElementById('planBtn').classList.add('filled');
-        setTimeout(closePlanningDirect,350);
-      };
-      sl.onclick=slFn;
-      sl.ontouchstart=function(e){e.preventDefault();slFn.call(this);};
-      col.appendChild(sl);
-    });
-    grid.appendChild(col);
+    (function(d){
+      var col=document.createElement('div');col.className='pday';
+      var hd=document.createElement('div');hd.className='pday-hd';
+      hd.innerHTML='<div class="pd">'+jours[d.getDay()]+'</div><div class="pn">'+d.getDate()+'</div>';
+      col.appendChild(hd);
+      slots.forEach(function(s){
+        var sl=document.createElement('div');
+        sl.className='pslot';
+        sl.style.cursor='pointer';
+        sl.style.webkitTapHighlightColor='rgba(0,135,90,0.3)';
+        sl.innerHTML=s.label+'<span class="sl">'+s.sub+'</span>';
+        var dateStr=jours[d.getDay()]+' '+d.getDate()+'/'+(d.getMonth()<9?'0':'')+(d.getMonth()+1);
+        var val=dateStr+' '+s.label+' ('+s.sub+')';
+        function select(){
+          document.querySelectorAll('.pslot').forEach(function(x){x.classList.remove('sel');});
+          var asap=document.getElementById('planAsap');if(asap)asap.classList.remove('sel');
+          sl.classList.add('sel');
+          var fm=document.getElementById('f_moment');if(fm)fm.value=val;
+          var bt=document.getElementById('planBtnTxt');if(bt)bt.textContent='📅 '+val;
+          var pb=document.getElementById('planBtn');if(pb)pb.classList.add('filled');
+          setTimeout(function(){if(typeof closePlanningDirect==='function')closePlanningDirect();},350);
+        }
+        sl.addEventListener('click',select);
+        sl.addEventListener('touchend',function(e){e.preventDefault();select();});
+        col.appendChild(sl);
+      });
+      grid.appendChild(col);
+    })(new Date(today.getFullYear(),today.getMonth(),today.getDate()+i));
   }
 }
 window.openPlanning=function(){
