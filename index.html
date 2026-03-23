@@ -271,16 +271,6 @@ body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;ove
 .mb p{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.7}
 .mb-call{display:flex;align-items:center;justify-content:center;gap:9px;background:var(--green);color:white;font-family:'Outfit',sans-serif;font-weight:800;font-size:18px;padding:14px 24px;border-radius:10px;text-decoration:none;margin-bottom:14px}
 .mb-back{background:none;border:none;color:var(--muted);font-size:12px;cursor:pointer;text-decoration:underline}
-/* COOKIES */
-.ck{position:fixed;bottom:90px;right:12px;left:12px;z-index:9999;background:rgba(15,26,20,.97);border:1px solid rgba(0,135,90,.4);border-radius:12px;padding:10px 14px;display:none;box-shadow:0 4px 20px rgba(0,0,0,.6);backdrop-filter:blur(16px);max-width:340px;margin:0 auto;animation:ckIn .3s ease}
-@keyframes ckIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-.ck.show{display:block}
-.ck-in{display:flex;flex-direction:column;gap:8px}
-.ck-in p{font-size:11px;color:var(--muted);line-height:1.5;margin:0}
-.ck-in p a{color:var(--green2);cursor:pointer;text-decoration:underline}
-.ck-btns{display:flex;gap:6px;justify-content:flex-end}
-.ck-ok{background:var(--green);color:white;font-family:'Outfit',sans-serif;font-weight:700;font-size:11px;padding:6px 14px;border-radius:6px;border:none;cursor:pointer}
-.ck-no{background:transparent;color:var(--muted);font-family:'Outfit',sans-serif;font-weight:600;font-size:11px;padding:6px 10px;border-radius:6px;border:1px solid var(--border);cursor:pointer}
 /* STICKY */
 .sticky{position:fixed;bottom:0;left:0;right:0;z-index:198;padding:10px 20px;background:rgba(9,15,13,.97);border-top:2px solid var(--green);backdrop-filter:blur(20px);transform:translateY(100%);transition:transform .4s ease}
 .sticky.show{transform:translateY(0)}
@@ -369,16 +359,6 @@ body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;ove
   </div>
 </div>
 
-<!-- COOKIES -->
-<div class="ck" id="ck">
-  <div class="ck-in">
-    <p>🍪 Cookies utilisés pour analyser l'audience. <a onclick="openLegal('cookies')">En savoir plus</a></p>
-    <div class="ck-btns">
-      <button class="ck-ok" onclick="localStorage.setItem('ps_ck3','ok');document.getElementById('ck').classList.remove('show')">Accepter</button>
-      <button class="ck-no" onclick="localStorage.setItem('ps_ck3','no');document.getElementById('ck').classList.remove('show')">Refuser</button>
-    </div>
-  </div>
-</div>
 
 <!-- STRIP -->
 <div class="strip">
@@ -710,7 +690,6 @@ body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;ove
     <button onclick="openLegal('mentions')">📜 Mentions légales</button>
     <button onclick="openLegal('cgu')">📄 CGU</button>
     <button onclick="openLegal('confidentialite')">🔒 Confidentialité</button>
-    <button onclick="openLegal('cookies')">🍪 Cookies</button>
   </div>
   <div class="fc2">&copy; 2026 PointSave &mdash; Stage récupération de points agréé près de <span id="dyn-footer">Meaux</span></div>
 </footer>
@@ -810,7 +789,6 @@ document.getElementById('contactForm').addEventListener('submit',function(e){
 
 // COOKIES + SCROLL + REVEAL
 window.addEventListener('DOMContentLoaded',function(){
-  if(!localStorage.getItem('ps_ck3')){setTimeout(function(){var el=document.getElementById('ck');if(el){el.style.display='block';el.classList.add('show');}},800);}
   var bO=new IntersectionObserver(function(en){en.forEach(function(e,i){if(e.isIntersecting){setTimeout(function(){e.target.classList.add('lit');},i*120);bO.unobserve(e.target);}});},{threshold:0.1});
   document.querySelectorAll('[data-badge]').forEach(function(el){bO.observe(el);});
   var o=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){e.target.classList.add('vis');o.unobserve(e.target);}});},{threshold:0.08});
