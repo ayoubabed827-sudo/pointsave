@@ -1069,9 +1069,14 @@ function init(){
         var n=nearest(pos.coords.latitude,pos.coords.longitude);
         if(n)apply(n.nom);
       },
-      function(){},
+      function(){
+        // GPS refusé ou erreur → fallback Meaux (ville par défaut)
+        apply('Meaux');
+      },
       {timeout:4000,maximumAge:600000}
     );
+  } else {
+    apply('Meaux');
   }
 }
 
