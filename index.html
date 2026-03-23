@@ -1358,16 +1358,21 @@ document.addEventListener('DOMContentLoaded',function(){
   if(d){
     d.style.display='block';
     d.style.background='#005500';
-    d.innerHTML='openPlanning: '+(typeof openPlanning)+' | filterVilles: '+(typeof filterVilles)+' | VILLES_AC: '+(typeof window.VILLES_AC !== "undefined" ? window.VILLES_AC.length : "UNDEF");
+    d.innerHTML='wOP: '+(typeof window.openPlanning)+' | wFV: '+(typeof window.filterVilles)+' | VA: '+(window.VILLES_AC?window.VILLES_AC.length:'UNDEF');
   }
   var pb=document.getElementById('planBtn');
   if(pb){
     pb.addEventListener('touchend',function(e){
       e.preventDefault();
       e.stopPropagation();
-      if(d){d.innerHTML+=' | BTN TOUCH OK';}
-      if(typeof openPlanning==='function'){openPlanning();}
-      else if(d){d.innerHTML+=' | openPlanning UNDEFINED!';}
+      if(d){d.innerHTML+=' | TOUCH';}
+      if(typeof window.openPlanning==='function'){
+        if(d)d.innerHTML+=' CALLING...';
+        window.openPlanning();
+        if(d)d.innerHTML+=' DONE';
+      } else {
+        if(d)d.innerHTML+=' openPlanning=UNDEF!';
+      }
     });
   }
 });
