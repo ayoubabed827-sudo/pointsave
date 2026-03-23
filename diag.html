@@ -3,62 +3,91 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Diagnostic PointSave</title>
+<title>Diagnostic</title>
 <script src="/ps-data.js"></script>
 <style>
 body{background:#111;color:#fff;font-family:monospace;padding:15px;font-size:13px;}
 .ok{color:#00C77A;}.err{color:#ff4444;}.warn{color:#FFD700;}
 .box{background:#1a1a1a;padding:12px;border-radius:8px;margin:10px 0;border:1px solid #333;}
-input{width:100%;padding:10px;background:#222;border:1px solid #00875A;border-radius:6px;color:#fff;font-size:16px;box-sizing:border-box;margin:8px 0;}
-#drop div{padding:10px;border-bottom:1px solid #333;background:#222;}
-button{width:100%;padding:12px;background:#00875A;color:#fff;border:none;border-radius:8px;font-size:15px;cursor:pointer;margin:8px 0;}
+button{width:100%;padding:14px;background:#00875A;color:#fff;border:none;border-radius:8px;font-size:15px;cursor:pointer;margin:6px 0;}
+.overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.85);z-index:9999;display:none;align-items:center;justify-content:center;}
+.overlay.open{display:flex;}
+.modal{background:#1a2e22;border-radius:12px;padding:20px;width:90%;max-width:360px;}
+.slot{padding:12px;border:1px solid #00875A;border-radius:8px;margin:8px 0;cursor:pointer;font-size:15px;-webkit-tap-highlight-color:rgba(0,199,122,.3);}
 </style>
 </head>
 <body>
-<h2>🔬 Diagnostic</h2>
-<div class="box" id="d1">Chargement...</div>
-<div class="box">
-  <b>Test Autocomplete</b>
-  <input type="text" id="ti" placeholder="Tapez P...">
-  <div id="drop"></div>
-  <div id="tres">en attente</div>
-</div>
-<div class="box">
-  <b>Test Planning</b>
-  <button id="pbtn">Ouvrir Planning</button>
-  <div id="pres">en attente</div>
-</div>
+<h2>🔬 Diagnostic Planning</h2>
+
 <div class="box" id="log"></div>
 
+<div class="box">
+  <b>Test 1 : onclick simple</b>
+  <button onclick="log('onclick OK','ok')">Tap ici (onclick)</button>
+</div>
+
+<div class="box">
+  <b>Test 2 : ontouchend JS</b>
+  <button id="b2">Tap ici (touchend JS)</button>
+</div>
+
+<div class="box">
+  <b>Test 3 : Ouvrir overlay</b>
+  <button id="b3">Ouvrir overlay</button>
+</div>
+
+<div class="overlay" id="ov">
+  <div class="modal">
+    <p style="color:#fff">✅ Overlay ouvert !</p>
+    <div class="slot" id="slot1">Matin 9h-12h</div>
+    <div class="slot" id="slot2">Après-midi 12h-17h</div>
+    <button onclick="document.getElementById('ov').classList.remove('open');log('Fermé','ok')">Fermer</button>
+  </div>
+</div>
+
 <script>
-var L=function(m,c){var d=document.createElement('div');d.className=c||'';d.textContent=m;document.getElementById('log').appendChild(d);};
+function log(msg, cls){
+  var d=document.createElement('div');
+  d.className=cls||'';
+  d.textContent=new Date().toLocaleTimeString()+' — '+msg;
+  document.getElementById('log').appendChild(d);
+}
 
-window.onload=function(){
-  L('=== VARIABLES ===');
-  L('window.VILLES_AC: '+(typeof window.VILLES_AC!=='undefined'?'✅ '+window.VILLES_AC.length+' villes':'❌ UNDEFINED'),typeof window.VILLES_AC!=='undefined'?'ok':'err');
-  L('window.COMMUNES: '+(typeof window.COMMUNES!=='undefined'?'✅ '+window.COMMUNES.length+' villes':'❌ UNDEFINED'),typeof window.COMMUNES!=='undefined'?'ok':'err');
-  
-  var ok=typeof window.VILLES_AC!=='undefined'&&window.VILLES_AC.length>0;
-  document.getElementById('d1').innerHTML=ok?'<span class="ok">✅ Données OK: '+window.VILLES_AC.length+' villes</span>':'<span class="err">❌ Données manquantes!</span>';
+log('Script chargé','ok');
+log('VILLES_AC: '+(typeof window.VILLES_AC!=='undefined'?window.VILLES_AC.length+' villes':'UNDEFINED'), typeof window.VILLES_AC!=='undefined'?'ok':'err');
 
-  function norm(s){return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');}
+// Test 2
+document.getElementById('b2').addEventListener('touchend',function(e){
+  e.preventDefault();
+  log('touchend OK','ok');
+});
+document.getElementById('b2').addEventListener('click',function(){
+  log('click OK','ok');
+});
 
-  document.getElementById('ti').oninput=function(){
-    var val=this.value;
-    var drop=document.getElementById('drop');
-    var LISTE=window.VILLES_AC||[];
-    if(!val){drop.innerHTML='';return;}
-    var n=norm(val);
-    var res=LISTE.filter(function(v){return norm(v).indexOf(n)===0;}).slice(0,5);
-    L('Recherche "'+val+'": '+res.length+' résultats',res.length?'ok':'warn');
-    drop.innerHTML=res.map(function(v){return '<div>'+v+'</div>';}).join('');
-    document.getElementById('tres').textContent=res.length?'✅ Résultats: '+res.join(', '):'❌ Aucun résultat';
-  };
+// Test 3
+function openOv(){
+  log('openOv appelé','ok');
+  document.getElementById('ov').classList.add('open');
+}
+document.getElementById('b3').addEventListener('touchend',function(e){
+  e.preventDefault();
+  log('b3 touchend','ok');
+  openOv();
+});
+document.getElementById('b3').addEventListener('click',function(){
+  log('b3 click','ok');
+  openOv();
+});
 
-  var btn=document.getElementById('pbtn');
-  btn.onclick=function(){document.getElementById('pres').textContent='✅ Click OK';L('Click OK','ok');};
-  btn.ontouchstart=function(e){e.preventDefault();document.getElementById('pres').textContent='✅ Touch OK';L('Touch OK','ok');};
-};
+// Slots
+['slot1','slot2'].forEach(function(id){
+  var el=document.getElementById(id);
+  el.addEventListener('click',function(){log(id+' click','ok');});
+  el.addEventListener('touchend',function(e){e.preventDefault();log(id+' touchend','ok');});
+});
+
+log('Listeners attachés','ok');
 </script>
 </body>
 </html>
