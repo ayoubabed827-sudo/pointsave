@@ -383,6 +383,18 @@ body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;ove
 </style>
 </head>
 <body>
+<div id="ps-err" style="position:fixed;bottom:60px;left:0;right:0;background:#ff0000;color:#fff;padding:8px;font-size:11px;z-index:99999;display:none;max-height:120px;overflow:auto;font-family:monospace"></div>
+<script>
+window.onerror=function(msg,src,line,col,err){
+  var d=document.getElementById('ps-err');
+  if(d){d.style.display='block';d.innerHTML+=msg+' ('+src+':'+line+')<br>';}
+  return false;
+};
+window.addEventListener('unhandledrejection',function(e){
+  var d=document.getElementById('ps-err');
+  if(d){d.style.display='block';d.innerHTML+='Promise: '+e.reason+'<br>';}
+});
+</script>
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PQHZWD3R" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <!-- POPUP -->
@@ -1340,5 +1352,25 @@ function updateJauge(val){
     <div class="plan-scroll" id="planningGrid"></div>
   </div>
 </div>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+  var d=document.getElementById('ps-err');
+  if(d){
+    d.style.display='block';
+    d.style.background='#005500';
+    d.innerHTML='openPlanning: '+(typeof openPlanning)+' | filterVilles: '+(typeof filterVilles)+' | VILLES_AC: '+(typeof window.VILLES_AC !== "undefined" ? window.VILLES_AC.length : "UNDEF");
+  }
+  var pb=document.getElementById('planBtn');
+  if(pb){
+    pb.addEventListener('touchend',function(e){
+      e.preventDefault();
+      e.stopPropagation();
+      if(d){d.innerHTML+=' | BTN TOUCH OK';}
+      if(typeof openPlanning==='function'){openPlanning();}
+      else if(d){d.innerHTML+=' | openPlanning UNDEFINED!';}
+    });
+  }
+});
+</script>
 </body>
 </html>
