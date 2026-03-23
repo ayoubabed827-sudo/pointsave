@@ -5,6 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title id="dyn-title">Stage Récupération Points Meaux | PointSave</title>
+<!-- v20260323-223754 -->
 <meta name="description" id="dyn-meta" content="Stage récupération de points agréé près de Meaux. Centres agréés dans un rayon de 30km. Appelez le +33 6 99 92 65 10.">
 <meta name="robots" content="index, follow">
 <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
@@ -1165,7 +1166,7 @@ function filterVilles(val){
     res=VILLES_AC.filter(function(v){return normalizeStr(v).indexOf(n)!==-1;}).slice(0,8);
   }
   if(res.length===0){drop.innerHTML='<div class="ac-empty">Aucune ville trouvée</div>';drop.style.display='block';return;}
-  drop.innerHTML=res.map(function(v){return '<div onmousedown="pickVille(\''+v.replace(/'/g,"\\'")+'\')"; ontouchstart="pickVille(\''+v.replace(/'/g,"\\'")+'\')">'+v+'</div>';}).join('');
+  drop.innerHTML=res.map(function(v){return '<div onmousedown="pickVille(\''+v.replace(/'/g,"\\'")+'\')">'+v+'</div>';}).join('');
   drop.style.display='block';
 }
 function pickVille(v){
