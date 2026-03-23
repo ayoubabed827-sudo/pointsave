@@ -1,2 +1,5 @@
 https://pointsave.fr/* https://www.pointsave.fr/:splat 301
 http://pointsave.fr/* https://www.pointsave.fr/:splat 301
+
+# Redirect old villes/ URLs to root
+/villes/:slug /:slug 301
