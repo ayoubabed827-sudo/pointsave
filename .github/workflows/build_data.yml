@@ -9,113 +9,104 @@ jobs:
     timeout-minutes: 15
 
     steps:
-      - name: Download communes and push via GitHub API
+      - name: Download communes and push via GitHub API (Python)
         env:
           GH_TOKEN: ${{ secrets.GH_PAT }}
           GH_REPO: ayoubabed827-sudo/pointsave
         run: |
-          node << 'SCRIPT'
-          const GH_TOKEN = process.env.GH_TOKEN;
-          const GH_REPO = process.env.GH_REPO;
+          python3 << 'PYEOF'
+import json, base64, urllib.request, urllib.parse, re
 
-          function slugify(str) {
-            return str.toLowerCase()
-              .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-              .replace(/[^a-z0-9]+/g, '-')
-              .replace(/^-|-$/g, '');
-          }
+GH_TOKEN = __import__('os').environ['GH_TOKEN']
+GH_REPO = __import__('os').environ['GH_REPO']
 
-          async function ghGetSHA(path) {
-            const r = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${path}`, {
-              headers: { 'Authorization': `Bearer ${GH_TOKEN}`, 'Accept': 'application/vnd.github.v3+json' }
-            });
-            if (!r.ok) return null;
-            const d = await r.json();
-            return d.sha || null;
-          }
+def slugify(s):
+    s = s.lower()
+    s = ''.join(c if c.isascii() else unicodedata.normalize('NFD', c)[0].lower() if c.isalpha() else '-' for c in s)
+    import unicodedata
+    s = unicodedata.normalize('NFD', s.lower())
+    s = ''.join(c for c in s if unicodedata.category(c) != 'Mn')
+    s = re.sub(r'[^a-z0-9]+', '-', s).strip('-')
+    return s
 
-          async function ghPutFile(path, content, message) {
-            const sha = await ghGetSHA(path);
-            // Encoder en base64 - forcer ASCII en échappant les chars unicode
-            const safeContent = content.replace(/[\u0080-\uFFFF]/g, ch =>
-              '\\u' + ch.charCodeAt(0).toString(16).padStart(4,'0')
-            );
-            const b64 = Buffer.from(safeContent, 'binary').toString('base64');
-            const body = {
-              message,
-              content: b64,
-            };
-            if (sha) body.sha = sha;
-            const r = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${path}`, {
-              method: 'PUT',
-              headers: {
-                'Authorization': `Bearer ${GH_TOKEN}`,
-                'Content-Type': 'application/json',
-                'Accept': 'application/vnd.github.v3+json'
-              },
-              body: JSON.stringify(body)
-            });
-            const d = await r.json();
-            if (!d.commit) throw new Error(`Failed: ${JSON.stringify(d)}`);
-            return d.commit.sha;
-          }
+def gh_get_sha(path):
+    url = f'https://api.github.com/repos/{GH_REPO}/contents/{path}'
+    req = urllib.request.Request(url, headers={
+        'Authorization': f'Bearer {GH_TOKEN}',
+        'Accept': 'application/vnd.github.v3+json'
+    })
+    try:
+        with urllib.request.urlopen(req) as r:
+            return json.loads(r.read())['sha']
+    except:
+        return None
 
-          // Nettoyer un string - supprimer caractères non-ASCII problématiques
-          function clean(str) {
-            if (!str) return str;
-            // Supprimer zero-width spaces et autres caractères invisibles
-            return str.replace(/[\u200B-\u200D\uFEFF\u00AD]/g, '').trim();
-          }
+def gh_put_file(path, content_str, message):
+    sha = gh_get_sha(path)
+    content_b64 = base64.b64encode(content_str.encode('utf-8')).decode('ascii')
+    body = {'message': message, 'content': content_b64}
+    if sha:
+        body['sha'] = sha
+    data = json.dumps(body).encode('utf-8')
+    url = f'https://api.github.com/repos/{GH_REPO}/contents/{path}'
+    req = urllib.request.Request(url, data=data, method='PUT', headers={
+        'Authorization': f'Bearer {GH_TOKEN}',
+        'Content-Type': 'application/json',
+        'Accept': 'application/vnd.github.v3+json'
+    })
+    with urllib.request.urlopen(req) as r:
+        result = json.loads(r.read())
+        return result['commit']['sha']
 
-          async function main() {
-            console.log('📥 Téléchargement communes françaises...');
-            const r = await fetch(
-              'https://geo.api.gouv.fr/communes?fields=nom,codesPostaux,codeDepartement,centre&format=json&geometry=centre'
-            );
-            const communes = await r.json();
-            console.log(`✅ ${communes.length} communes`);
+import unicodedata
 
-            // Grouper par département
-            const deptMap = {};
-            const index = {};
-            for (const c of communes) {
-              if (!c.codesPostaux?.length) continue;
-              const dept = clean(c.codeDepartement);
-              const cp = clean(c.codesPostaux[0]);
-              const nom = clean(c.nom);
-              const lat = c.centre?.coordinates?.[1] || null;
-              const lon = c.centre?.coordinates?.[0] || null;
-              if (!dept || !cp || !nom) continue;
-              if (!deptMap[dept]) deptMap[dept] = [];
-              const data = { nom, cp, dept, lat, lon };
-              deptMap[dept].push(data);
-              const slug = slugify(nom);
-              if (slug) index[slug] = data;
-            }
+def slugify(s):
+    s = unicodedata.normalize('NFD', s.lower())
+    s = ''.join(c for c in s if unicodedata.category(c) != 'Mn')
+    s = re.sub(r'[^a-z0-9]+', '-', s).strip('-')
+    return s
 
-            console.log(`📤 Upload ${Object.keys(deptMap).length} fichiers via GitHub API...`);
+print('Téléchargement communes françaises...')
+url = 'https://geo.api.gouv.fr/communes?fields=nom,codesPostaux,codeDepartement,centre&format=json&geometry=centre'
+with urllib.request.urlopen(url) as r:
+    communes = json.loads(r.read())
+print(f'✅ {len(communes)} communes')
 
-            // Upload chaque dept
-            let i = 0;
-            for (const [dept, coms] of Object.entries(deptMap)) {
-              await ghPutFile(
-                `public/data/dept-${dept}.json`,
-                JSON.stringify(coms),
-                `data: communes dept-${dept}`
-              );
-              i++;
-              if (i % 10 === 0) console.log(`  ${i}/${Object.keys(deptMap).length} depts...`);
-            }
+dept_map = {}
+index = {}
+for c in communes:
+    if not c.get('codesPostaux'):
+        continue
+    dept = c['codeDepartement']
+    cp = c['codesPostaux'][0]
+    nom = c['nom']
+    coords = c.get('centre', {}).get('coordinates', [None, None])
+    lon, lat = coords[0], coords[1]
+    if dept not in dept_map:
+        dept_map[dept] = []
+    data = {'nom': nom, 'cp': cp, 'dept': dept, 'lat': lat, 'lon': lon}
+    dept_map[dept].append(data)
+    slug = slugify(nom)
+    if slug:
+        index[slug] = data
 
-            // Upload index
-            await ghPutFile(
-              'public/data/index.json',
-              JSON.stringify(index),
-              `data: index ${Object.keys(index).length} communes`
-            );
+print(f'📤 Upload {len(dept_map)} fichiers...')
+i = 0
+for dept, coms in dept_map.items():
+    gh_put_file(
+        f'public/data/dept-{dept}.json',
+        json.dumps(coms, ensure_ascii=False),
+        f'data: communes dept-{dept}'
+    )
+    i += 1
+    if i % 10 == 0:
+        print(f'  {i}/{len(dept_map)} depts...')
 
-            console.log(`🎉 ${i} fichiers uploadés + index (${Object.keys(index).length} communes)`);
-          }
+gh_put_file(
+    'public/data/index.json',
+    json.dumps(index, ensure_ascii=False),
+    f'data: index {len(index)} communes'
+)
 
-          main().catch(e => { console.error('❌', e.message); process.exit(1); });
-          SCRIPT
+print(f'🎉 {i} fichiers + index ({len(index)} communes) uploadés!')
+          PYEOF
