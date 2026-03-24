@@ -9,25 +9,50 @@ jobs:
     timeout-minutes: 15
 
     steps:
-      - uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GH_PAT }}
-          fetch-depth: 0
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
-      - name: Download and build dept JSON files
+      - name: Download communes and push via GitHub API
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+          GH_REPO: ayoubabed827-sudo/pointsave
         run: |
           node << 'SCRIPT'
-          const fs = require('fs');
+          const GH_TOKEN = process.env.GH_TOKEN;
+          const GH_REPO = process.env.GH_REPO;
 
           function slugify(str) {
             return str.toLowerCase()
               .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
               .replace(/[^a-z0-9]+/g, '-')
               .replace(/^-|-$/g, '');
+          }
+
+          async function ghGetSHA(path) {
+            const r = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${path}`, {
+              headers: { 'Authorization': `Bearer ${GH_TOKEN}`, 'Accept': 'application/vnd.github.v3+json' }
+            });
+            if (!r.ok) return null;
+            const d = await r.json();
+            return d.sha || null;
+          }
+
+          async function ghPutFile(path, content, message) {
+            const sha = await ghGetSHA(path);
+            const body = {
+              message,
+              content: Buffer.from(content).toString('base64'),
+            };
+            if (sha) body.sha = sha;
+            const r = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${path}`, {
+              method: 'PUT',
+              headers: {
+                'Authorization': `Bearer ${GH_TOKEN}`,
+                'Content-Type': 'application/json',
+                'Accept': 'application/vnd.github.v3+json'
+              },
+              body: JSON.stringify(body)
+            });
+            const d = await r.json();
+            if (!d.commit) throw new Error(`Failed: ${JSON.stringify(d)}`);
+            return d.commit.sha;
           }
 
           async function main() {
@@ -38,7 +63,9 @@ jobs:
             const communes = await r.json();
             console.log(`✅ ${communes.length} communes`);
 
+            // Grouper par département
             const deptMap = {};
+            const index = {};
             for (const c of communes) {
               if (!c.codesPostaux?.length) continue;
               const dept = c.codeDepartement;
@@ -46,38 +73,35 @@ jobs:
               const lat = c.centre?.coordinates?.[1] || null;
               const lon = c.centre?.coordinates?.[0] || null;
               if (!deptMap[dept]) deptMap[dept] = [];
-              deptMap[dept].push({ nom: c.nom, cp, dept, lat, lon });
+              const data = { nom: c.nom, cp, dept, lat, lon };
+              deptMap[dept].push(data);
+              const slug = slugify(c.nom);
+              if (slug) index[slug] = data;
             }
 
-            fs.mkdirSync('public/data', { recursive: true });
+            console.log(`📤 Upload ${Object.keys(deptMap).length} fichiers via GitHub API...`);
 
-            let total = 0;
+            // Upload chaque dept
+            let i = 0;
             for (const [dept, coms] of Object.entries(deptMap)) {
-              fs.writeFileSync(`public/data/dept-${dept}.json`, JSON.stringify(coms));
-              total++;
+              await ghPutFile(
+                `public/data/dept-${dept}.json`,
+                JSON.stringify(coms),
+                `data: communes dept-${dept}`
+              );
+              i++;
+              if (i % 10 === 0) console.log(`  ${i}/${Object.keys(deptMap).length} depts...`);
             }
-            console.log(`✅ ${total} fichiers JSON créés`);
 
-            // Index slug -> commune
-            const index = {};
-            for (const coms of Object.values(deptMap)) {
-              for (const c of coms) {
-                const slug = slugify(c.nom);
-                if (slug) index[slug] = { nom: c.nom, cp: c.cp, dept: c.dept, lat: c.lat, lon: c.lon };
-              }
-            }
-            fs.writeFileSync('public/data/index.json', JSON.stringify(index));
-            console.log(`✅ Index: ${Object.keys(index).length} slugs`);
+            // Upload index
+            await ghPutFile(
+              'public/data/index.json',
+              JSON.stringify(index),
+              `data: index ${Object.keys(index).length} communes`
+            );
+
+            console.log(`🎉 ${i} fichiers uploadés + index (${Object.keys(index).length} communes)`);
           }
 
-          main().catch(e => { console.error('❌', e); process.exit(1); });
+          main().catch(e => { console.error('❌', e.message); process.exit(1); });
           SCRIPT
-
-      - name: Commit and push data files
-        run: |
-          git config user.name "GitHub Action"
-          git config user.email "action@github.com"
-          git remote set-url origin https://x-access-token:${{ secrets.GH_PAT }}@github.com/ayoubabed827-sudo/pointsave.git
-          git add public/data/
-          git diff --staged --quiet && echo "No changes" || git commit -m "data: communes françaises par département"
-          git push origin main
