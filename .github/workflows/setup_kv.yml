@@ -1,0 +1,191 @@
+name: Setup Cloudflare KV — 35 000 communes France
+
+on:
+  workflow_dispatch:  # Déclenchement manuel uniquement
+
+jobs:
+  setup-kv:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run KV setup
+        env:
+          CF_TOKEN: ${{ secrets.CF_TOKEN }}
+          CF_ACCOUNT: ${{ secrets.CF_ACCOUNT }}
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+        run: |
+          cat << 'SCRIPT' > run_setup.js
+          const CF_TOKEN = process.env.CF_TOKEN;
+          const CF_ACCOUNT = process.env.CF_ACCOUNT;
+          const GH_TOKEN = process.env.GH_TOKEN;
+          const GH_REPO = 'ayoubabed827-sudo/pointsave';
+
+          function slugify(str) {
+            return str.toLowerCase()
+              .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+              .replace(/[^a-z0-9]+/g, '-')
+              .replace(/^-|-$/g, '');
+          }
+
+          async function cfGet(path) {
+            const r = await fetch(`https://api.cloudflare.com/client/v4${path}`, {
+              headers: { 'Authorization': `Bearer ${CF_TOKEN}` }
+            });
+            return r.json();
+          }
+
+          async function cfPost(path, body) {
+            const r = await fetch(`https://api.cloudflare.com/client/v4${path}`, {
+              method: 'POST',
+              headers: { 'Authorization': `Bearer ${CF_TOKEN}`, 'Content-Type': 'application/json' },
+              body: JSON.stringify(body)
+            });
+            return r.json();
+          }
+
+          async function cfBulk(kvId, entries) {
+            const BATCH = 5000;
+            for (let i = 0; i < entries.length; i += BATCH) {
+              const batch = entries.slice(i, i + BATCH);
+              const r = await fetch(
+                `https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT}/storage/kv/namespaces/${kvId}/bulk`,
+                {
+                  method: 'PUT',
+                  headers: { 'Authorization': `Bearer ${CF_TOKEN}`, 'Content-Type': 'application/json' },
+                  body: JSON.stringify(batch)
+                }
+              );
+              const d = await r.json();
+              if (!d.success) throw new Error('Bulk error: ' + JSON.stringify(d.errors));
+              console.log(`  ✅ ${i + batch.length}/${entries.length} clés uploadées`);
+            }
+          }
+
+          async function cfPutText(kvId, key, value) {
+            const r = await fetch(
+              `https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT}/storage/kv/namespaces/${kvId}/values/${encodeURIComponent(key)}`,
+              {
+                method: 'PUT',
+                headers: { 'Authorization': `Bearer ${CF_TOKEN}`, 'Content-Type': 'text/plain' },
+                body: value
+              }
+            );
+            return r.json();
+          }
+
+          async function main() {
+            console.log('\n🚀 Setup KV PointSave — France entière\n');
+
+            // 1. Créer ou récupérer namespace KV
+            console.log('📦 Namespace KV...');
+            const list = await cfGet(`/accounts/${CF_ACCOUNT}/storage/kv/namespaces`);
+            let kvId = list.result?.find(n => n.title === 'pointsave-communes')?.id;
+
+            if (kvId) {
+              console.log(`  ✅ Namespace existant: ${kvId}`);
+            } else {
+              const res = await cfPost(`/accounts/${CF_ACCOUNT}/storage/kv/namespaces`, { title: 'pointsave-communes' });
+              if (!res.success) throw new Error(JSON.stringify(res.errors));
+              kvId = res.result.id;
+              console.log(`  ✅ Namespace créé: ${kvId}`);
+            }
+
+            // 2. Télécharger communes
+            console.log('\n📥 Téléchargement communes françaises...');
+            const r = await fetch('https://geo.api.gouv.fr/communes?fields=nom,code,codesPostaux,codeDepartement,centre&format=json&geometry=centre');
+            const communes = await r.json();
+            console.log(`  ✅ ${communes.length} communes`);
+
+            // 3. Préparer données
+            const DEPT_VOISINS = {
+              '75':['92','93','94'],'92':['75','78','91','93','95'],
+              '93':['75','77','94','95'],'94':['75','77','91','92','93'],
+              '77':['75','91','93','94'],'78':['75','91','92','95'],
+              '91':['75','77','78','92','94'],'95':['75','78','92','93']
+            };
+
+            const communeMap = {};
+            const deptMap = {};
+
+            for (const c of communes) {
+              if (!c.codesPostaux?.length) continue;
+              const cp = c.codesPostaux[0];
+              const dept = c.codeDepartement;
+              const lat = c.centre?.coordinates?.[1] || null;
+              const lon = c.centre?.coordinates?.[0] || null;
+              const slug = slugify(c.nom);
+              if (!slug) continue;
+              const data = { nom: c.nom, cp, dept, lat, lon };
+              communeMap[slug] = data;
+              if (!deptMap[dept]) deptMap[dept] = [];
+              deptMap[dept].push(data);
+            }
+
+            // 4. Upload communes
+            console.log(`\n📤 Upload ${Object.keys(communeMap).length} communes...`);
+            const bulkEntries = Object.entries(communeMap).map(([slug, data]) => ({
+              key: slug, value: JSON.stringify(data)
+            }));
+            await cfBulk(kvId, bulkEntries);
+
+            // 5. Upload données par département
+            console.log('\n📤 Upload données départements...');
+            const deptEntries = [];
+            for (const [dept, coms] of Object.entries(deptMap)) {
+              const voisinsDepts = DEPT_VOISINS[dept] || [];
+              let allComs = [...coms];
+              for (const vd of voisinsDepts) {
+                if (deptMap[vd]) allComs = allComs.concat(deptMap[vd]);
+              }
+              deptEntries.push({ key: `__voisines_${dept}__`, value: JSON.stringify(allComs) });
+            }
+            await cfBulk(kvId, deptEntries);
+            console.log(`  ✅ ${deptEntries.length} départements`);
+
+            // 6. Upload template
+            console.log('\n📤 Upload template HTML...');
+            const fs = await import('fs');
+            const template = fs.readFileSync('template_commune.html', 'utf-8');
+            const tplRes = await cfPutText(kvId, '__template__', template);
+            if (!tplRes.success) throw new Error(JSON.stringify(tplRes.errors));
+            console.log(`  ✅ Template uploadé (${Math.round(template.length/1024)}kb)`);
+
+            // 7. Mettre à jour wrangler.toml sur GitHub
+            console.log('\n📝 Mise à jour wrangler.toml...');
+            const newToml = `name = "pointsave"\ncompatibility_date = "2024-01-01"\n\n[[kv_namespaces]]\nbinding = "COMMUNES_KV"\nid = "${kvId}"\n`;
+
+            const shaRes = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/wrangler.toml`, {
+              headers: { 'Authorization': `Bearer ${GH_TOKEN}`, 'Accept': 'application/vnd.github.v3+json' }
+            });
+            const shaData = await shaRes.json();
+
+            const updateRes = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/wrangler.toml`, {
+              method: 'PUT',
+              headers: { 'Authorization': `Bearer ${GH_TOKEN}`, 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                message: `chore: KV namespace ID ${kvId.slice(0,8)}`,
+                content: Buffer.from(newToml).toString('base64'),
+                sha: shaData.sha
+              })
+            });
+            const updateData = await updateRes.json();
+            if (!updateData.commit) throw new Error(JSON.stringify(updateData));
+            console.log(`  ✅ wrangler.toml mis à jour (commit ${updateData.commit.sha.slice(0,7)})`);
+
+            console.log(`\n🎉 SETUP COMPLET !`);
+            console.log(`📊 ${Object.keys(communeMap).length} communes dans KV`);
+            console.log(`🔑 KV ID: ${kvId}`);
+          }
+
+          main().catch(e => { console.error('❌', e.message); process.exit(1); });
+          SCRIPT
+          node run_setup.js
