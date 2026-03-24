@@ -36,9 +36,13 @@ jobs:
 
           async function ghPutFile(path, content, message) {
             const sha = await ghGetSHA(path);
+            // Encoder proprement en base64 avec support UTF-8 complet
+            const bytes = new TextEncoder().encode(content);
+            const binStr = Array.from(bytes).map(b => String.fromCharCode(b)).join('');
+            const b64 = btoa(binStr);
             const body = {
               message,
-              content: Buffer.from(content, 'utf8').toString('base64'),
+              content: b64,
             };
             if (sha) body.sha = sha;
             const r = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${path}`, {
