@@ -804,9 +804,9 @@ input,select,textarea{font-size:16px!important;}
 
 
 <!-- MAILLAGE GRANDES VILLES -->
-<section class="maillage">
+<section class="maillage" id="maillage-index">
   <div class="maillage-in">
-    <div class="ml-title">📍 Communes couvertes près de Meaux</div>
+    <div class="ml-title">📍 Communes couvertes près de <span id="dyn-ml-ville">Meaux</span></div>
     <div class="ml-grid">
       <a href="/chelles.html" class="ml-link">Chelles <span class="ml-dept">(77)</span></a>
       <a href="/lagny-sur-marne.html" class="ml-link">Lagny-sur-Marne <span class="ml-dept">(77)</span></a>
@@ -1051,6 +1051,31 @@ function apply(ville){
   // Footer
   var ft=document.getElementById('dyn-footer');
   if(ft)ft.textContent=ville;
+  // Maillage dynamique
+  var mlv=document.getElementById('dyn-ml-ville');
+  if(mlv)mlv.textContent=ville;
+  // Mettre à jour les liens du maillage selon la ville
+  if(typeof window.COMMUNES!=='undefined'&&window.COMMUNES.length){
+    var dept=null;
+    var cp=null;
+    var found=window.COMMUNES.find(function(x){return x.nom===ville;});
+    if(found){dept=found.d;cp=parseInt(found.cp);}
+    if(dept){
+      var voisines=window.COMMUNES.filter(function(x){return x.d===dept&&x.nom!==ville;});
+      voisines.sort(function(a,b){return Math.abs(parseInt(a.cp)-cp)-Math.abs(parseInt(b.cp)-cp);});
+      voisines=voisines.slice(0,6);
+      var grid=document.getElementById('maillage-index');
+      if(grid){
+        var g=grid.querySelector('.ml-grid');
+        if(g&&voisines.length){
+          g.innerHTML=voisines.map(function(v){
+            var slug=v.nom.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+            return '<a href="/'+slug+'.html" class="ml-link">'+v.nom+' <span class="ml-dept">('+v.cp+')</span></a>';
+          }).join('');
+        }
+      }
+    }
+  }
   // Formulaire ville
   var vi=document.getElementById('f_ville')||document.getElementById('ville');
   if(vi&&!vi.value)vi.value=ville;
