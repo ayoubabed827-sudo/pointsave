@@ -36,10 +36,11 @@ jobs:
 
           async function ghPutFile(path, content, message) {
             const sha = await ghGetSHA(path);
-            // Encoder proprement en base64 avec support UTF-8 complet
-            const bytes = new TextEncoder().encode(content);
-            const binStr = Array.from(bytes).map(b => String.fromCharCode(b)).join('');
-            const b64 = btoa(binStr);
+            // Encoder en base64 - forcer ASCII en échappant les chars unicode
+            const safeContent = content.replace(/[\u0080-\uFFFF]/g, ch =>
+              '\\u' + ch.charCodeAt(0).toString(16).padStart(4,'0')
+            );
+            const b64 = Buffer.from(safeContent, 'binary').toString('base64');
             const body = {
               message,
               content: b64,
@@ -59,6 +60,13 @@ jobs:
             return d.commit.sha;
           }
 
+          // Nettoyer un string - supprimer caractères non-ASCII problématiques
+          function clean(str) {
+            if (!str) return str;
+            // Supprimer zero-width spaces et autres caractères invisibles
+            return str.replace(/[\u200B-\u200D\uFEFF\u00AD]/g, '').trim();
+          }
+
           async function main() {
             console.log('📥 Téléchargement communes françaises...');
             const r = await fetch(
@@ -72,14 +80,16 @@ jobs:
             const index = {};
             for (const c of communes) {
               if (!c.codesPostaux?.length) continue;
-              const dept = c.codeDepartement;
-              const cp = c.codesPostaux[0];
+              const dept = clean(c.codeDepartement);
+              const cp = clean(c.codesPostaux[0]);
+              const nom = clean(c.nom);
               const lat = c.centre?.coordinates?.[1] || null;
               const lon = c.centre?.coordinates?.[0] || null;
+              if (!dept || !cp || !nom) continue;
               if (!deptMap[dept]) deptMap[dept] = [];
-              const data = { nom: c.nom, cp, dept, lat, lon };
+              const data = { nom, cp, dept, lat, lon };
               deptMap[dept].push(data);
-              const slug = slugify(c.nom);
+              const slug = slugify(nom);
               if (slug) index[slug] = data;
             }
 
