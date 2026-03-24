@@ -702,7 +702,7 @@ window.addEventListener('unhandledrejection',function(e){
       <div class="fi rev"><div class="fq" onclick="tFaq(this)">Combien coûte un stage de récupération de points ? <span class="fa2">+</span></div><div class="fan"><p>Le prix varie entre <strong>200 et 350 euros</strong> selon le centre agréé choisi. Ce montant est réglé directement au centre. Notre service de mise en relation est entièrement gratuit.</p></div></div>
       <div class="fi rev"><div class="fq" onclick="tFaq(this)">Suis-je éligible au stage de récupération de points ? <span class="fa2">+</span></div><div class="fan"><p>Vous êtes éligible si vous avez perdu <strong>au moins 1 point</strong> et que vous n'avez <strong>pas effectué de stage dans les 12 derniers mois</strong>. Votre permis ne doit pas être invalidé ni suspendu.</p></div></div>
       <div class="fi rev"><div class="fq" onclick="tFaq(this)">Combien de temps dure un stage de récupération de points ? <span class="fa2">+</span></div><div class="fan"><p>Un stage dure exactement <strong>2 jours consécutifs</strong> (16 heures de formation). <strong>Aucun examen, aucune note</strong> : il suffit d'être présent les 2 jours. Attestation remise à la fin du 2ème jour.</p></div></div>
-      <div class="fi rev"><div class="fq" onclick="tFaq(this)">Que se passe-t-il si je perds tous mes points ? <span class="fa2">+</span></div><div class="fan"><p>Si vous atteignez 0 point, votre permis est <strong>automatiquement invalidé</strong>. Vous devrez attendre 6 mois minimum puis repasser intégralement l'examen du permis. Agissez dès que votre capital baisse.</p></div></div>
+      <div class="fi rev"><div class="fq" onclick="tFaq(this)">Que se passe-t-il si je perds tous mes points ? <span class="fa2">+</span></div><div class="fan"><p>Si vous atteignez 0 point, votre permis est <strong>automatiquement invalidé</strong>. Vous devrez attendre 6 mois minimum puis repasser intégralement l\'examen du permis. Agissez dès que votre capital baisse.</p></div></div>
       <div class="fi rev"><div class="fq" onclick="tFaq(this)">Comment vérifier mon solde de points gratuitement ? <span class="fa2">+</span></div><div class="fan"><p>Sur <strong>telepoints.interieur.gouv.fr</strong> avec votre numéro de permis et votre date de naissance. Gratuit et disponible 24h/24. Également accessible via FranceConnect.</p></div></div>
     </div>
   </div>
@@ -998,7 +998,8 @@ window.addEventListener('DOMContentLoaded',function(){
 </div>
 <script>
 (function(){
-// COMMUNES → ps-data.js
+var COMMUNES=window.COMMUNES||[];
+var VILLES_AC=window.VILLES_AC||[];
 
 function slugify(s){
   return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
@@ -1233,55 +1234,46 @@ function updateJauge(val){
   var ptsRow = document.getElementById('jauge-pts-row');
   var msg = document.getElementById('jauge-msg');
   var lbl = document.getElementById('jauge-label');
-
-  if(isNaN(val) || val === '') { wrap.style.display='none'; return; }
-  val = Math.min(12, Math.max(0, val));
-  wrap.style.display = 'block';
-
-  // Remplissage
-  fill.style.width = Math.round(val/12*100) + '%';
-  ptsEl.textContent = val + ' point' + (val > 1 ? 's' : '');
-
-  // Pastilles
-  var html = '';
-  for(var i=1;i<=12;i++){
-    var cls = i <= val ? (i <= 3 ? 're' : i <= 6 ? 'lo' : 'ok') : 'lost';
-    html += '<div class="sj-pt '+cls+'">'+(i<=val?i:'')+'</div>';
+  if(isNaN(val)){
+    if(wrap)wrap.style.display='none';
+    return;
   }
-  ptsRow.innerHTML = html;
-
-  // Message contextuel
-  msg.style.display = 'block';
-  if(val === 0){
-    msg.style.background = 'rgba(255,50,50,.12)';
-    msg.style.color = '#FF3232';
-    msg.style.border = '1px solid rgba(255,50,50,.3)';
-    msg.innerHTML = '\uD83D\uDEA8 <strong>Permis invalidé !</strong> Vous devez repasser l'examen complet après 6 mois minimum.';
-    lbl.textContent = 'Situation critique';
-  } else if(val <= 3){
-    msg.style.background = 'rgba(255,50,50,.1)';
-    msg.style.color = '#FF6B6B';
-    msg.style.border = '1px solid rgba(255,50,50,.2)';
-    msg.innerHTML = '\uD83D\uDD34 <strong>Danger immédiat !</strong> Une seule infraction peut invalider votre permis. <a href="#formulaire" style="color:#FF6B6B;font-weight:900" onclick="document.getElementById('formulaire').scrollIntoView({behavior:'smooth'});return false;">Réservez un stage maintenant →</a>';
-    lbl.textContent = 'Solde critique';
-  } else if(val <= 6){
-    msg.style.background = 'rgba(255,149,0,.1)';
-    msg.style.color = '#FF9500';
-    msg.style.border = '1px solid rgba(255,149,0,.2)';
-    msg.innerHTML = '\uD83D\uDFE0 <strong>Solde faible.</strong> Vous êtes éligible à un stage — récupérez jusqu'à 4 points avant qu'il ne soit trop tard. <a href="#formulaire" style="color:#FF9500;font-weight:900" onclick="document.getElementById('formulaire').scrollIntoView({behavior:'smooth'});return false;">Je veux un stage →</a>';
-    lbl.textContent = 'Solde insuffisant';
-  } else if(val <= 9){
-    msg.style.background = 'rgba(255,215,0,.08)';
-    msg.style.color = '#FFD700';
-    msg.style.border = '1px solid rgba(255,215,0,.2)';
-    msg.innerHTML = '\uD83D\uDFE1 <strong>Solde correct mais surveillé.</strong> Anticipez avant une prochaine infraction. Un stage préventif est possible.';
-    lbl.textContent = 'Solde à surveiller';
+  if(wrap)wrap.style.display='block';
+  if(ptsRow)ptsRow.style.display='flex';
+  if(ptsEl)ptsEl.textContent=val+' / 12 points';
+  var pct=Math.round((val/12)*100);
+  if(fill){fill.style.width=pct+'%';}
+  if(!msg||!lbl)return;
+  if(val===0){
+    msg.style.background='rgba(255,0,0,.1)';
+    msg.style.color='#ff4444';
+    msg.style.border='1px solid rgba(255,0,0,.2)';
+    msg.innerHTML="<strong>Permis invalide !</strong> Vous devez repasser l\u2019examen apr\u00e8s 6 mois. <a href=\"#formulaire\" style=\"color:#FF6B6B;font-weight:900\">Je veux un stage \u2192</a>";
+    lbl.textContent='Permis invalide';
+  } else if(val<=3){
+    msg.style.background='rgba(255,0,0,.08)';
+    msg.style.color='#FF6B6B';
+    msg.style.border='1px solid rgba(255,0,0,.2)';
+    msg.innerHTML="<strong>Danger imm\u00e9diat !</strong> Une infraction peut invalider votre permis. <a href=\"#formulaire\" style=\"color:#FF6B6B;font-weight:900\">Je veux un stage \u2192</a>";
+    lbl.textContent='Danger imm\u00e9diat';
+  } else if(val<=6){
+    msg.style.background='rgba(255,100,0,.08)';
+    msg.style.color='#FF8C00';
+    msg.style.border='1px solid rgba(255,100,0,.2)';
+    msg.innerHTML="<strong>Solde faible.</strong> Un stage vous redonne jusqu\u2019\u00e0 4 points. <a href=\"#formulaire\" style=\"color:#FF8C00;font-weight:900\">Je veux un stage \u2192</a>";
+    lbl.textContent='Solde faible';
+  } else if(val<=9){
+    msg.style.background='rgba(255,215,0,.08)';
+    msg.style.color='#FFD700';
+    msg.style.border='1px solid rgba(255,215,0,.2)';
+    msg.innerHTML="<strong>Solde surveill\u00e9.</strong> Anticipez avant une prochaine infraction.";
+    lbl.textContent='Solde surveiller';
   } else {
-    msg.style.background = 'rgba(0,199,122,.08)';
-    msg.style.color = '#00C77A';
-    msg.style.border = '1px solid rgba(0,199,122,.2)';
-    msg.innerHTML = '\u2705 <strong>Bon solde !</strong> Continuez à conduire prudemment. Pensez à vérifier votre solde tous les 6 mois.';
-    lbl.textContent = 'Bonne situation';
+    msg.style.background='rgba(0,199,122,.08)';
+    msg.style.color='#00C77A';
+    msg.style.border='1px solid rgba(0,199,122,.2)';
+    msg.innerHTML="<strong>Bon solde !</strong> Continuez \u00e0 conduire prudemment.";
+    lbl.textContent='Bon solde';
   }
 }
 </script>
