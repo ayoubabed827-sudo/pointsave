@@ -1415,7 +1415,7 @@ document.getElementById('contactForm').addEventListener('submit',function(e){
   document.body.style.overflow='hidden';
   document.getElementById('contactForm').reset();
   btn.disabled=false;
-  btn.textContent='📨 Envoyer ma demande de rappel';
+  btn.textContent=' Envoyer ma demande de rappel';
   if(typeof gtag!=='undefined'){gtag('event','form_submit',{event_category:'Lead',event_label:'Formulaire soumis'});}
   fetch(APPS_SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)}).catch(function(){});
 });
@@ -1633,7 +1633,7 @@ function initPlanning(){
           var asap=document.getElementById('planAsap');if(asap)asap.classList.remove('sel');
           sl.classList.add('sel');
           var fm=document.getElementById('f_moment');if(fm)fm.value=val;
-          var bt=document.getElementById('planBtnTxt');if(bt)bt.textContent='📅 '+val;
+          var bt=document.getElementById('planBtnTxt');if(bt)bt.textContent=' '+val;
           var pb=document.getElementById('planBtn');if(pb)pb.classList.add('filled');
           setTimeout(function(){if(typeof closePlanningDirect==='function')closePlanningDirect();},350);
         }
