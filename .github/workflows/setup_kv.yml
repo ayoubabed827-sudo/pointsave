@@ -130,12 +130,8 @@ jobs:
               deptMap[dept].push(data);
             }
 
-            // 4. Upload communes
-            console.log(`\n📤 Upload ${Object.keys(communeMap).length} communes...`);
-            const bulkEntries = Object.entries(communeMap).map(([slug, data]) => ({
-              key: slug, value: JSON.stringify(data)
-            }));
-            await cfBulk(kvId, bulkEntries);
+            // 4. Skip upload communes (déjà dans KV depuis run #1)
+            console.log(`\n⏩ Skip communes individuelles - déjà en KV (limite quotidienne atteinte)`);
 
             // 5. Upload données par département
             console.log('\n📤 Upload données départements...');
