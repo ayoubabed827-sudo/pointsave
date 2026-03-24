@@ -334,6 +334,26 @@ body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;ove
 .ml-link{display:inline-flex;align-items:center;gap:5px;padding:6px 12px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:8px;color:var(--text);text-decoration:none;font-size:12px;font-weight:600;transition:all .2s}
 .ml-link:hover{border-color:var(--green2);color:var(--green2);background:rgba(0,135,90,.08)}
 .ml-km{font-size:10px;color:var(--muted);font-weight:400}
+/* WIDGET SOLDE */
+.wsolde{padding:56px 20px;background:linear-gradient(135deg,var(--dark2) 0%,rgba(0,135,90,.08) 100%);border-top:1px solid var(--border)}
+.wsolde-in{max-width:560px;margin:0 auto;text-align:center}
+.wsolde-box{background:var(--dark);border:1.5px solid var(--border);border-radius:20px;padding:28px 24px;margin-top:24px;position:relative;overflow:hidden}
+.wsolde-box::before{content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;background:radial-gradient(circle,rgba(0,135,90,.12),transparent 70%);pointer-events:none}
+.wsolde-steps{display:flex;flex-direction:column;gap:14px;margin-bottom:20px;text-align:left}
+.wsolde-step{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:12px;transition:border-color .2s}
+.wsolde-step:hover{border-color:var(--green2)}
+.wsolde-step-num{width:28px;height:28px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;font-family:'Outfit',sans-serif;font-weight:900;font-size:13px;color:white;flex-shrink:0;margin-top:1px}
+.wsolde-step-txt{flex:1}
+.wsolde-step-txt strong{display:block;font-size:14px;color:var(--text);font-weight:700;margin-bottom:2px}
+.wsolde-step-txt span{font-size:12px;color:var(--muted);line-height:1.5}
+.wsolde-cta{display:flex;flex-direction:column;gap:10px;margin-top:4px}
+.wsolde-btn-primary{display:flex;align-items:center;justify-content:center;gap:10px;background:var(--green);color:white;font-family:'Outfit',sans-serif;font-weight:800;font-size:16px;padding:14px 24px;border-radius:12px;text-decoration:none;transition:all .2s;border:none;cursor:pointer;width:100%}
+.wsolde-btn-primary:hover{background:var(--green2);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,135,90,.4);color:white}
+.wsolde-btn-secondary{display:flex;align-items:center;justify-content:center;gap:8px;background:rgba(255,255,255,.03);color:var(--muted);font-size:13px;padding:11px 20px;border-radius:10px;text-decoration:none;border:1px solid var(--border);transition:all .2s}
+.wsolde-btn-secondary:hover{border-color:var(--green2);color:var(--green2)}
+.wsolde-info{margin-top:14px;padding:10px 14px;background:rgba(0,135,90,.06);border-radius:10px;border:1px solid rgba(0,135,90,.15);font-size:11px;color:var(--muted);line-height:1.6}
+.wsolde-info strong{color:var(--green2)}
+
 </style>
 </head>
 <body>
@@ -515,7 +535,7 @@ body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;ove
             <div class="fg"><label>Prénom</label><div class="iw"><span class="ico">👤</span><input type="text" id="f_prenom" placeholder="Jean" required></div></div>
             <div class="fg"><label>Nom</label><div class="iw"><span class="ico">👤</span><input type="text" id="f_nom" placeholder="Dupont" required></div></div>
           </div>
-          <div class="fg"><label>Téléphone</label><div class="iw"><span class="ico"><svg class="ico-tel" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.07 1.15 2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.09a16 16 0 006.29 6.29l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 15.42z"/></svg></span><input type="tel" id="f_telephone" placeholder="06 xx xx xx xx" required></div></div>
+          <div class="fg"><label>Téléphone</label><div class="iw"><span class="ico"><svg class="ico-tel" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.07 1.15 2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.09a16 16 0 006.29 6.29l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 15.42z"/></svg></span><input type="tel" id="f_telephone" placeholder="06 xx xx xx xx" required maxlength="10" pattern="0[67][0-9]{8}" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,10)" onblur="if(this.value.length>0&&!/^0[67]/.test(this.value)){this.setCustomValidity('Numéro invalide: doit commencer par 06 ou 07');}else{this.setCustomValidity('');}"></div></div>
           <div class="fg ville-wrap"><label>Ville la plus proche</label>
             <div class="iw"><span class="ico"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#00C77A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
               <input type="text" id="f_ville" name="f_ville" required placeholder="Votre ville..." autocomplete="off" oninput="filterVilles(this.value)" onfocus="filterVilles(this.value)" onblur="setTimeout(hideVilles,500)">
@@ -690,6 +710,649 @@ body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;ove
     <div class="ml-grid"><a href="/sucy-en-brie.html" class="ml-link">Sucy-en-Brie <span class="ml-dept">(94370)</span></a><a href="/bry-sur-marne.html" class="ml-link">Bry-sur-Marne <span class="ml-dept">(94360)</span></a><a href="/vitry-sur-seine.html" class="ml-link">Vitry-sur-Seine <span class="ml-dept">(94400)</span></a><a href="/saint-maurice.html" class="ml-link">Saint-Maurice <span class="ml-dept">(94410)</span></a><a href="/villiers-sur-marne.html" class="ml-link">Villiers-sur-Marne <span class="ml-dept">(94350)</span></a><a href="/joinville-le-pont.html" class="ml-link">Joinville-le-Pont <span class="ml-dept">(94340)</span></a></div>
   </div>
 </section>
+<!-- WIDGET SOLDE -->
+<section class="wsolde rev" id="solde">
+  <div class="wsolde-in">
+    <div class="stag">Outil gratuit</div>
+    <h2 class="stit">Vérifiez votre solde de points</h2>
+    <p class="ssub">Entrez votre solde actuel pour voir votre situation et savoir si un stage s'impose.</p>
+
+    <div class="wsolde-box">
+      <!-- Saisie rapide -->
+      <div class="wsolde-input-wrap">
+        <input type="number" class="wsolde-input" id="solde-input" min="0" max="12" placeholder="?" oninput="if(parseInt(this.value)>12)this.value=12;if(parseInt(this.value)<0)this.value=0;updateJauge(this.value)">
+        <span class="wsolde-input-unit">/ 12 pts</span>
+      </div>
+
+      <!-- Jauge -->
+      <div class="solde-jauge" id="jauge-wrap" style="display:none">
+        <div class="sj-lbl">
+          <span id="jauge-label">Mon solde</span>
+          <strong id="jauge-pts"></strong>
+        </div>
+        <div class="sj-track"><div class="sj-fill" id="jauge-fill" style="width:0%"></div></div>
+        <div class="sj-pts" id="jauge-pts-row"></div>
+        <div id="jauge-msg" style="margin-top:14px;padding:12px 16px;border-radius:10px;font-size:13px;font-weight:600;text-align:center;display:none"></div>
+      </div>
+
+      <!-- Comment vérifier officiellement -->
+      <div class="wsolde-steps">
+        <div class="wsolde-step">
+          <div class="wsolde-step-num">1</div>
+          <div class="wsolde-step-txt">
+            <strong>Accédez au téléservice officiel</strong>
+            <span>telepoints.interieur.gouv.fr — gratuit, 24h/24, sans déplacement</span>
+          </div>
+        </div>
+        <div class="wsolde-step">
+          <div class="wsolde-step-num">2</div>
+          <div class="wsolde-step-txt">
+            <strong>Connectez-vous avec FranceConnect</strong>
+            <span>Via Ameli, impots.gouv.fr ou La Poste — identifiants habituels</span>
+          </div>
+        </div>
+        <div class="wsolde-step">
+          <div class="wsolde-step-num">3</div>
+          <div class="wsolde-step-txt">
+            <strong>Consultez votre relevé d'information</strong>
+            <span>Votre solde exact apparaît immédiatement — si insuffisant, agissez vite</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="wsolde-cta">
+        <a href="#formulaire" class="wsolde-btn-primary" onclick="document.getElementById('formulaire').scrollIntoView({behavior:'smooth'});return false;">📋 Récupérer mes points — rappel gratuit</a>
+        <a href="#formulaire" class="wsolde-btn-secondary" onclick="document.getElementById('formulaire').scrollIntoView({behavior:'smooth'});return false;">
+          📋 Mon solde est faible — je veux un stage
+        </a>
+      </div>
+
+      <div class="wsolde-info">
+        <strong>Besoin d'un stage ?</strong> Si votre solde est inférieur à 6 points, n'attendez pas. 
+        Un seul excès de vitesse peut invalider votre permis. Appelez le 
+        <a href="tel:+33699926510" style="color:var(--green2)">06 99 92 65 10</a> — rappel en 30 minutes.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOG -->
+<section class="blog" id="blog">
+  <div class="blog-in">
+    <div class="rev" style="text-align:center">
+      <div class="stag">Conseils &amp; Infos</div>
+      <h2 class="stit">Tout savoir sur les points de permis</h2>
+      <p class="ssub">Cliquez sur un article pour le lire.</p>
+    </div>
+    <div class="bg rev">
+      <div class="bc" id="card-a1" onclick="tArt('a1','card-a1')"><div class="bimg" style="background:rgba(0,135,90,.1)">🚗</div><div class="bbody"><div class="btag">Guide</div><div class="btit">Comment vérifier son solde de points gratuitement ?</div><div class="bex">Découvrez le téléservice officiel et toutes les méthodes.</div><div class="bdate">Mars 2026</div><div class="bread">Lire →</div></div></div>
+      <div class="bc" id="card-a2" onclick="tArt('a2','card-a2')"><div class="bimg" style="background:rgba(255,215,0,.08)">⚠️</div><div class="bbody"><div class="btag">Infos</div><div class="btit">Quelles infractions font perdre le plus de points ?</div><div class="bex">Le classement complet des infractions les plus pénalisantes.</div><div class="bdate">Février 2026</div><div class="bread">Lire →</div></div></div>
+      <div class="bc" id="card-a3" onclick="tArt('a3','card-a3')"><div class="bimg" style="background:rgba(0,199,122,.08)">✅</div><div class="bbody"><div class="btag">Conseil</div><div class="btit">Stage de récupération : tout ce qu'il faut savoir</div><div class="bex">Durée, coût, éligibilité, déroulement complet.</div><div class="bdate">Janvier 2026</div><div class="bread">Lire →</div></div></div>
+    </div>
+    <div class="bart" id="a1">
+      <h3>🚗 Comment vérifier son solde de points gratuitement ?</h3>
+      <h4>Le téléservice officiel</h4><p>Rendez-vous sur <strong>telepoints.interieur.gouv.fr</strong> avec votre numéro de permis et votre date de naissance. Gratuit, immédiat, disponible 24h/24.</p>
+      <h4>Via FranceConnect</h4><p>Connectez-vous avec vos identifiants Ameli ou impots.gouv.fr. La méthode la plus simple si vous avez déjà un compte actif.</p>
+      <h4>Que faire si votre solde est faible ?</h4><p>Si vous avez moins de 6 points, agissez maintenant. Appelez le <a href="tel:+33699926510" onclick="trackCall()">+33 6 99 92 65 10</a> pour trouver un centre agréé près de Meaux.</p>
+      <button class="bclose" onclick="tArt('a1',null)">↑ Fermer</button>
+    </div>
+    <div class="bart" id="a2">
+      <h3>⚠️ Quelles infractions font perdre le plus de points ?</h3>
+      <h4>Perte de 6 points</h4><ul><li>Conduite en état alcoolique (taux ≥ 0,8 g/l)</li><li>Refus de se soumettre aux vérifications alcoolémie / stupéfiants</li><li>Délit de fuite après un accident corporel</li></ul>
+      <h4>Perte de 4 points</h4><ul><li>Excès de vitesse de 50 km/h ou plus</li><li>Usage du téléphone tenu en main en conduisant</li><li>Dépassement dangereux</li></ul>
+      <h4>Perte de 3 points</h4><ul><li>Excès de vitesse entre 30 et 50 km/h</li><li>Non-respect d'un feu rouge ou d'un stop</li><li>Non-port de la ceinture de sécurité</li></ul>
+      <button class="bclose" onclick="tArt('a2',null)">↑ Fermer</button>
+    </div>
+    <div class="bart" id="a3">
+      <h3>✅ Stage de récupération de points : tout ce qu'il faut savoir</h3>
+      <h4>Qui peut faire un stage ?</h4><ul><li>Tout titulaire d'un permis français valide</li><li>Ayant perdu au moins 1 point</li><li>N'ayant pas effectué de stage dans les 12 derniers mois</li></ul>
+      <h4>Comment se déroule un stage ?</h4><p>2 jours consécutifs (16h) en groupe de maximum 20 participants. Exercices pratiques et ateliers avec des formateurs agréés. <strong>Aucun examen, aucune note.</strong></p>
+      <h4>Quel est le coût ?</h4><p>Entre <strong>200€ et 350€</strong> selon le centre. Notre mise en relation est gratuite. Appelez le <a href="tel:+33699926510" onclick="trackCall()">+33 6 99 92 65 10</a> pour réserver votre stage près de Meaux.</p>
+      <button class="bclose" onclick="tArt('a3',null)">↑ Fermer</button>
+    </div>
+  </div>
+</section>
+
+
+<!-- MAILLAGE GRANDES VILLES -->
+<section class="maillage">
+  <div class="maillage-in">
+    <div class="ml-title">🗺️ Communes couvertes près de Meaux</div>
+    <div class="ml-grid">
+      <a href="/chelles.html" class="ml-link">Chelles <span class="ml-dept">(77)</span></a>
+      <a href="/lagny-sur-marne.html" class="ml-link">Lagny-sur-Marne <span class="ml-dept">(77)</span></a>
+      <a href="/torcy.html" class="ml-link">Torcy <span class="ml-dept">(77)</span></a>
+      <a href="/mitry-mory.html" class="ml-link">Mitry-Mory <span class="ml-dept">(77)</span></a>
+      <a href="/claye-souilly.html" class="ml-link">Claye-Souilly <span class="ml-dept">(77)</span></a>
+      <a href="/villeparisis.html" class="ml-link">Villeparisis <span class="ml-dept">(77)</span></a>
+    </div>
+  </div>
+</section>
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="fl2">
+    <button onclick="openLegal('mentions')">📜 Mentions légales</button>
+    <button onclick="openLegal('cgu')">📄 CGU</button>
+    <button onclick="openLegal('confidentialite')">🔒 Confidentialité</button>
+  </div>
+  <div class="fc2">&copy; 2026 PointSave &mdash; Stage récupération de points agréé près de <span id="dyn-footer">Meaux</span></div>
+</footer>
+
+<!-- STICKY -->
+<div class="sticky" id="sticky">
+  <div class="sticky-in">
+    <p>⚠️ <strong>Permis en danger&nbsp;?</strong> &mdash; <span id="dyn-sticky">Meaux</span> &amp; 30km</p>
+    <div class="sticky-btns">
+      <a href="https://wa.me/33699926510?text=Bonjour%2C+stage+r%C3%A9cup%C3%A9ration+de+points+Meaux" class="sticky-wa" target="_blank">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="#25D366"><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.122 1.526 5.852L.057 23.997l6.305-1.654A11.954 11.954 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.016-1.378l-.36-.214-3.728.978 1.001-3.618-.235-.372A9.818 9.818 0 1112 21.818z"/></svg>
+        WhatsApp
+      </a>
+      <a href="tel:+33699926510" class="sticky-btn" onclick="trackCall()"><svg class="ico-tel" style="width:17px;height:17px" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.07 1.15 2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.09a16 16 0 006.29 6.29l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 15.42z"/></svg> +33 6 99 92 65 10</a>
+    </div>
+  </div>
+</div>
+
+<!-- WHATSAPP FLOTTANT (desktop) -->
+<a href="https://wa.me/33699926510?text=Bonjour%2C+je+voudrais+des+informations+sur+un+stage+de+r%C3%A9cup%C3%A9ration+de+points+pr%C3%A8s+de+Meaux" class="wa-float" target="_blank" aria-label="Contacter par WhatsApp">
+  <svg viewBox="0 0 24 24" width="28" height="28" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.122 1.526 5.852L.057 23.997l6.305-1.654A11.954 11.954 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.016-1.378l-.36-.214-3.728.978 1.001-3.618-.235-.372A9.818 9.818 0 1112 21.818z"/></svg>
+</a>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyzBidKE6K4f0erDLIG8N8lNpdiiCdrUwEAKfN_8JC1TtcRRSMJA57F2Is79D-e0gmtQQ/exec';
+
+function trackCall(){if(typeof gtag!=="undefined"){gtag("event","click_call",{event_category:"CTA",event_label:"Appel"});}}
+
+function toggleMenu(){var m=document.getElementById('mmenu');var b=document.getElementById('burger');m.classList.toggle('open');b.classList.toggle('open');document.body.style.overflow=m.classList.contains('open')?'hidden':'';}
+function closeMenu(){document.getElementById('mmenu').classList.remove('open');document.getElementById('burger').classList.remove('open');document.body.style.overflow='';}
+function goTo(id){closeMenu();setTimeout(function(){var el=document.getElementById(id);if(el){window.scrollTo({top:el.getBoundingClientRect().top+window.pageYOffset-70,behavior:'smooth'});}},50);}
+document.addEventListener('click',function(e){var m=document.getElementById('mmenu');var b=document.getElementById('burger');if(m.classList.contains('open')&&!m.contains(e.target)&&!b.contains(e.target)){closeMenu();}});
+
+// COMPTEUR
+function getC(){var d=new Date();var j=d.getDate();var m=d.getMonth()+1;var a=d.getFullYear();var jm=new Date(a,m,0).getDate();var p=Math.floor((j/jm)*150);var b=150+p;var s=(a*100+m)*31+j;var r=((s*7919+3571)%100)-50;return Math.max(150,Math.min(300,b+r));}
+var cT=getC();var cC=Math.max(140,cT-15);var cE=document.getElementById('counter');
+function animC(){if(cC<cT){cC++;cE.textContent=cC;setTimeout(animC,60);}else{cE.textContent=cT;}}
+setTimeout(animC,600);
+
+// POPUP exit-intent
+var pS=false;
+document.addEventListener('mouseleave',function(e){if(e.clientY<10&&!pS){pS=true;document.getElementById('popup').classList.add('show');document.body.style.overflow='hidden';}});
+
+// FAQ
+function tFaq(el){var i=el.parentElement;var o=i.classList.contains('open');document.querySelectorAll('.fi').forEach(function(x){x.classList.remove('open');});if(!o)i.classList.add('open');}
+
+// BLOG
+function tArt(id,cardId){
+  var a=document.getElementById(id);
+  var op=a.classList.contains('show');
+  document.querySelectorAll('.bart').forEach(function(x){x.classList.remove('show');});
+  document.querySelectorAll('.bc').forEach(function(x){x.classList.remove('active');});
+  if(!op){
+    a.classList.add('show');
+    if(cardId){var card=document.getElementById(cardId);if(card)card.classList.add('active');}
+    setTimeout(function(){a.scrollIntoView({behavior:'smooth',block:'nearest'});},50);
+  }
+}
+
+// MENTIONS LÉGALES
+function openLegal(tab){var p=document.getElementById('lp');document.querySelectorAll('.lc').forEach(function(c){c.classList.remove('active');});var el=document.getElementById('lc-'+tab);if(el)el.classList.add('active');p.classList.add('show');document.body.style.overflow='hidden';var sh=p.querySelector('.lp-sheet');if(sh)sh.scrollTop=0;}
+function closeLegal(){document.getElementById('lp').classList.remove('show');document.querySelectorAll('.lc').forEach(function(c){c.classList.remove('active');});document.body.style.overflow='';}
+
+// FORMULAIRE
+document.getElementById('contactForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  var consent=document.getElementById('f_consent');
+  if(!consent.checked){
+    var msg=document.getElementById('formMsg');
+    msg.textContent='Veuillez accepter les conditions avant d\'envoyer.';
+    msg.className='form-msg err';
+    return;
+  }
+  var btn=document.getElementById('submitBtn');
+  btn.disabled=true;
+  btn.textContent='Envoi en cours…';
+  var data={
+    prenom:document.getElementById('f_prenom').value,
+    nom:document.getElementById('f_nom').value,
+    telephone:document.getElementById('f_telephone').value,
+    ville:document.getElementById('f_ville').value,
+    moment:document.getElementById('f_moment').value,
+    date:new Date().toLocaleString('fr-FR'),
+    source:'www.pointsave.fr'
+  };
+  var stored=JSON.parse(localStorage.getItem('ps_leads')||'[]');
+  stored.unshift({id:Date.now(),date:new Date().toLocaleString('fr-FR'),prenom:data.prenom,nom:data.nom,telephone:data.telephone,ville:data.ville,moment:data.moment,source:data.source,statut:'Nouveau',note:''});
+  localStorage.setItem('ps_leads',JSON.stringify(stored));
+  document.getElementById('merci').classList.add('show');
+  document.body.style.overflow='hidden';
+  document.getElementById('contactForm').reset();
+  btn.disabled=false;
+  btn.textContent='\uD83D\uDCE8 Envoyer ma demande de rappel';
+  if(typeof gtag!=='undefined'){gtag('event','form_submit',{event_category:'Lead',event_label:'Formulaire soumis'});}
+  fetch(APPS_SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)}).catch(function(){});
+});
+
+// COOKIES + SCROLL + REVEAL
+window.addEventListener('DOMContentLoaded',function(){
+  var bO=new IntersectionObserver(function(en){en.forEach(function(e,i){if(e.isIntersecting){setTimeout(function(){e.target.classList.add('lit');},i*120);bO.unobserve(e.target);}});},{threshold:0.1});
+  document.querySelectorAll('[data-badge]').forEach(function(el){bO.observe(el);});
+  var o=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){e.target.classList.add('vis');o.unobserve(e.target);}});},{threshold:0.08});
+  document.querySelectorAll('.rev').forEach(function(el){o.observe(el);});
+  var st=document.getElementById('sticky');
+  window.addEventListener('scroll',function(){if(window.pageYOffset>400){st.classList.add('show');}else{st.classList.remove('show');}});
+});
+</script>
+
+  <div class="lp" id="lp" onclick="if(event.target===this)closeLegal()">
+    <div class="lp-sheet">
+    <div class="lp-in">
+      <div class="lph">
+        <h2>Informations légales</h2>
+        <button class="lpc-btn" onclick="closeLegal()">✕ Fermer</button>
+      </div>
+      <div class="lc" id="lc-mentions">
+        <div class="lst">📜 Mentions légales</div>
+        <h3>1. Éditeur du site</h3>
+        <p>Le site <strong>www.pointsave.fr</strong> est édité à titre personnel par :<br><strong>Nom :</strong> Kylian P.<br><strong>Adresse :</strong> Meaux, 77100, France<br><strong>Email :</strong> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="53303c3d2732302713233c3a3d27203225367d3521">[email&#160;protected]</a><br><strong>Statut :</strong> Particulier — personne physique non commerçante</p>
+        <h3>2. Hébergeur</h3><p><strong>Cloudflare, Inc.</strong><br>101 Townsend St, San Francisco, CA 94107, États-Unis</p>
+        <h3>3. Activité du site</h3><p>PointSave est un service de mise en relation entre conducteurs souhaitant effectuer un stage de récupération de points de permis de conduire et des centres de stages agréés par le Ministère de l'Intérieur. PointSave n'est pas lui-même organisateur de stages et n'agit qu'en qualité d'intermédiaire.</p>
+        <h3>4. Propriété intellectuelle</h3><p>L'ensemble des contenus présents sur le site est la propriété exclusive de l'éditeur. Toute reproduction sans autorisation est interdite.</p>
+        <h3>5. Droit applicable</h3><p>Droit français. En cas de litige, les tribunaux français seront seuls compétents.</p>
+      </div>
+      <div class="lc" id="lc-cgu">
+        <div class="lst">📄 Conditions Générales d'Utilisation</div>
+        <h3>1. Objet</h3><p>Les présentes CGU régissent l'utilisation du site pointsave.fr.</p>
+        <h3>2. Service</h3><p>PointSave est un service de mise en relation entre conducteurs et centres de stages agréés. PointSave transmet les coordonnées des utilisateurs à ses centres partenaires.</p>
+        <h3>3. Conditions d'utilisation</h3><ul><li>Être titulaire d'un permis français valide</li><li>Avoir perdu au moins 1 point</li><li>Fournir des informations exactes</li><li>Ne pas utiliser le service à des fins frauduleuses</li></ul>
+        <h3>4. Coût du stage</h3><p>Entre 200 et 350 euros selon le centre, réglés directement au centre agréé. Le service PointSave est gratuit.</p>
+        <h3>5. Responsabilité</h3><p>PointSave ne peut être tenu responsable en cas d'indisponibilité des centres partenaires.</p>
+        <h3>6. Droit applicable</h3><p>Les présentes CGU sont soumises au droit français.</p>
+      </div>
+      <div class="lc" id="lc-confidentialite">
+        <div class="lst">🔒 Politique de confidentialité (RGPD)</div>
+        <h3>1. Responsable du traitement</h3><p>Kylian P. — Meaux, 77100 — <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f5969a9b81949681b5859a9c9b8186948390db9387">[email&#160;protected]</a></p>
+        <h3>2. Données collectées</h3><p>Prénom, nom, téléphone, ville, moment souhaité de rappel. Aucune donnée sensible n'est collectée.</p>
+        <h3>3. Finalité</h3><p>Vos données sont utilisées uniquement pour vous rappeler et vous orienter vers un centre de stage agréé. Elles ne sont pas revendues à des tiers.</p>
+        <h3>4. Durée de conservation</h3><p>Maximum 12 mois, puis suppression.</p>
+        <h3>5. Vos droits</h3><p>Accès, rectification, suppression, opposition : <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="9af9f5f4eefbf9eedaeaf5f3f4eee9fbecffb4fce8">[email&#160;protected]</a>. Réclamation possible auprès de la CNIL : www.cnil.fr</p>
+        <h3>6. Sous-traitants</h3><p>Données stockées sur Google Sheets (Google LLC, USA) avec clauses contractuelles types. Notifications via Telegram (Telegram Messenger Inc).</p>
+      </div>
+      <div class="lc" id="lc-cookies">
+        <div class="lst">🍪 Politique de cookies</div>
+        <h3>Cookies utilisés</h3>
+        <ul>
+          <li><strong>Cookie technique (ps_ck)</strong> — Mémorisation de votre choix cookies. Session uniquement.</li>
+          <li><strong>Google Analytics</strong> — Mesure d'audience anonymisée. 13 mois maximum.</li>
+          <li><strong>Google Fonts</strong> — Polices de caractères. Aucune donnée personnelle.</li>
+        </ul>
+        <h3>Cookies tiers publicitaires</h3><p>Aucun cookie publicitaire ou de tracking comportemental.</p>
+        <h3>Gestion</h3><p>Refus possible via les paramètres de votre navigateur ou le bandeau de gestion des cookies.</p>
+        <h3>Opt-out Google Analytics</h3><p>Extension officielle : <a href="https://tools.google.com/dlpage/gaoptout" target="_blank">tools.google.com/dlpage/gaoptout</a></p>
+      </div>
+    </div>
+    </div>
+  </div>
+
+<!-- SEO IDF : toutes communes -->
+<div id="seo-idf" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap" aria-hidden="true">
+<p>Stage récupération de points permis de conduire agréé Île-de-France. Centres agréés Préfecture disponibles dans toute l'Île-de-France. PointSave vous met en relation avec le centre agréé le plus proche dans un rayon de 30km.</p>
+<p>Villes desservies en Île-de-France pour stage récupération de points : Abbéville-la-Rivière, Ableiges, Ablis, Ablon-sur-Seine, Achères, Achères-la-Forêt, Adainville, Aigremont, Aincourt, Alfortville, Allainville, Ambleville, Amenucourt, Amillis, Amponville, Andelu, Andilly, Andrezel, Andrésy, Angerville, Angervilliers, Annet-sur-Marne, Antony, Arbonne-la-Forêt, Arcueil, Argenteuil, Argentières, Armentières-en-Brie, Arnouville, Arnouville-lès-Mantes, Arpajon, Arrancourt, Arronville, Arthies, Arville, Asnières-sur-Oise, Asnières-sur-Seine, Athis-Mons, Attainville, Aubepierre-Ozouer-le-Repos, Aubergenville, Aubervilliers, Auffargis, Aufferville, Auffreville-Brasseuil, Augers-en-Brie, Aulnay-sous-Bois, Aulnay-sur-Mauldre, Aulnoy, Auteuil, Authon-la-Plaine, Autouillet, Auvernaux, Auvers-Saint-Georges, Auvers-sur-Oise, Avernes, Avon, Avrainville, Baby, Bagneaux-sur-Loing, Bagneux, Bagnolet, Baillet-en-France, Bailly, Bailly-Romainvilliers, Ballainvilliers, Ballancourt-sur-Essonne, Balloy, Bannost-Villegagnon, Banthelu, Barbey, Barbizon, Barcy, Bassevelle, Baulne, Bazainville, Bazemont, Bazoches-lès-Bray, Bazoches-sur-Guyonne, Beauchamp, Beauchery-Saint-Martin, Beaumont-du-Gâtinais, Beaumont-sur-Oise, Beautheil-Saints, Beauvoir, Bellefontaine, Bellot, Belloy-en-France, Bennecourt, Bernay-Vilbert, Bernes-sur-Oise, Berville, Bessancourt, Beton-Bazoches, Beynes, Bezalles, Bezons, Bièvres, Blandy, Blandy, Blaru, Blennes, Bobigny, Boigneville, Boinville-en-Mantois, Boinville-le-Gaillard, Boinvilliers, Bois-Colombes, Bois-d'Arcy, Bois-Herpin, Bois-le-Roi, Boisdon, Boisemont, Boissets, Boissettes, Boissise-la-Bertrand, Boissise-le-Roi, Boissy-aux-Cailles, Boissy-l'Aillerie, Boissy-la-Rivière, Boissy-le-Châtel, Boissy-le-Cutté, Boissy-le-Sec, Boissy-Mauvoisin, Boissy-Saint-Léger, Boissy-sans-Avoir, Boissy-sous-Saint-Yon, Boitron, Bombon, Bondoufle, Bondy, Bonnelles, Bonneuil-en-France, Bonneuil-sur-Marne, Bonnières-sur-Seine, Bouafle, Bouffémont, Bougival, Bougligny, Boulancourt, Bouleurs, Boullay-les-Troux, Boulogne-Billancourt, Bouqueval, Bouray-sur-Juine, Bourdonné, Bourg-la-Reine, Bourron-Marlotte, Boussy-Saint-Antoine, Boutervilliers, Boutigny, Boutigny-sur-Essonne, Bouville, Bransles, Bray-et-Lû, Bray-sur-Seine, Breuil-Bois-Robert, Breuillet, Breux-Jouy, Brie-Comte-Robert, Brignancourt, Briis-sous-Forges, Brières-les-Scellés, Brou-sur-Chantereine, Brouy, Brueil-en-Vexin, Brunoy, Bruyères-le-Châtel, Bruyères-sur-Oise, Bry-sur-Marne, Bréançon, Bréau, Brétigny-sur-Orge, Bréval, Buc, Buchelay, Buhy, Bullion, Buno-Bonnevaux, Burcy, Bures-sur-Yvette, Bussières, Bussy-Saint-Georges, Bussy-Saint-Martin, Buthiers, Butry-sur-Oise, Béhoust, Béthemont-la-Forêt, Cachan, Cannes-Écluse, Carnetin, Carrières-sous-Poissy, Carrières-sur-Seine, Cergy, Cernay-la-Ville, Cerneux, Cerny, Cesson, Cessoy-en-Montois, Chailly-en-Bière.</p>
+<p>Récupérez vos points de permis près de : Chailly-en-Brie, Chaintreaux, Chalautre-la-Grande, Chalautre-la-Petite, Chalifert, Chalmaison, Chalo-Saint-Mars, Chalou-Moulineux, Chamarande, Chambourcy, Chambry, Chamigny, Champagne-sur-Oise, Champagne-sur-Seine, Champcenest, Champcueil, Champdeuil, Champeaux, Champigny-sur-Marne, Champlan, Champmotteux, Champs-sur-Marne, Changis-sur-Marne, Chanteloup-en-Brie, Chanteloup-les-Vignes, Chapet, Charenton-le-Pont, Charmentray, Charmont, Charny, Chars, Chartrettes, Chartronges, Chatignonville, Chatou, Chauconin-Neufmontiers, Chauffour-lès-Étréchy, Chauffry, Chaufour-lès-Bonnières, Chaumes-en-Brie, Chaumontel, Chaussy, Chauvry, Chavenay, Chaville, Chelles, Chennevières-lès-Louvres, Chennevières-sur-Marne, Chenoise-Cucharmoy, Chenou, Cheptainville, Chessy, Chevannes, Chevilly-Larue, Chevrainvilliers, Chevreuse, Chevru, Chevry-Cossigny, Chevry-en-Sereine, Chilly-Mazarin, Choisel, Choisy-en-Brie, Choisy-le-Roi, Château-Landon, Châteaubleau, Châteaufort, Châtenay-en-France, Châtenay-Malabry, Châtenay-sur-Seine, Châtenoy, Châtillon, Châtillon-la-Borde, Châtres, Chérence, Citry, Civry-la-Forêt, Clairefontaine-en-Yvelines, Clamart, Claye-Souilly, Clichy, Clichy-sous-Bois, Clos-Fontaine, Cléry-en-Vexin, Cocherel, Coignières, Collégien, Colombes, Combs-la-Ville, Commeny, Compans, Conches-sur-Gondoire, Condé-Sainte-Libiaire, Condé-sur-Vesgre, Condécourt, Conflans-Sainte-Honorine, Congerville-Thionville, Congis-sur-Thérouanne, Corbeil-Essonnes, Corbreuse, Cormeilles-en-Parisis, Cormeilles-en-Vexin, Coubert, Coubron, Couilly-Pont-aux-Dames, Coulombs-en-Valois, Coulommes, Coulommiers, Coupvray, Courances, Courbevoie, Courcelles-en-Bassée, Courcelles-sur-Viosne, Courchamp, Courdimanche, Courdimanche-sur-Essonne, Courgent, Courpalay, Courquetaine, Courson-Monteloup, Courtacon, Courtomer, Courtry, Coutençon, Coutevroult, Cravent, Crespières, Crisenoy, Croissy-Beaubourg, Croissy-sur-Seine, Crosne, Crouy-sur-Ourcq, Crèvecœur-en-Brie, Crécy-la-Chapelle, Crégy-lès-Meaux, Créteil, Cuisy, Cély, D'Huison-Longueville, Dagny, Dammarie-les-Lys, Dammartin-en-Goële, Dammartin-en-Serve, Dammartin-sur-Tigeaux, Dampierre-en-Yvelines, Dampmart, Dannemarie, Dannemois, Darvault, Davron, Deuil-la-Barre, Dhuisy, Diant, Domont, Donnemarie-Dontilly, Dormelles, Doue, Dourdan, Douy-la-Ramée, Drancy, Draveil, Drocourt, Dugny, Eaubonne, Ecquevilly, Enghien-les-Bains, Ennery, Ermont, Esbly, Esmans, Everly, Faremoutiers, Favières, Favrieux, Faÿ-lès-Nemours, Ferrières-en-Brie, Feucherolles, Flacourt, Flagy, Fleury-en-Bière, Fleury-Mérogis, Flexanville, Flins-Neuve-Église, Flins-sur-Seine, Follainville-Dennemont, Fontaine-Fourches, Fontaine-la-Rivière, Fontaine-le-Port, Fontainebleau, Fontains, Fontenailles, Fontenay-aux-Roses, Fontenay-en-Parisis, Fontenay-le-Fleury, Fontenay-le-Vicomte, Fontenay-lès-Briis, Fontenay-Mauvoisin, Fontenay-Saint-Père, Fontenay-sous-Bois, Fontenay-Trésigny, Forfry.</p>
+<p>Stage récupération points agréé Préfecture : Forges, Forges-les-Bains, Fosses, Fouju, Franconville, Freneuse, Fresnes, Fresnes-sur-Marne, Fromont, Frouville, Frémainville, Frémécourt, Frépillon, Frétoy, Fublaines, Féricy, Férolles-Attilly, Gagny, Gaillon-sur-Montcient, Galluis, Gambais, Gambaiseuil, Garancières, Garches, Garentreville, Gargenville, Garges-lès-Gonesse, Gastins, Gazeran, Genainville, Gennevilliers, Gentilly, Germigny-l'Évêque, Germigny-sous-Coulombs, Gesvres-le-Chapitre, Gif-sur-Yvette, Giremoutiers, Gironville, Gironville-sur-Essonne, Gometz-la-Ville, Gometz-le-Châtel, Gommecourt, Gonesse, Gouaix, Goupillières, Gournay-sur-Marne, Goussainville, Goussonville, Gouvernes, Grandchamp, Grandpuits-Bailly-Carrois, Gravon, Gressey, Gressy, Gretz-Armainvilliers, Grez-sur-Loing, Grigny, Grisy-les-Plâtres, Grisy-Suisnes, Grisy-sur-Seine, Groslay, Grosrouvre, Guercheville, Guermantes, Guernes, Guerville, Guibeville, Guignes, Guigneville-sur-Essonne, Guillerval, Guiry-en-Vexin, Guitrancourt, Gurcy-le-Châtel, Guyancourt, Guérard, Génicourt, Haravilliers, Hardricourt, Hargeville, Haute-Isle, Hautefeuille, Herbeville, Herblay-sur-Seine, Hermeray, Hermé, Hodent, Hondevilliers, Houdan, Houilles, Hédouville, Héricy, Hérouville-en-Vexin, Ichy, Igny, Isles-les-Meldeuses, Isles-lès-Villenoy, Issou, Issy-les-Moulineaux, Itteville, Iverny, Ivry-sur-Seine, Jablines, Jagny-sous-Bois, Jaignes, Jambville, Janville-sur-Juine, Janvry, Jaulnes, Joinville-le-Pont, Jossigny, Jouarre, Jouars-Pontchartrain, Jouy-en-Josas, Jouy-le-Châtel, Jouy-le-Moutier, Jouy-Mauvoisin, Jouy-sur-Morin, Juilly, Jumeauville, Jutigny, Juvisy-sur-Orge, Juziers, L'Haÿ-les-Roses, L'Isle-Adam, L'Étang-la-Ville, L'Île-Saint-Denis, La Boissière-École, La Brosse-Montceaux, La Celle-les-Bordes, La Celle-Saint-Cloud, La Celle-sur-Morin, La Chapelle-en-Vexin, La Chapelle-Gauthier, La Chapelle-Iger, La Chapelle-la-Reine, La Chapelle-Moutils, La Chapelle-Rablais, La Chapelle-Saint-Sulpice, La Courneuve, La Croix-en-Brie, La Falaise, La Ferté-Alais, La Ferté-Gaucher, La Ferté-sous-Jouarre, La Forêt-le-Roi, La Forêt-Sainte-Croix, La Frette-sur-Seine, La Garenne-Colombes, La Genevraye, La Grande-Paroisse, La Haute-Maison, La Hauteville, La Houssaye-en-Brie, La Madeleine-sur-Loing, La Norville, La Queue-en-Brie, La Queue-les-Yvelines, La Roche-Guyon, La Rochette, La Tombe, La Trétoire, La Verrière, La Ville-du-Bois, La Villeneuve-en-Chevrie, Labbeville, Lagny-sur-Marne, Lainville-en-Vexin, Larchant, Lardy, Lassy, Laval-en-Brie, Le Bellay-en-Vexin, Le Blanc-Mesnil, Le Bourget, Le Chesnay-Rocquencourt, Le Châtelet-en-Brie, Le Coudray-Montceaux, Le Heaulme, Le Kremlin-Bicêtre, Le Mesnil-Amelot, Le Mesnil-Aubry, Le Mesnil-le-Roi, Le Mesnil-Saint-Denis, Le Mée-sur-Seine, Le Mérévillois, Le Pecq, Le Perchay, Le Perray-en-Yvelines, Le Perreux-sur-Marne, Le Pin, Le Plessis-aux-Bois, Le Plessis-Bouchard, Le Plessis-Feu-Aussoux, Le Plessis-Gassot, Le Plessis-l'Évêque, Le Plessis-Luzarches, Le Plessis-Placy, Le Plessis-Pâté, Le Plessis-Robinson, Le Plessis-Trévise.</p>
+<p>Centre récupération points permis de conduire : Le Port-Marly, Le Pré-Saint-Gervais, Le Raincy, Le Tartre-Gaudran, Le Tertre-Saint-Denis, Le Thillay, Le Tremblay-sur-Mauldre, Le Val-Saint-Germain, Le Vaudoué, Le Vésinet, Les Alluets-le-Roi, Les Bréviaires, Les Chapelles-Bourbon, Les Clayes-sous-Bois, Les Essarts-le-Roi, Les Granges-le-Roi, Les Lilas, Les Loges-en-Josas, Les Marêts, Les Mesnuls, Les Molières, Les Mureaux, Les Ormes-sur-Voulzie, Les Pavillons-sous-Bois, Les Ulis, Les Écrennes, Lescherolles, Lesches, Leudeville, Leudon-en-Brie, Leuville-sur-Orge, Levallois-Perret, Lieusaint, Limay, Limeil-Brévannes, Limetz-Villez, Limoges-Fourches, Limours, Linas, Lisses, Lissy, Liverdy-en-Brie, Livilliers, Livry-Gargan, Livry-sur-Seine, Lizines, Lizy-sur-Ourcq, Lognes, Lommoye, Longjumeau, Longnes, Longperrier, Longpont-sur-Orge, Longuesse, Longueville, Longvilliers, Lorrez-le-Bocage-Préaux, Louan-Villegruis-Fontaine, Louveciennes, Louvres, Luisetaines, Lumigny-Nesles-Ormeaux, Luzancy, Luzarches, Léchelle, Lésigny, Lévis-Saint-Nom, Machault, Maffliers, Magnanville, Magny-en-Vexin, Magny-le-Hongre, Magny-les-Hameaux, Maincy, Maison-Rouge, Maisoncelles-en-Brie, Maisoncelles-en-Gâtinais, Maisons-Alfort, Maisons-Laffitte, Maisse, Malakoff, Mandres-les-Roses, Mantes-la-Jolie, Mantes-la-Ville, Marchémoret, Marcilly, Marcoussis, Marcq, Mareil-en-France, Mareil-le-Guyon, Mareil-Marly, Mareil-sur-Mauldre, Mareuil-lès-Meaux, Margency, Marines, Marles-en-Brie, Marly-la-Ville, Marly-le-Roi, Marnes-la-Coquette, Marolles-en-Beauce, Marolles-en-Brie, Marolles-en-Brie, Marolles-en-Hurepoix, Marolles-sur-Seine, Mary-sur-Marne, Massy, Mauchamps, Maudétour-en-Vexin, Maule, Maulette, Mauperthuis, Maurecourt, Mauregard, Maurepas, May-en-Multien, Meaux, Meigneux, Meilleray, Melun, Melz-sur-Seine, Mennecy, Menouville, Menucourt, Mespuits, Messy, Meudon, Meulan-en-Yvelines, Millemont, Milly-la-Forêt, Milon-la-Chapelle, Misy-sur-Yonne, Mitry-Mory, Mittainville, Moigny-sur-École, Moisenay, Moisselles, Moisson, Moissy-Cramayel, Moncourt-Fromonville, Mondeville, Mondreville, Mondreville, Monnerville, Mons-en-Montois, Montainville, Montalet-le-Bois, Montceaux-lès-Meaux, Montceaux-lès-Provins, Montchauvet, Montdauphin, Montenils, Montereau-Fault-Yonne, Montereau-sur-le-Jard, Montesson, Montfermeil, Montfort-l'Amaury, Montgeron, Montgeroult, Montgé-en-Goële, Monthyon, Montigny-le-Bretonneux, Montigny-le-Guesdier, Montigny-Lencoup, Montigny-lès-Cormeilles, Montigny-sur-Loing, Montlhéry, Montlignon, Montmachoux, Montmagny, Montmorency, Montolivet, Montreuil, Montreuil-sur-Epte, Montrouge, Montry, Montsoult, Montévrain, Morainvilliers, Morangis, Moret-Loing-et-Orvanne, Morigny-Champigny, Mormant, Morsang-sur-Orge, Morsang-sur-Seine, Mortcerf, Mortery, Mouroux, Mours, Mousseaux-lès-Bray, Mousseaux-sur-Seine, Moussy, Moussy-le-Neuf, Moussy-le-Vieux, Mouy-sur-Seine, Mulcent, Médan, Ménerville, Méricourt, Mériel, Mérobert.</p>
+<p>Stage permis points Île-de-France : Méry-sur-Marne, Méry-sur-Oise, Méré, Mézières-sur-Seine, Mézy-sur-Seine, Nainville-les-Roches, Nandy, Nangis, Nanteau-sur-Essonne, Nanteau-sur-Lunain, Nanterre, Nanteuil-lès-Meaux, Nanteuil-sur-Marne, Nantouillet, Neauphle-le-Château, Neauphle-le-Vieux, Neauphlette, Nemours, Nerville-la-Forêt, Nesles-la-Vallée, Neufmoutiers-en-Brie, Neuilly-en-Vexin, Neuilly-Plaisance, Neuilly-sur-Marne, Neuilly-sur-Seine, Neuville-sur-Oise, Nogent-sur-Marne, Nointel, Noiseau, Noisiel, Noisy-le-Grand, Noisy-le-Roi, Noisy-le-Sec, Noisy-Rudignon, Noisy-sur-Oise, Noisy-sur-École, Nonville, Notre-Dame-de-la-Mer, Noyen-sur-Seine, Nozay, Nucourt, Nézel, Obsonville, Ocquerre, Oinville-sur-Montcient, Oissery, Ollainville, Omerville, Oncy-sur-École, Orcemont, Orgerus, Orgeval, Orly, Orly-sur-Morin, Ormesson, Ormesson-sur-Marne, Ormoy, Ormoy-la-Rivière, Orphin, Orsay, Orsonville, Orveau, Orvilliers, Osmoy, Osny, Othis, Ozoir-la-Ferrière, Ozouer-le-Voulgis, Palaiseau, Paley, Pamfou, Pantin, Paray-Douaville, Paray-Vieille-Poste, Paris, Parmain, Paroy, Passy-sur-Seine, Pecqueuse, Penchard, Perdreauville, Persan, Perthes, Pierre-Levée, Pierrelaye, Piscop, Plaisir, Plessis-Saint-Benoist, Poigny, Poigny-la-Forêt, Poincy, Poissy, Poligny, Pommeuse, Pomponne, Pontault-Combault, Pontcarré, Ponthévrard, Pontoise, Porcheville, Presles, Presles-en-Brie, Pringy, Provins, Prunay-en-Yvelines, Prunay-le-Temple, Prunay-sur-Essonne, Précy-sur-Marne, Puiselet-le-Marais, Puiseux-en-France, Puiseux-Pontoise, Puisieux, Pussay, Puteaux, Pécy, Périgny, Pézarches, Quiers, Quincy-sous-Sénart, Quincy-Voisins, Raizeux, Rambouillet, Rampillon, Rebais, Recloses, Remauville, Rennemoulin, Reuil-en-Brie, Richarville, Richebourg, Ris-Orangis, Rochefort-en-Yvelines, Roinville, Roinvilliers, Roissy-en-Brie, Roissy-en-France, Rolleboise, Romainville, Ronquerolles, Rosay, Rosny-sous-Bois, Rosny-sur-Seine, Rouilly, Rouvres, Rozay-en-Brie, Rubelles, Rueil-Malmaison, Rumont, Rungis, Rupéreux, Réau, Sablonnières, Saclas, Saclay, Sagy, Sailly, Saint-Arnoult-en-Yvelines, Saint-Aubin, Saint-Augustin, Saint-Barthélemy, Saint-Brice, Saint-Brice-sous-Forêt, Saint-Chéron, Saint-Clair-sur-Epte, Saint-Cloud, Saint-Cyr-en-Arthies, Saint-Cyr-l'École, Saint-Cyr-la-Rivière, Saint-Cyr-sous-Dourdan, Saint-Cyr-sur-Morin, Saint-Denis, Saint-Denis-lès-Rebais, Saint-Escobille, Saint-Fargeau-Ponthierry, Saint-Fiacre, Saint-Forget, Saint-Germain-de-la-Grange, Saint-Germain-en-Laye, Saint-Germain-Laval, Saint-Germain-Laxis, Saint-Germain-lès-Arpajon, Saint-Germain-lès-Corbeil, Saint-Germain-sous-Doue, Saint-Germain-sur-Morin, Saint-Germain-sur-École, Saint-Gervais, Saint-Gratien, Saint-Hilaire, Saint-Hilarion, Saint-Hilliers, Saint-Illiers-la-Ville, Saint-Illiers-le-Bois, Saint-Jean-de-Beauregard, Saint-Jean-les-Deux-Jumeaux, Saint-Just-en-Brie, Saint-Lambert, Saint-Leu-la-Forêt, Saint-Loup-de-Naud, Saint-Léger, Saint-Léger-en-Yvelines.</p>
+<p>Récupération points permis Seine-et-Marne Yvelines Essonne Hauts-de-Seine Seine-Saint-Denis Val-de-Marne Val-d'Oise Paris : Saint-Mammès, Saint-Mandé, Saint-Mard, Saint-Mars-Vieux-Maisons, Saint-Martin-de-Bréthencourt, Saint-Martin-des-Champs, Saint-Martin-des-Champs, Saint-Martin-du-Boschet, Saint-Martin-du-Tertre, Saint-Martin-en-Bière, Saint-Martin-la-Garenne, Saint-Maur-des-Fossés, Saint-Maurice, Saint-Maurice-Montcouronne, Saint-Mesmes, Saint-Michel-sur-Orge, Saint-Méry, Saint-Nom-la-Bretèche, Saint-Ouen-en-Brie, Saint-Ouen-l'Aumône, Saint-Ouen-sur-Morin, Saint-Ouen-sur-Seine, Saint-Pathus, Saint-Pierre-du-Perray, Saint-Pierre-lès-Nemours, Saint-Prix, Saint-Rémy-de-la-Vanne, Saint-Rémy-l'Honoré, Saint-Rémy-lès-Chevreuse, Saint-Sauveur-lès-Bray, Saint-Sauveur-sur-École, Saint-Siméon, Saint-Soupplets, Saint-Sulpice-de-Favières, Saint-Thibault-des-Vignes, Saint-Vrain, Saint-Witz, Saint-Yon, Sainte-Aulde, Sainte-Colombe, Sainte-Geneviève-des-Bois, Sainte-Mesme, Saintry-sur-Seine, Salins, Sammeron, Samois-sur-Seine, Samoreau, Sancy, Sancy-lès-Provins, Sannois, Santeny, Santeuil, Sarcelles, Sartrouville, Saulx-les-Chartreux, Saulx-Marchais, Savigny-le-Temple, Savigny-sur-Orge, Savins, Saâcy-sur-Marne, Sceaux, Seine-Port, Senlisse, Sept-Sorts, Septeuil, Seraincourt, Sermaise, Serris, Servon, Seugy, Sevran, Signy-Signets, Sigy, Sivry-Courtry, Sognolles-en-Montois, Soignolles-en-Brie, Soindres, Soisy-Bouy, Soisy-sous-Montmorency, Soisy-sur-Seine, Soisy-sur-École, Solers, Sonchamp, Souppes-sur-Loing, Sourdun, Souzy-la-Briche, Stains, Sucy-en-Brie, Suresnes, Survilliers, Sèvres, Tacoignières, Tancrou, Taverny, Tessancourt-sur-Aubette, Theuville, Thiais, Thieux, Thiverval-Grignon, Thoiry, Thomery, Thorigny-sur-Marne, Thoury-Férottes, Théméricourt, Thénisy, Tigeaux, Tigery, Tilly, Torcy, Torfou, Touquin, Tournan-en-Brie, Tousson, Toussus-le-Noble, Trappes, Tremblay-en-France, Treuzy-Levelay, Triel-sur-Seine, Trilbardou, Trilport, Trocy-en-Multien, Ury, Us, Ussy-sur-Marne, Vaires-sur-Marne, Valence-en-Brie, Valenton, Vallangoujard, Valmondois, Valpuiseaux, Vanves, Vanvillé, Varennes-Jarcy, Varennes-sur-Seine, Varreddes, Vaucourtois, Vaucresson, Vaudherland, Vaudoy-en-Brie, Vaugrigneuse, Vauhallan, Vaujours, Vauréal, Vaux-le-Pénil, Vaux-sur-Lunain, Vaux-sur-Seine, Vayres-sur-Essonne, Vendrest, Verdelot, Verneuil-l'Étang, Verneuil-sur-Seine, Vernou-la-Celle-sur-Seine, Vernouillet, Verrières-le-Buisson, Versailles, Vert, Vert-le-Grand, Vert-le-Petit, Vert-Saint-Denis, Viarmes, Vicq, Videlles, Vieille-Église-en-Yvelines, Vienne-en-Arthies, Vieux-Champagne, Vignely, Vigneux-sur-Seine, Vigny, Villabé, Villaines-sous-Bois, Ville-d'Avray, Ville-Saint-Jacques, Villebon-sur-Yvette, Villebéon, Villecerf, Villeconin, Villecresnes, Villejuif, Villejust, Villemareuil, Villemaréchal, Villemer, Villemoisson-sur-Orge, Villemomble, Villenauxe-la-Petite, Villeneuve-la-Garenne, Villeneuve-le-Comte, Villeneuve-le-Roi, Villeneuve-les-Bordes, Villeneuve-Saint-Denis, Villeneuve-Saint-Georges, Villeneuve-sous-Dammartin, Villeneuve-sur-Auvers, Villeneuve-sur-Bellot, Villennes-sur-Seine, Villenoy, Villeparisis, Villepinte, Villepreux, Villeron, Villeroy, Villers-en-Arthies, Villetaneuse, Villette, Villevaudé, Villiers-Adam, Villiers-en-Bière, Villiers-le-Bel, Villiers-le-Bâcle, Villiers-le-Mahieu, Villiers-le-Sec, Villiers-Saint-Frédéric, Villiers-Saint-Georges, Villiers-sous-Grez, Villiers-sur-Marne, Villiers-sur-Morin, Villiers-sur-Orge, Villiers-sur-Seine, Villuis, Vimpelles, Vinantes, Vincennes, Vincy-Manœuvre, Viroflay, Viry-Châtillon, Vitry-sur-Seine, Voinsles, Voisenon, Voisins-le-Bretonneux, Voulangis, Voulton, Voulx, Vulaines-lès-Provins, Vulaines-sur-Seine, Vélizy-Villacoublay, Vémars, Vétheuil, Wissous, Wy-dit-Joli-Village, Yerres, Yèbles, Écharcon, Échouboulains, Écouen, Égligny, Égly, Égreville, Élancourt, Émancé, Émerainville, Épiais-lès-Louvres, Épiais-Rhus, Épinay-Champlâtreux, Épinay-sous-Sénart, Épinay-sur-Orge, Épinay-sur-Seine, Épône, Éragny-sur-Oise, Étampes, Étiolles, Étréchy, Étrépilly, Évecquemont, Évry-Courcouronnes, Évry-Grégy-sur-Yerre, Ézanville.</p>
+<p>PointSave — service gratuit de mise en relation pour stage récupération de points en Île-de-France. Appelez le 06 99 92 65 10. Centres agréés Ministère de l'Intérieur. Résultats sous 3 à 4 semaines. Stage de 2 jours, 200 à 350 euros. Jusqu'à 4 points récupérés.</p>
+</div>
+<script>
+(function(){
+var COMMUNES=window.COMMUNES||[];
+var VILLES_AC=window.VILLES_AC||[];
+
+function slugify(s){
+  return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+}
+
+function distKm(a,b,c,d){
+  var R=6371,dL=(c-a)*Math.PI/180,dl=(d-b)*Math.PI/180;
+  var x=Math.sin(dL/2)*Math.sin(dL/2)+Math.cos(a*Math.PI/180)*Math.cos(c*Math.PI/180)*Math.sin(dl/2)*Math.sin(dl/2);
+  return R*2*Math.atan2(Math.sqrt(x),Math.sqrt(1-x));
+}
+
+function nearest(lat,lon){
+  var best=null,bd=99999;
+  var COMMUNES=window.COMMUNES||[];for(var i=0;i<COMMUNES.length;i++){
+    var d=distKm(lat,lon,COMMUNES[i].lat,COMMUNES[i].lon);
+    if(d<bd){bd=d;best=COMMUNES[i];}
+  }
+  return best;
+}
+
+function apply(ville){
+  // Title
+  document.title='Stage Récupération Points '+ville+' | PointSave';
+  var t=document.getElementById('dyn-title');
+  if(t)t.textContent='Stage Récupération Points '+ville+' | PointSave';
+  // Meta desc
+  var m=document.getElementById('dyn-meta');
+  if(m)m.content='Stage récupération de points agréé près de '+ville+'. Centres agréés dans un rayon de 30km. PointSave — Appelez le 06 99 92 65 10.';
+  // Canonical
+  var ca=document.getElementById('dyn-canonical');
+  if(ca)ca.href='https://www.pointsave.fr/?v='+encodeURIComponent(slugify(ville));
+  // H1
+  var h=document.getElementById('dyn-h1-ville');
+  if(h)h.textContent='autour de '+ville;
+  // Logo
+  var l=document.getElementById('dyn-logo');
+  if(l)l.textContent=ville+' & alentours';
+  // Strip
+  var s=document.getElementById('dyn-strip');
+  if(s)s.textContent=ville;
+  // Sticky
+  var sk=document.getElementById('dyn-sticky');
+  if(sk)sk.textContent=ville;
+  // Villes label
+  var vl=document.getElementById('dyn-villes-lbl');
+  if(vl)vl.textContent=ville;
+  // Footer
+  var ft=document.getElementById('dyn-footer');
+  if(ft)ft.textContent=ville;
+  // Formulaire ville
+  var vi=document.getElementById('f_ville')||document.getElementById('ville');
+  if(vi&&!vi.value)vi.value=ville;
+  // WhatsApp
+  var wm=encodeURIComponent('Bonjour, je voudrais vérifier mon éligibilité pour un stage récupération de points près de '+ville);
+  document.querySelectorAll('a[href*="wa.me"]').forEach(function(a){
+    a.href='https://wa.me/33699926510?text='+wm;
+  });
+  // URL sans rechargement
+  if(!window.location.search.includes('v=')){
+    history.replaceState(null,'','/?v='+encodeURIComponent(slugify(ville)));
+  }
+}
+
+function init(){
+  // 1. URL param ?v= ou ?ville=
+  var p=new URLSearchParams(window.location.search);
+  var vParam=p.get('v')||p.get('ville');
+  if(vParam){
+    var inputSlug=slugify(decodeURIComponent(vParam));
+    // Exact match
+    var found=COMMUNES.find(function(c){return slugify(c.nom)===inputSlug;});
+    // StartsWith match (ex: "evry" -> "evry-courcouronnes")
+    if(!found) found=COMMUNES.find(function(c){var s=slugify(c.nom);return s===inputSlug||s.indexOf(inputSlug)===0;});
+    if(found){apply(found.nom);return;}
+  }
+  // 2. Géolocalisation
+  if(navigator.geolocation){
+    navigator.geolocation.getCurrentPosition(
+      function(pos){
+        var n=nearest(pos.coords.latitude,pos.coords.longitude);
+        if(n)apply(n.nom);
+      },
+      function(){
+        // GPS refusé ou erreur → fallback Meaux (ville par défaut)
+        apply('Meaux');
+      },
+      {timeout:4000,maximumAge:600000}
+    );
+  } else {
+    apply('Meaux');
+  }
+}
+
+window._psApply=apply;
+if(document.readyState==='loading'){
+  document.addEventListener('DOMContentLoaded',init);
+}else{
+  init();
+}
+})();
+// PLANNING POPUP
+function initPlanning(){
+  var grid=document.getElementById('planningGrid');
+  if(!grid)return;
+  var jours=['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];
+  var slots=[{label:'Matin',sub:'9h-12h'},{label:'Apres-midi',sub:'12h-17h'},{label:'Soir',sub:'17h-20h'}];
+  var today=new Date();
+  grid.innerHTML='';
+  for(var i=0;i<7;i++){
+    (function(d){
+      var col=document.createElement('div');col.className='pday';
+      var hd=document.createElement('div');hd.className='pday-hd';
+      hd.innerHTML='<div class="pd">'+jours[d.getDay()]+'</div><div class="pn">'+d.getDate()+'</div>';
+      col.appendChild(hd);
+      slots.forEach(function(s){
+        var sl=document.createElement('div');
+        sl.className='pslot';
+        sl.style.cursor='pointer';
+        sl.style.webkitTapHighlightColor='rgba(0,135,90,0.3)';
+        sl.innerHTML=s.label+'<span class="sl">'+s.sub+'</span>';
+        var dateStr=jours[d.getDay()]+' '+d.getDate()+'/'+(d.getMonth()<9?'0':'')+(d.getMonth()+1);
+        var val=dateStr+' '+s.label+' ('+s.sub+')';
+        function select(){
+          document.querySelectorAll('.pslot').forEach(function(x){x.classList.remove('sel');});
+          var asap=document.getElementById('planAsap');if(asap)asap.classList.remove('sel');
+          sl.classList.add('sel');
+          var fm=document.getElementById('f_moment');if(fm)fm.value=val;
+          var bt=document.getElementById('planBtnTxt');if(bt)bt.textContent='\uD83D\uDCC5 '+val;
+          var pb=document.getElementById('planBtn');if(pb)pb.classList.add('filled');
+          setTimeout(function(){if(typeof closePlanningDirect==='function')closePlanningDirect();},350);
+        }
+        sl.addEventListener('click',select);
+        sl.addEventListener('touchend',function(e){e.preventDefault();select();});
+        col.appendChild(sl);
+      });
+      grid.appendChild(col);
+    })(new Date(today.getFullYear(),today.getMonth(),today.getDate()+i));
+  }
+}
+window.openPlanning=function(){
+  var grid=document.getElementById('planningGrid');
+  if(grid&&grid.children.length===0){initPlanning();}
+  document.getElementById('planOverlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+window.closePlanningDirect=function(){document.getElementById('planOverlay').classList.remove('open');document.body.style.overflow='';}
+window.closePlanning=function(e){if(e.target===document.getElementById('planOverlay'))closePlanningDirect();}
+window.selectPlanAsap=function(){
+  document.querySelectorAll('.pslot').forEach(function(x){x.classList.remove('sel')});
+  document.getElementById('planAsap').classList.add('sel');
+  document.getElementById('f_moment').value='Le plus tôt possible';
+  document.getElementById('planBtnTxt').textContent='\u26A1 Le plus tôt possible';
+  document.getElementById('planBtn').classList.add('filled');
+  setTimeout(closePlanningDirect,350);
+}
+document.addEventListener('DOMContentLoaded',function(){
+  initPlanning();
+  var pb=document.getElementById('planBtn');
+  if(pb){
+    pb.addEventListener('touchend',function(e){e.preventDefault();if(window.openPlanning)window.openPlanning();});
+  }
+  // Auto-ouvre le planning quand f_ville est rempli et qu'on quitte ce champ
+  var villeInput=document.getElementById('f_ville');
+  if(villeInput){
+    villeInput.addEventListener('change',function(){
+      if(this.value.length>2){
+        setTimeout(function(){
+          var overlay=document.getElementById('planOverlay');
+          if(overlay&&!overlay.classList.contains('open')&&!document.getElementById('f_moment').value){
+            openPlanning();
+          }
+        },400);
+      }
+    });
+  }
+});
+
+// AUTOCOMPLETE VILLE
+// VILLES_AC → ps-data.js
+/* filterVilles/pickVille/hideVilles remplacées */
+
+// INDEXNOW PING — une seule fois par semaine
+(function(){
+  var key='indexnow_pinged';
+  var last=localStorage.getItem(key);
+  var now=Date.now();
+  if(last && (now-parseInt(last)) < 7*24*3600*1000) return;
+  localStorage.setItem(key, now);
+  var urls=[
+    "https://www.pointsave.fr/",
+    "https://www.pointsave.fr/versailles.html",
+    "https://www.pointsave.fr/cergy.html",
+    "https://www.pointsave.fr/massy.html",
+    "https://www.pointsave.fr/vincennes.html",
+    "https://www.pointsave.fr/argenteuil.html",
+    "https://www.pointsave.fr/montreuil.html",
+    "https://www.pointsave.fr/nanterre.html",
+    "https://www.pointsave.fr/creteil.html",
+    "https://www.pointsave.fr/boulogne-billancourt.html",
+    "https://www.pointsave.fr/saint-denis.html",
+    "https://www.pointsave.fr/courbevoie.html",
+    "https://www.pointsave.fr/vitry-sur-seine.html",
+    "https://www.pointsave.fr/rueil-malmaison.html",
+    "https://www.pointsave.fr/champigny-sur-marne.html",
+    "https://www.pointsave.fr/colombes.html",
+    "https://www.pointsave.fr/asnieres-sur-seine.html",
+    "https://www.pointsave.fr/ivry-sur-seine.html",
+    "https://www.pointsave.fr/drancy.html",
+    "https://www.pointsave.fr/epinay-sur-seine.html",
+    "https://www.pointsave.fr/livry-gargan.html"
+  ];
+  fetch("https://api.indexnow.org/indexnow",{
+    method:"POST",
+    headers:{"Content-Type":"application/json; charset=utf-8"},
+    body:JSON.stringify({
+      host:"www.pointsave.fr",
+      key:"383232b6ca4d41f3a2f03594b4fd5a51",
+      keyLocation:"https://www.pointsave.fr/383232b6ca4d41f3a2f03594b4fd5a51.txt",
+      urlList:urls
+    })
+  }).catch(function(){});
+  fetch("https://www.bing.com/ping?sitemap=https%3A%2F%2Fwww.pointsave.fr%2Fsitemap.xml").catch(function(){});
+})();
+
+// WIDGET SOLDE
+function updateJauge(val){
+  val = parseInt(val);
+  var wrap = document.getElementById('jauge-wrap');
+  var fill = document.getElementById('jauge-fill');
+  var ptsEl = document.getElementById('jauge-pts');
+  var ptsRow = document.getElementById('jauge-pts-row');
+  var msg = document.getElementById('jauge-msg');
+  var lbl = document.getElementById('jauge-label');
+  if(isNaN(val)){
+    if(wrap)wrap.style.display='none';
+    return;
+  }
+  if(wrap)wrap.style.display='block';
+  if(ptsRow)ptsRow.style.display='flex';
+  if(ptsEl)ptsEl.textContent=val+' / 12 points';
+  var pct=Math.round((val/12)*100);
+  if(fill){fill.style.width=pct+'%';}
+  if(!msg||!lbl)return;
+  if(val===0){
+    msg.style.background='rgba(255,0,0,.1)';
+    msg.style.color='#ff4444';
+    msg.style.border='1px solid rgba(255,0,0,.2)';
+    msg.innerHTML="<strong>Permis invalide !</strong> Vous devez repasser l\u2019examen apr\u00e8s 6 mois. <a href=\"#formulaire\" style=\"color:#FF6B6B;font-weight:900\">Je veux un stage \u2192</a>";
+    lbl.textContent='Permis invalide';
+  } else if(val<=3){
+    msg.style.background='rgba(255,0,0,.08)';
+    msg.style.color='#FF6B6B';
+    msg.style.border='1px solid rgba(255,0,0,.2)';
+    msg.innerHTML="<strong>Danger imm\u00e9diat !</strong> Une infraction peut invalider votre permis. <a href=\"#formulaire\" style=\"color:#FF6B6B;font-weight:900\">Je veux un stage \u2192</a>";
+    lbl.textContent='Danger imm\u00e9diat';
+  } else if(val<=6){
+    msg.style.background='rgba(255,100,0,.08)';
+    msg.style.color='#FF8C00';
+    msg.style.border='1px solid rgba(255,100,0,.2)';
+    msg.innerHTML="<strong>Solde faible.</strong> Un stage vous redonne jusqu\u2019\u00e0 4 points. <a href=\"#formulaire\" style=\"color:#FF8C00;font-weight:900\">Je veux un stage \u2192</a>";
+    lbl.textContent='Solde faible';
+  } else if(val<=9){
+    msg.style.background='rgba(255,215,0,.08)';
+    msg.style.color='#FFD700';
+    msg.style.border='1px solid rgba(255,215,0,.2)';
+    msg.innerHTML="<strong>Solde surveill\u00e9.</strong> Anticipez avant une prochaine infraction.";
+    lbl.textContent='Solde surveiller';
+  } else {
+    msg.style.background='rgba(0,199,122,.08)';
+    msg.style.color='#00C77A';
+    msg.style.border='1px solid rgba(0,199,122,.2)';
+    msg.innerHTML="<strong>Bon solde !</strong> Continuez \u00e0 conduire prudemment.";
+    lbl.textContent='Bon solde';
+  }
+}
+</script>
+<script>
+/* PointSave - Fonctions interactives Safari-safe */
+(function(){
+  function norm(s){
+    return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
+  }
+
+  window.filterVilles = function(val){
+    var drop = document.getElementById('villesDrop');
+    if(!drop) return;
+    var LISTE = window.VILLES_AC || [];
+    if(!val || val.length < 1){ drop.style.display='none'; return; }
+    var n = norm(val);
+    var res = LISTE.filter(function(v){ return norm(v).indexOf(n)===0; }).slice(0,8);
+    if(!res.length) res = LISTE.filter(function(v){ return norm(v).indexOf(n)!==-1; }).slice(0,8);
+    if(!res.length){
+      drop.innerHTML='<div style="padding:10px 16px;color:#888">Aucune ville trouvee</div>';
+      drop.style.display='block';
+      return;
+    }
+    drop.innerHTML = res.map(function(v){
+      return '<div class="ps-ac-item">'+v+'</div>';
+    }).join('');
+    Array.prototype.forEach.call(drop.querySelectorAll('.ps-ac-item'), function(div){
+      var txt = div.textContent;
+      function doSelect(e){
+        if(e && e.preventDefault) e.preventDefault();
+        window.psPickVille(txt);
+      }
+      div.addEventListener('mousedown', doSelect);
+      div.addEventListener('touchstart', doSelect, {passive:false});
+      div.addEventListener('click', doSelect);
+    });
+    drop.style.display = 'block';
+  };
+
+  window.psPickVille = function(v){
+    var inp = document.getElementById('f_ville');
+    if(inp) inp.value = v;
+    window.hideVilles();
+    if(typeof window._psApply === 'function') window._psApply(v);
+    setTimeout(function(){
+      if(typeof window.openPlanning === 'function') window.openPlanning();
+    }, 500);
+  };
+
+  window.pickVille = window.psPickVille;
+
+  window.hideVilles = function(){
+    var d = document.getElementById('villesDrop');
+    if(d) d.style.display='none';
+  };
+})();
+
+</script>
+
+<!-- PLANNING POPUP (hors form pour position:fixed correct) -->
+<div class="plan-overlay" id="planOverlay" onclick="window.closePlanning&&window.closePlanning(event)">
+  <div class="plan-modal">
+    <div class="plan-modal-hd">
+      <h3>📅 Choisissez un créneau</h3>
+      <button class="plan-close" onclick="window.closePlanningDirect&&window.closePlanningDirect()">✕</button>
+    </div>
+    <button type="button" class="plan-asap" id="planAsap" onclick="window.selectPlanAsap&&window.selectPlanAsap()">⚡ Le plus tôt possible</button>
+    <div class="plan-scroll" id="planningGrid"></div>
+  </div>
+</div>
+</body>
+</html
+
 <!-- FOOTER -->
 <footer class="footer">
   <div class="fl2">
