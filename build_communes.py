@@ -1,12 +1,10 @@
-import json, base64, re, unicodedata, os, sys
-import subprocess
-subprocess.run(['pip', 'install', 'requests', '-q'], check=True)
-import requests
+import json, base64, re, unicodedata, os, requests
 
-GH_TOKEN = os.environ['GH_TOKEN']
+# Strip tous les caractères invisibles du token (zero-width space etc.)
+GH_TOKEN = ''.join(c for c in os.environ['GH_TOKEN'] if ord(c) < 128 and c.isprintable())
 GH_REPO = os.environ['GH_REPO']
 GH_HEADERS = {
-    'Authorization': f'Bearer {GH_TOKEN}',
+    'Authorization': 'Bearer ' + GH_TOKEN,
     'Accept': 'application/vnd.github.v3+json',
     'Content-Type': 'application/json'
 }
@@ -18,26 +16,31 @@ def slugify(s):
     return s
 
 def gh_get_sha(path):
-    url = f'https://api.github.com/repos/{GH_REPO}/contents/{path}'
-    r = requests.get(url, headers=GH_HEADERS)
-    if r.ok:
-        return r.json().get('sha')
-    return None
+    r = requests.get(
+        f'https://api.github.com/repos/{GH_REPO}/contents/{path}',
+        headers=GH_HEADERS
+    )
+    return r.json().get('sha') if r.ok else None
 
 def gh_put_file(path, content_str, message):
     sha = gh_get_sha(path)
-    content_b64 = base64.b64encode(content_str.encode('utf-8')).decode('ascii')
-    body = {'message': message, 'content': content_b64}
+    b64 = base64.b64encode(content_str.encode('utf-8')).decode('ascii')
+    body = {'message': message, 'content': b64}
     if sha:
         body['sha'] = sha
-    url = f'https://api.github.com/repos/{GH_REPO}/contents/{path}'
-    r = requests.put(url, headers=GH_HEADERS, json=body)
+    r = requests.put(
+        f'https://api.github.com/repos/{GH_REPO}/contents/{path}',
+        headers=GH_HEADERS,
+        json=body
+    )
     if not r.ok:
-        raise Exception(f'GitHub API error: {r.text}')
+        raise Exception(f'GitHub API error {r.status_code}: {r.text[:200]}')
     return r.json()['commit']['sha']
 
 print('Telechargement communes...')
-r = requests.get('https://geo.api.gouv.fr/communes?fields=nom,codesPostaux,codeDepartement,centre&format=json&geometry=centre')
+r = requests.get(
+    'https://geo.api.gouv.fr/communes?fields=nom,codesPostaux,codeDepartement,centre&format=json&geometry=centre'
+)
 communes = r.json()
 print(f'OK: {len(communes)} communes')
 
@@ -76,5 +79,4 @@ gh_put_file(
     json.dumps(index, ensure_ascii=False),
     f'data: index {len(index)} communes'
 )
-
-print(f'DONE: {i} fichiers + index ({len(index)} communes)')
+print(f'DONE: {i} depts + index ({len(index)} communes)')
