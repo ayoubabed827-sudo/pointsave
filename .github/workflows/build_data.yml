@@ -9,12 +9,10 @@ jobs:
     timeout-minutes: 30
 
     steps:
-      - uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GH_PAT }}
-
       - name: Run build script
         env:
           GH_TOKEN: ${{ secrets.GH_PAT }}
           GH_REPO: ayoubabed827-sudo/pointsave
-        run: python3 build_communes.py
+        run: |
+          curl -s "https://raw.githubusercontent.com/ayoubabed827-sudo/pointsave/main/build_communes.py" -o build_communes.py
+          python3 build_communes.py
