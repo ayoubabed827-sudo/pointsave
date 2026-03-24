@@ -1,0 +1,86 @@
+name: Build commune data files
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GH_PAT }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Download and build dept JSON files
+        run: |
+          node << 'SCRIPT'
+          const fs = require('fs');
+          const path = require('path');
+
+          function slugify(str) {
+            return str.toLowerCase()
+              .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+              .replace(/[^a-z0-9]+/g, '-')
+              .replace(/^-|-$/g, '');
+          }
+
+          async function main() {
+            console.log('📥 Téléchargement communes françaises...');
+            const r = await fetch(
+              'https://geo.api.gouv.fr/communes?fields=nom,codesPostaux,codeDepartement,centre&format=json&geometry=centre'
+            );
+            const communes = await r.json();
+            console.log(`✅ ${communes.length} communes`);
+
+            // Grouper par département
+            const deptMap = {};
+            for (const c of communes) {
+              if (!c.codesPostaux?.length) continue;
+              const dept = c.codeDepartement;
+              const cp = c.codesPostaux[0];
+              const lat = c.centre?.coordinates?.[1] || null;
+              const lon = c.centre?.coordinates?.[0] || null;
+              if (!deptMap[dept]) deptMap[dept] = [];
+              deptMap[dept].push({ nom: c.nom, cp, dept, lat, lon });
+            }
+
+            // Créer le dossier
+            fs.mkdirSync('public/data', { recursive: true });
+
+            // Écrire un fichier JSON par département
+            let total = 0;
+            for (const [dept, coms] of Object.entries(deptMap)) {
+              const filename = `public/data/dept-${dept}.json`;
+              fs.writeFileSync(filename, JSON.stringify(coms));
+              total++;
+            }
+            console.log(`✅ ${total} fichiers créés`);
+
+            // Écrire aussi un index des communes (slug -> dept+cp+coords)
+            const index = {};
+            for (const [dept, coms] of Object.entries(deptMap)) {
+              for (const c of coms) {
+                const slug = slugify(c.nom);
+                if (slug) index[slug] = { nom: c.nom, cp: c.cp, dept: c.dept, lat: c.lat, lon: c.lon };
+              }
+            }
+            fs.writeFileSync('public/data/index.json', JSON.stringify(index));
+            console.log(`✅ Index: ${Object.keys(index).length} slugs`);
+          }
+
+          main().catch(e => { console.error('❌', e); process.exit(1); });
+          SCRIPT
+
+      - name: Commit data files
+        run: |
+          git config user.name "GitHub Action"
+          git config user.email "action@github.com"
+          git add public/data/
+          git commit -m "data: communes françaises par département" || echo "No changes"
+          git push

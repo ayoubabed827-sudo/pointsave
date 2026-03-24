@@ -1,5 +1,5 @@
 // PointSave — Worker France entière
-// Génère une page SEO par commune à la volée depuis KV
+// Données communes depuis /public/data/dept-XX.json (fichiers statiques)
 
 function slugify(str) {
   return str.toLowerCase()
@@ -10,50 +10,11 @@ function slugify(str) {
 
 function distKm(lat1, lon1, lat2, lon2) {
   const R = 6371;
-  const dL = (lat2 - lat1) * Math.PI / 180;
-  const dl = (lon2 - lon1) * Math.PI / 180;
+  const dL = (lat2-lat1)*Math.PI/180, dl = (lon2-lon1)*Math.PI/180;
   const a = Math.sin(dL/2)**2 + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dl/2)**2;
-  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  return R*2*Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 }
 
-function getVoisines(commune, allCommunes) {
-  if (!commune.lat || !commune.lon || !allCommunes.length) return [];
-  return allCommunes
-    .filter(c => c.nom !== commune.nom && c.lat && c.lon)
-    .map(c => ({ ...c, d: distKm(commune.lat, commune.lon, c.lat, c.lon) }))
-    .sort((a, b) => a.d - b.d)
-    .filter(c => c.d <= 50)
-    .slice(0, 6);
-}
-
-function buildVoisinesHTML(voisines) {
-  return voisines.map(v => {
-    const slug = slugify(v.nom);
-    return `<a href="/${slug}" class="ml-link">${v.nom} <span class="ml-dept">(${v.cp})</span></a>`;
-  }).join('');
-}
-
-function buildPage(commune, allCommunes, TEMPLATE) {
-  const ville = commune.nom;
-  const cp = commune.cp;
-  const dept = commune.dept;
-  const slug = slugify(ville);
-  const villeUrl = encodeURIComponent(ville);
-  const voisines = getVoisines(commune, allCommunes);
-  const voisinesHTML = buildVoisinesHTML(voisines);
-
-  return TEMPLATE
-    .replace(/{{META_TITLE}}/g, `Stage Récupération Points ${ville} | PointSave`)
-    .replace(/{{META_DESC}}/g, `Stage récupération de points agréé près de ${ville} (${cp}). Centres agréés dans un rayon de 30km. Appelez le +33 6 99 92 65 10.`)
-    .replace(/{{SLUG}}/g, slug)
-    .replace(/{{CP}}/g, cp)
-    .replace(/{{DEPT_NUM}}/g, dept)
-    .replace(/{{VILLE_URL}}/g, villeUrl)
-    .replace(/{{VILLE}}/g, ville)
-    .replace(/{{VOISINES_HTML}}/g, voisinesHTML);
-}
-
-// Depts voisins pour récupérer les communes proches
 const DEPT_VOISINS = {
   '01':['39','71','69','38','73','74'],'02':['60','95','78','76','51','80'],
   '03':['71','58','18','23','63','43'],'04':['05','26','84','83','06'],
@@ -101,55 +62,79 @@ const DEPT_VOISINS = {
   '95':['60','78','92']
 };
 
+function buildPage(commune, allCommunes, template) {
+  const { nom: ville, cp, dept } = commune;
+  const slug = slugify(ville);
+
+  // Trouver les 6 communes les plus proches
+  const voisines = commune.lat && commune.lon
+    ? allCommunes
+        .filter(c => c.nom !== ville && c.lat && c.lon)
+        .map(c => ({ ...c, d: distKm(commune.lat, commune.lon, c.lat, c.lon) }))
+        .sort((a, b) => a.d - b.d)
+        .filter(c => c.d <= 50)
+        .slice(0, 6)
+    : [];
+
+  const voisinesHTML = voisines.map(v =>
+    `<a href="/${slugify(v.nom)}" class="ml-link">${v.nom} <span class="ml-dept">(${v.cp})</span></a>`
+  ).join('');
+
+  return template
+    .replace(/{{META_TITLE}}/g, `Stage Récupération Points ${ville} | PointSave`)
+    .replace(/{{META_DESC}}/g, `Stage récupération de points agréé près de ${ville} (${cp}). Centres agréés dans un rayon de 30km. Appelez le +33 6 99 92 65 10.`)
+    .replace(/{{SLUG}}/g, slug)
+    .replace(/{{CP}}/g, cp)
+    .replace(/{{DEPT_NUM}}/g, dept)
+    .replace(/{{VILLE_URL}}/g, encodeURIComponent(ville))
+    .replace(/{{VILLE}}/g, ville)
+    .replace(/{{VOISINES_HTML}}/g, voisinesHTML);
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
     let path = url.pathname.replace(/^\//, '').replace(/\.html$/, '');
 
     // Pages statiques → ASSETS
-    if (path === '' || path === 'index' || path === 'crm' ||
-        path.startsWith('cdn-cgi') || path.includes('.')) {
+    if (!path || path === 'index' || path === 'crm' ||
+        path.startsWith('cdn-cgi') || path.startsWith('public') ||
+        path.includes('.')) {
       return env.ASSETS.fetch(request);
     }
 
-    // Lookup commune dans KV
+    // Chercher la commune dans KV
     const communeJSON = await env.COMMUNES_KV.get(path);
     if (!communeJSON) {
       return env.ASSETS.fetch(request);
     }
-
     const commune = JSON.parse(communeJSON);
 
-    // Charger template + communes du dept + depts voisins EN PARALLÈLE
-    const dept = commune.dept;
-    const voisinsDepts = [dept, ...(DEPT_VOISINS[dept] || [])];
-
-    // Charger toutes les communes des depts voisins depuis KV
-    // On utilise __dept_XX__ qui contient toutes les communes du dept
-    const [template, ...deptDataArr] = await Promise.all([
-      env.COMMUNES_KV.get('__template__'),
-      ...voisinsDepts.map(d => env.COMMUNES_KV.get(`__dept_${d}__`))
-    ]);
-
+    // Charger template depuis KV
+    const template = await env.COMMUNES_KV.get('__template__');
     if (!template) {
-      return new Response('Template non trouvé', { status: 500 });
+      return new Response('Template manquant', { status: 500 });
     }
 
-    // Assembler toutes les communes candidates
-    let allCommunes = [];
-    for (const data of deptDataArr) {
-      if (data) {
-        try { allCommunes = allCommunes.concat(JSON.parse(data)); } catch(e) {}
-      }
-    }
+    // Charger les communes voisines depuis les fichiers statiques
+    const dept = commune.dept;
+    const depts = [dept, ...(DEPT_VOISINS[dept] || [])];
 
+    const deptData = await Promise.all(
+      depts.map(d =>
+        fetch(new URL(`/public/data/dept-${d}.json`, url.origin))
+          .then(r => r.ok ? r.json() : [])
+          .catch(() => [])
+      )
+    );
+
+    const allCommunes = deptData.flat();
     const html = buildPage(commune, allCommunes, template);
 
     return new Response(html, {
       headers: {
         'Content-Type': 'text/html;charset=UTF-8',
         'Cache-Control': 'public, max-age=86400',
-        'X-Generated-By': 'PointSave-Worker'
       }
     });
   }
