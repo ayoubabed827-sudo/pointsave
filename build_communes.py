@@ -1,7 +1,15 @@
-import json, base64, urllib.request, re, unicodedata, os, sys
+import json, base64, re, unicodedata, os, sys
+import subprocess
+subprocess.run(['pip', 'install', 'requests', '-q'], check=True)
+import requests
 
 GH_TOKEN = os.environ['GH_TOKEN']
 GH_REPO = os.environ['GH_REPO']
+GH_HEADERS = {
+    'Authorization': f'Bearer {GH_TOKEN}',
+    'Accept': 'application/vnd.github.v3+json',
+    'Content-Type': 'application/json'
+}
 
 def slugify(s):
     s = unicodedata.normalize('NFD', s.lower())
@@ -11,15 +19,10 @@ def slugify(s):
 
 def gh_get_sha(path):
     url = f'https://api.github.com/repos/{GH_REPO}/contents/{path}'
-    req = urllib.request.Request(url, headers={
-        'Authorization': f'Bearer {GH_TOKEN}',
-        'Accept': 'application/vnd.github.v3+json'
-    })
-    try:
-        with urllib.request.urlopen(req) as r:
-            return json.loads(r.read())['sha']
-    except:
-        return None
+    r = requests.get(url, headers=GH_HEADERS)
+    if r.ok:
+        return r.json().get('sha')
+    return None
 
 def gh_put_file(path, content_str, message):
     sha = gh_get_sha(path)
@@ -27,21 +30,15 @@ def gh_put_file(path, content_str, message):
     body = {'message': message, 'content': content_b64}
     if sha:
         body['sha'] = sha
-    data = json.dumps(body).encode('utf-8')
     url = f'https://api.github.com/repos/{GH_REPO}/contents/{path}'
-    req = urllib.request.Request(url, data=data, method='PUT', headers={
-        'Authorization': f'Bearer {GH_TOKEN}',
-        'Content-Type': 'application/json',
-        'Accept': 'application/vnd.github.v3+json'
-    })
-    with urllib.request.urlopen(req) as r:
-        result = json.loads(r.read())
-        return result['commit']['sha']
+    r = requests.put(url, headers=GH_HEADERS, json=body)
+    if not r.ok:
+        raise Exception(f'GitHub API error: {r.text}')
+    return r.json()['commit']['sha']
 
 print('Telechargement communes...')
-url = 'https://geo.api.gouv.fr/communes?fields=nom,codesPostaux,codeDepartement,centre&format=json&geometry=centre'
-with urllib.request.urlopen(url) as r:
-    communes = json.loads(r.read())
+r = requests.get('https://geo.api.gouv.fr/communes?fields=nom,codesPostaux,codeDepartement,centre&format=json&geometry=centre')
+communes = r.json()
 print(f'OK: {len(communes)} communes')
 
 dept_map = {}
