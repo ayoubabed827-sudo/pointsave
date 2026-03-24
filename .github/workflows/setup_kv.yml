@@ -161,7 +161,15 @@ jobs:
 
             // 7. Mettre à jour wrangler.toml sur GitHub
             console.log('\n📝 Mise à jour wrangler.toml...');
-            const newToml = `name = "pointsave"\ncompatibility_date = "2024-01-01"\n\n[[kv_namespaces]]\nbinding = "COMMUNES_KV"\nid = "${kvId}"\n`;
+            const newToml = [
+              'name = "pointsave"',
+              'compatibility_date = "2024-01-01"',
+              '',
+              '[[kv_namespaces]]',
+              'binding = "COMMUNES_KV"',
+              'id = "' + kvId + '"',
+              ''
+            ].join('\n');
 
             const shaRes = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/wrangler.toml`, {
               headers: { 'Authorization': `Bearer ${GH_TOKEN}`, 'Accept': 'application/vnd.github.v3+json' }
@@ -172,8 +180,8 @@ jobs:
               method: 'PUT',
               headers: { 'Authorization': `Bearer ${GH_TOKEN}`, 'Content-Type': 'application/json' },
               body: JSON.stringify({
-                message: `chore: KV namespace ID ${kvId.slice(0,8)}`,
-                content: Buffer.from(newToml).toString('base64'),
+                message: 'chore: update wrangler KV id',
+                content: Buffer.from(newToml, 'utf8').toString('base64'),
                 sha: shaData.sha
               })
             });
