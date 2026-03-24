@@ -1,0 +1,6 @@
+name = "pointsave"
+compatibility_date = "2024-01-01"
+
+[[kv_namespaces]]
+binding = "COMMUNES_KV"
+id = "PLACEHOLDER_KV_ID"
