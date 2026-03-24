@@ -38,7 +38,7 @@ jobs:
             const sha = await ghGetSHA(path);
             const body = {
               message,
-              content: Buffer.from(content).toString('base64'),
+              content: Buffer.from(content, 'utf8').toString('base64'),
             };
             if (sha) body.sha = sha;
             const r = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${path}`, {
