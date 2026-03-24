@@ -12,6 +12,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           token: ${{ secrets.GH_PAT }}
+          fetch-depth: 0
 
       - uses: actions/setup-node@v4
         with:
@@ -21,7 +22,6 @@ jobs:
         run: |
           node << 'SCRIPT'
           const fs = require('fs');
-          const path = require('path');
 
           function slugify(str) {
             return str.toLowerCase()
@@ -38,7 +38,6 @@ jobs:
             const communes = await r.json();
             console.log(`✅ ${communes.length} communes`);
 
-            // Grouper par département
             const deptMap = {};
             for (const c of communes) {
               if (!c.codesPostaux?.length) continue;
@@ -50,21 +49,18 @@ jobs:
               deptMap[dept].push({ nom: c.nom, cp, dept, lat, lon });
             }
 
-            // Créer le dossier
             fs.mkdirSync('public/data', { recursive: true });
 
-            // Écrire un fichier JSON par département
             let total = 0;
             for (const [dept, coms] of Object.entries(deptMap)) {
-              const filename = `public/data/dept-${dept}.json`;
-              fs.writeFileSync(filename, JSON.stringify(coms));
+              fs.writeFileSync(`public/data/dept-${dept}.json`, JSON.stringify(coms));
               total++;
             }
-            console.log(`✅ ${total} fichiers créés`);
+            console.log(`✅ ${total} fichiers JSON créés`);
 
-            // Écrire aussi un index des communes (slug -> dept+cp+coords)
+            // Index slug -> commune
             const index = {};
-            for (const [dept, coms] of Object.entries(deptMap)) {
+            for (const coms of Object.values(deptMap)) {
               for (const c of coms) {
                 const slug = slugify(c.nom);
                 if (slug) index[slug] = { nom: c.nom, cp: c.cp, dept: c.dept, lat: c.lat, lon: c.lon };
@@ -77,10 +73,11 @@ jobs:
           main().catch(e => { console.error('❌', e); process.exit(1); });
           SCRIPT
 
-      - name: Commit data files
+      - name: Commit and push data files
         run: |
           git config user.name "GitHub Action"
           git config user.email "action@github.com"
+          git remote set-url origin https://x-access-token:${{ secrets.GH_PAT }}@github.com/ayoubabed827-sudo/pointsave.git
           git add public/data/
-          git commit -m "data: communes françaises par département" || echo "No changes"
-          git push
+          git diff --staged --quiet && echo "No changes" || git commit -m "data: communes françaises par département"
+          git push origin main
