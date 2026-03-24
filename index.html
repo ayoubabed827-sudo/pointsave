@@ -1115,11 +1115,14 @@ function init(){
   var vParam=p.get('v')||p.get('ville');
   if(vParam){
     var inputSlug=slugify(decodeURIComponent(vParam));
-    // Exact match
+    // Exact match dans COMMUNES IDF
     var found=COMMUNES.find(function(c){return slugify(c.nom)===inputSlug;});
-    // StartsWith match (ex: "evry" -> "evry-courcouronnes")
+    // StartsWith match
     if(!found) found=COMMUNES.find(function(c){var s=slugify(c.nom);return s===inputSlug||s.indexOf(inputSlug)===0;});
     if(found){apply(found.nom);return;}
+    // Ville hors IDF → rediriger vers la page dédiée
+    window.location.replace('/'+inputSlug);
+    return;
   }
   // 2. Géolocalisation
   if(navigator.geolocation){

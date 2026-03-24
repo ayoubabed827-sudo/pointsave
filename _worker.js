@@ -20,34 +20,25 @@ function distKm(lat1, lon1, lat2, lon2) {
   return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 }
 
-// Voisines : 6 communes les plus proches
+// Voisines : 6 communes les plus proches (tous départements)
 function getVoisines(commune, allCommunes) {
-  const DEPT_VOISINS = {
-    '75':['92','93','94'], '92':['75','78','91','93','95'],
-    '93':['75','77','94','95'], '94':['75','77','91','92','93'],
-    '77':['75','91','93','94'], '78':['75','91','92','95'],
-    '91':['75','77','78','92','94'], '95':['75','78','92','93']
-  };
-  const dept = commune.dept;
-  const voisinsDepts = [dept, ...(DEPT_VOISINS[dept] || [])];
-  
+  if (!commune.lat || !commune.lon || !allCommunes.length) return [];
+
+  // Filtrer les candidates avec coords GPS valides, exclure la commune elle-même
   let candidates = allCommunes.filter(c =>
-    c.nom !== commune.nom && voisinsDepts.includes(c.dept)
+    c.nom !== commune.nom && c.lat && c.lon
   );
 
-  if (commune.lat && commune.lon) {
-    candidates = candidates.filter(c => c.lat && c.lon);
-    candidates.sort((a, b) =>
-      distKm(commune.lat, commune.lon, a.lat, a.lon) -
-      distKm(commune.lat, commune.lon, b.lat, b.lon)
-    );
-  } else {
-    candidates.sort((a, b) =>
-      Math.abs(parseInt(a.cp) - parseInt(commune.cp)) -
-      Math.abs(parseInt(b.cp) - parseInt(commune.cp))
-    );
-  }
-  return candidates.slice(0, 6);
+  // Trier par distance GPS réelle
+  candidates.sort((a, b) =>
+    distKm(commune.lat, commune.lon, a.lat, a.lon) -
+    distKm(commune.lat, commune.lon, b.lat, b.lon)
+  );
+
+  // Prendre les 6 plus proches dans un rayon de 50km
+  return candidates
+    .filter(c => distKm(commune.lat, commune.lon, c.lat, c.lon) <= 50)
+    .slice(0, 6);
 }
 
 // Générer le HTML des voisines
