@@ -524,21 +524,8 @@ input,select,textarea{font-size:16px!important;}
 <div class="villes rev">
   <div class="villes-in">
     <div class="vl">Villes couvertes &mdash; rayon 30km autour de <span id="dyn-villes-lbl">Meaux</span></div>
-    <div class="vg">
-      <div class="vt">📍 Meaux<span class="km">centre</span></div>
-      <div class="vt">Trilport<span class="km">5km</span></div>
-      <div class="vt">Nanteuil-lès-Meaux<span class="km">5km</span></div>
-      <div class="vt">Claye-Souilly<span class="km">15km</span></div>
-      <div class="vt">Lagny-sur-Marne<span class="km">12km</span></div>
-      <div class="vt">Chelles<span class="km">18km</span></div>
-      <div class="vt">Chessy<span class="km">20km</span></div>
-      <div class="vt">Torcy<span class="km">20km</span></div>
-      <div class="vt">Mitry-Mory<span class="km">20km</span></div>
-      <div class="vt">Noisiel<span class="km">22km</span></div>
-      <div class="vt">Villeparisis<span class="km">25km</span></div>
-      <div class="vt">Dammartin-en-Goële<span class="km">25km</span></div>
-      <div class="vt">La Ferté-sous-Jouarre<span class="km">28km</span></div>
-      <div class="vt">Coulommiers<span class="km">30km</span></div>
+    <div class="vg" id="dyn-vg">
+      <div class="vt">&#128205; <span id="dyn-vg-centre">Meaux</span><span class="km">centre</span></div>
     </div>
   </div>
 </div>
@@ -1048,6 +1035,25 @@ function apply(ville){
   // Villes label
   var vl=document.getElementById('dyn-villes-lbl');
   if(vl)vl.textContent=ville;
+  // Section villes dynamique
+  var vgc=document.getElementById('dyn-vg-centre');
+  if(vgc)vgc.textContent=ville;
+  var vg=document.getElementById('dyn-vg');
+  if(vg&&typeof window.COMMUNES!=='undefined'){
+    var vfound=window.COMMUNES.find(function(x){return x.nom===ville;});
+    if(vfound&&vfound.lat&&vfound.lon){
+      var allD={'75':['92','93','94'],'92':['75','78','91','93','95'],'93':['75','77','94','95'],'94':['75','77','91','92','93'],'77':['75','91','93','94'],'78':['75','91','92','95'],'91':['75','77','78','92','94'],'95':['75','78','92','93']};
+      var vdpts=[vfound.d].concat(allD[vfound.d]||[]);
+      var cands=window.COMMUNES.filter(function(x){return vdpts.indexOf(x.d)!==-1&&x.nom!==ville&&x.lat&&x.lon;});
+      cands.sort(function(a,b){return distKm(vfound.lat,vfound.lon,a.lat,a.lon)-distKm(vfound.lat,vfound.lon,b.lat,b.lon);});
+      var html='<div class="vt">&#128205; <span id="dyn-vg-centre">'+ville+'</span><span class="km">centre</span></div>';
+      cands.slice(0,13).forEach(function(x){
+        var d=Math.round(distKm(vfound.lat,vfound.lon,x.lat,x.lon));
+        if(d<=30)html+='<div class="vt">'+x.nom+'<span class="km">'+d+'km</span></div>';
+      });
+      vg.innerHTML=html;
+    }
+  }
   // Footer
   var ft=document.getElementById('dyn-footer');
   if(ft)ft.textContent=ville;
