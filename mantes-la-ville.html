@@ -1054,7 +1054,7 @@ function pickVille(v){
   setTimeout(function(){openPlanning();},400);
 }
 function hideVilles(){var d=document.getElementById('villesDrop');if(d)d.style.display='none';}
-document.addEventListener('DOMContentLoaded',function(){initPlanning();});
+document.addEventListener('DOMContentLoaded',function(){initPlanning();var pb=document.getElementById('planBtn');if(pb){pb.addEventListener('touchend',function(e){e.preventDefault();e.stopPropagation();if(window.openPlanning)window.openPlanning();});}});
 
 </script>
 </body>
