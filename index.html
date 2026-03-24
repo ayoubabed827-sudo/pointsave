@@ -1062,6 +1062,12 @@ function apply(ville){
     if(found){dept=found.d;cp=parseInt(found.cp);}
     if(dept){
       var voisines=window.COMMUNES.filter(function(x){return x.d===dept&&x.nom!==ville;});
+      // Si pas assez de voisines dans le même dept, chercher dans les depts limitrophes
+      if(voisines.length<3){
+        var depts={'75':['92','93','94'],'92':['75','78','91','93','95'],'93':['75','77','94','95'],'94':['75','77','91','92','93'],'77':['75','91','93','94'],'78':['75','91','92','95'],'91':['75','77','78','92','94'],'95':['75','78','92','93']};
+        var extra=depts[dept]||[];
+        extra.forEach(function(d){voisines=voisines.concat(window.COMMUNES.filter(function(x){return x.d===d&&x.nom!==ville;}));});
+      }
       voisines.sort(function(a,b){return Math.abs(parseInt(a.cp)-cp)-Math.abs(parseInt(b.cp)-cp);});
       voisines=voisines.slice(0,6);
       var grid=document.getElementById('maillage-index');
