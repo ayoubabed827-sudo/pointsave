@@ -133,19 +133,14 @@ jobs:
             // 4. Skip upload communes (déjà dans KV depuis run #1)
             console.log(`\n⏩ Skip communes individuelles - déjà en KV (limite quotidienne atteinte)`);
 
-            // 5. Upload données par département
-            console.log('\n📤 Upload données départements...');
+            // 5. Upload communes par département (__dept_XX__)
+            console.log('\n📤 Upload communes par département...');
             const deptEntries = [];
             for (const [dept, coms] of Object.entries(deptMap)) {
-              const voisinsDepts = DEPT_VOISINS[dept] || [];
-              let allComs = [...coms];
-              for (const vd of voisinsDepts) {
-                if (deptMap[vd]) allComs = allComs.concat(deptMap[vd]);
-              }
-              deptEntries.push({ key: `__voisines_${dept}__`, value: JSON.stringify(allComs) });
+              deptEntries.push({ key: `__dept_${dept}__`, value: JSON.stringify(coms) });
             }
             await cfBulk(kvId, deptEntries);
-            console.log(`  ✅ ${deptEntries.length} départements`);
+            console.log(`  ✅ ${deptEntries.length} départements uploadés`);
 
             // 6. Upload template
             console.log('\n📤 Upload template HTML...');
