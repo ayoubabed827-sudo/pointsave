@@ -394,6 +394,12 @@ window.addEventListener('unhandledrejection',function(e){
   var d=document.getElementById('ps-err');
   if(d){d.style.display='block';d.innerHTML+='Promise: '+e.reason+'<br>';}
 });
+
+window._dbg=function(msg){
+  var d=document.getElementById('ps-err');
+  if(d){d.style.display='block';d.innerHTML+=msg+'<br>';}
+};
+window._dbg("ERROR-CATCHER-READY");
 </script>
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PQHZWD3R" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
@@ -1000,6 +1006,7 @@ window.addEventListener('DOMContentLoaded',function(){
 (function(){
 var COMMUNES=window.COMMUNES||[];
 var VILLES_AC=window.VILLES_AC||[];
+if(window._dbg)window._dbg("S6-IIFE-START COMMUNES:"+COMMUNES.length);
 
 function slugify(s){
   return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
@@ -1094,13 +1101,14 @@ function init(){
 }
 
 window._psApply=apply;
+if(window._dbg)window._dbg("S6-_psApply-SET");
 if(document.readyState==='loading'){
   document.addEventListener('DOMContentLoaded',init);
 }else{
   init();
 }
 })();
-
+if(window._dbg)window._dbg("S6-IIFE-END");
 // PLANNING POPUP
 function initPlanning(){
   var grid=document.getElementById('planningGrid');
@@ -1140,6 +1148,7 @@ function initPlanning(){
     })(new Date(today.getFullYear(),today.getMonth(),today.getDate()+i));
   }
 }
+if(window._dbg)window._dbg("S6-DEFINING-openPlanning");
 window.openPlanning=function(){
   var grid=document.getElementById('planningGrid');
   if(grid&&grid.children.length===0){initPlanning();}
