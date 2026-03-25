@@ -66,18 +66,24 @@ function buildPage(commune, allCommunes, template) {
   const { nom: ville, cp, dept } = commune;
   const slug = slugify(ville);
 
-  // Trouver les 6 communes les plus proches
-  const voisines = commune.lat && commune.lon
+  // Communes proches triées par distance GPS
+  const proches = commune.lat && commune.lon
     ? allCommunes
         .filter(c => c.nom !== ville && c.lat && c.lon)
         .map(c => ({ ...c, d: distKm(commune.lat, commune.lon, c.lat, c.lon) }))
         .sort((a, b) => a.d - b.d)
-        .filter(c => c.d <= 50)
-        .slice(0, 6)
     : [];
 
+  // Maillage bas : 6 communes les plus proches (liens cliquables)
+  const voisines = proches.filter(c => c.d <= 50).slice(0, 6);
   const voisinesHTML = voisines.map(v =>
     `<a href="/${slugify(v.nom)}" class="ml-link">${v.nom} <span class="ml-dept">(${v.cp})</span></a>`
+  ).join('');
+
+  // Section villes km : toutes les communes dans 30km
+  const villesKm = proches.filter(c => c.d <= 30).slice(0, 13);
+  const villesKmHTML = villesKm.map(v =>
+    `<div class="vt">${v.nom}<span class="km">${Math.round(v.d)}km</span></div>`
   ).join('');
 
   return template
@@ -88,7 +94,8 @@ function buildPage(commune, allCommunes, template) {
     .replace(/{{DEPT_NUM}}/g, dept)
     .replace(/{{VILLE_URL}}/g, encodeURIComponent(ville))
     .replace(/{{VILLE}}/g, ville)
-    .replace(/{{VOISINES_HTML}}/g, voisinesHTML);
+    .replace(/{{VOISINES_HTML}}/g, voisinesHTML)
+    .replace(/{{VILLES_KM_HTML}}/g, villesKmHTML);
 }
 
 export default {

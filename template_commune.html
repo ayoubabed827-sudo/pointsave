@@ -494,7 +494,18 @@ input,select,textarea{font-size:16px!important;}
 </section>
 
 
-<!-- FORMULAIRE<!-- FORMULAIRE -->
+<!-- FORMULAIRE<!-- VILLES -->
+<div class="villes rev">
+  <div class="villes-in">
+    <div class="vl">Villes couvertes &mdash; rayon 30km autour de <span id="dyn-villes-lbl">{{VILLE}}</span></div>
+    <div class="vg">
+      <div class="vt">📍 {{VILLE}}<span class="km">centre</span></div>
+      {{VILLES_KM_HTML}}
+    </div>
+  </div>
+</div>
+
+<!-- FORMULAIRE -->
 <section class="fsec" id="formulaire">
   <div class="fin">
     <div class="rev" style="text-align:center;margin-bottom:24px">
