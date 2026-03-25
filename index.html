@@ -571,7 +571,7 @@ input,select,textarea{font-size:16px!important;}
           </div>
           <div class="consent-box">
             <label class="consent-label">
-              <input type="checkbox" id="f_consent" required onclick="this.setAttribute('data-checked',this.checked?'1':'0');if(this.checked){var m=document.getElementById('formMsg');if(m)m.textContent=''}">
+              <input type="checkbox" id="f_consent" onclick="this.setAttribute('data-checked',this.checked?'1':'0');if(this.checked){var m=document.getElementById('formMsg');if(m)m.textContent=''}">
               <span>J'accepte d'être recontacté par PointSave concernant ma demande de stage. Mes données ne seront pas transmises à des tiers. <a onclick="openLegal('confidentialite')">Politique de confidentialité</a>.</span>
             </label>
           </div>
@@ -882,7 +882,12 @@ document.getElementById('contactForm').addEventListener('submit',function(e){
     if(msg){msg.textContent='Numéro invalide : doit commencer par 06 ou 07 (10 chiffres).';msg.className='form-msg err';}
     return;
   }
-  // Consentement vérifié par l'attribut required HTML natif
+  var consent=document.getElementById('f_consent');
+  if(!consent.checked){
+    var msg=document.getElementById('formMsg');
+    if(msg){msg.textContent='Veuillez cocher la case pour continuer.';msg.className='form-msg err';}
+    return;
+  }
   var btn=document.getElementById('submitBtn');
   btn.disabled=true;
   btn.textContent='Envoi en cours…';
