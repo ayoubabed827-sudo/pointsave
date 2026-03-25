@@ -152,9 +152,9 @@ body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;ove
 .consent-label input[type="checkbox"]{width:18px;height:18px;flex-shrink:0;margin-top:1px;accent-color:var(--green2);cursor:pointer}
 .consent-label a{color:var(--green2);text-decoration:underline;cursor:pointer}
 /* FORM MSG */
-.form-msg{display:none;padding:12px 16px;border-radius:10px;font-size:13px;font-weight:600;margin-top:12px;text-align:center}
+.form-msg{display:none !important;padding:12px 16px;border-radius:10px;font-size:13px;font-weight:600;margin-top:12px;text-align:center}
 .form-msg.ok{background:rgba(0,199,122,.1);border:1px solid rgba(0,199,122,.3);color:var(--green2);display:block}
-.form-msg.err{background:rgba(255,80,80,.1);border:1px solid rgba(255,80,80,.3);color:#ff8080;display:block}
+.form-msg.err{background:rgba(255,80,80,.1);border:1px solid rgba(255,80,80,.3);color:#ff8080;display:block !important}
 /* POINTS */
 .pts{padding:56px 20px;background:var(--dark2);border-top:1px solid var(--border)}
 .pts-in{max-width:760px;margin:0 auto;text-align:center}
@@ -405,7 +405,7 @@ input,select,textarea{font-size:16px!important;}
     <h2>Demande reçue&nbsp;!</h2>
     <p>Un conseiller vous rappellera dans les <strong>30 prochaines minutes</strong>.</p>
     <a href="tel:+33699926510" class="mb-call" onclick="trackCall()"><svg class="ico-tel" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.07 1.15 2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.09a16 16 0 006.29 6.29l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 15.42z"/></svg> Appeler directement</a>
-    <button class="mb-back" onclick="document.getElementById('merci').classList.remove('show');document.body.style.overflow='';var fm=document.getElementById('formMsg');if(fm){fm.textContent='';fm.style.display='none';fm.className='form-msg';}">← Retour</button>
+    <button class="mb-back" onclick="document.getElementById('merci').classList.remove('show');document.body.style.overflow='';var fm=document.getElementById('formMsg');if(fm){fm.textContent='';fm.className='form-msg';}">← Retour</button>
   </div>
 </div>
 
