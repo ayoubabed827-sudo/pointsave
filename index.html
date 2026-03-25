@@ -905,6 +905,10 @@ document.getElementById('contactForm').addEventListener('submit',function(e){
   document.getElementById('merci').classList.add('show');
   document.body.style.overflow='hidden';
   document.getElementById('contactForm').reset();
+  window._psConsent=false;
+  document.getElementById('consent-check').style.background='transparent';
+  document.getElementById('consent-check').innerHTML='';
+  var fm=document.getElementById('formMsg');if(fm){fm.textContent='';fm.className='form-msg';}
   btn.disabled=false;
   btn.textContent='\uD83D\uDCE8 Envoyer ma demande de rappel';
   if(typeof gtag!=='undefined'){gtag('event','form_submit',{event_category:'Lead',event_label:'Formulaire soumis'});}
