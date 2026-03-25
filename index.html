@@ -879,12 +879,12 @@ document.getElementById('contactForm').addEventListener('submit',function(e){
   var tel=document.getElementById('f_telephone').value;
   if(!/^0[67][0-9]{8}$/.test(tel)){
     var msg=document.getElementById('formMsg');
-    if(msg){msg.textContent='Numéro invalide : doit commencer par 06 ou 07 (10 chiffres).';msg.className='form-msg err';}
+    if(msg){msg.textContent='Numéro invalide : doit commencer par 06 ou 07 (10 chiffres).';msg.className='form-msg err';msg.style.display='block';}
     return;
   }
   if(!window._psConsent){
     var msg=document.getElementById('formMsg');
-    if(msg){msg.textContent='Veuillez cocher la case pour continuer.';msg.className='form-msg err';}
+    if(msg){msg.textContent='Veuillez cocher la case pour continuer.';msg.className='form-msg err';msg.style.display='block';}
     return;
   }
   var btn=document.getElementById('submitBtn');
@@ -908,7 +908,7 @@ document.getElementById('contactForm').addEventListener('submit',function(e){
   window._psConsent=false;
   document.getElementById('consent-check').style.background='transparent';
   document.getElementById('consent-check').innerHTML='';
-  var fm=document.getElementById('formMsg');if(fm){fm.textContent='';fm.className='form-msg';}
+  var fm=document.getElementById('formMsg');if(fm){fm.textContent='';fm.className='form-msg';fm.style.display='none';}
   btn.disabled=false;
   btn.textContent='\uD83D\uDCE8 Envoyer ma demande de rappel';
   if(typeof gtag!=='undefined'){gtag('event','form_submit',{event_category:'Lead',event_label:'Formulaire soumis'});}
