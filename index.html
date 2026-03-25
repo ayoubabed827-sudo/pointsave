@@ -405,7 +405,7 @@ input,select,textarea{font-size:16px!important;}
     <h2>Demande reçue&nbsp;!</h2>
     <p>Un conseiller vous rappellera dans les <strong>30 prochaines minutes</strong>.</p>
     <a href="tel:+33699926510" class="mb-call" onclick="trackCall()"><svg class="ico-tel" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.07 1.15 2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.09a16 16 0 006.29 6.29l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 15.42z"/></svg> Appeler directement</a>
-    <button class="mb-back" onclick="document.getElementById('merci').classList.remove('show');document.body.style.overflow=''">← Retour</button>
+    <button class="mb-back" onclick="document.getElementById('merci').classList.remove('show');document.body.style.overflow='';var fm=document.getElementById('formMsg');if(fm){fm.textContent='';fm.style.display='none';fm.className='form-msg';}">← Retour</button>
   </div>
 </div>
 
