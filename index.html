@@ -882,14 +882,7 @@ document.getElementById('contactForm').addEventListener('submit',function(e){
     if(msg){msg.textContent='Numéro invalide : doit commencer par 06 ou 07 (10 chiffres).';msg.className='form-msg err';}
     return;
   }
-  var consent=document.getElementById('f_consent');
-  var isChecked=consent.checked||consent.getAttribute('data-checked')==='1';
-  if(!isChecked){
-    var msg=document.getElementById('formMsg');
-    msg.textContent='Veuillez cocher la case de consentement.';
-    msg.className='form-msg err';
-    return;
-  }
+  // Consentement vérifié par l'attribut required HTML natif
   var btn=document.getElementById('submitBtn');
   btn.disabled=true;
   btn.textContent='Envoi en cours…';
