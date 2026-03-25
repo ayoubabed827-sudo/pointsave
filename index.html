@@ -571,7 +571,7 @@ input,select,textarea{font-size:16px!important;}
           </div>
           <div class="consent-box">
             <label class="consent-label">
-              <input type="checkbox" id="f_consent" required onclick="this.setAttribute('data-checked',this.checked?'1':'0')">
+              <input type="checkbox" id="f_consent" required onclick="this.setAttribute('data-checked',this.checked?'1':'0');if(this.checked){var m=document.getElementById('formMsg');if(m)m.textContent=''}">
               <span>J'accepte d'être recontacté par PointSave concernant ma demande de stage. Mes données ne seront pas transmises à des tiers. <a onclick="openLegal('confidentialite')">Politique de confidentialité</a>.</span>
             </label>
           </div>
