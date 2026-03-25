@@ -144,40 +144,7 @@ jobs:
             if (!tplRes.success) throw new Error(JSON.stringify(tplRes.errors));
             console.log(`  ✅ Template uploadé (${Math.round(template.length/1024)}kb)`);
 
-            // 7. Mettre à jour wrangler.toml sur GitHub
-            console.log('\n📝 Mise à jour wrangler.toml...');
-            const newToml = [
-              'name = "pointsave"',
-              'compatibility_date = "2024-01-01"',
-              '',
-              '[[kv_namespaces]]',
-              'binding = "COMMUNES_KV"',
-              'id = "' + kvId + '"',
-              ''
-            ].join('\n');
-
-            const shaRes = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/wrangler.toml`, {
-              headers: { 'Authorization': `Bearer ${GH_TOKEN}`, 'Accept': 'application/vnd.github.v3+json' }
-            });
-            const shaData = await shaRes.json();
-
-            const updateRes = await fetch(`https://api.github.com/repos/${GH_REPO}/contents/wrangler.toml`, {
-              method: 'PUT',
-              headers: { 'Authorization': `Bearer ${GH_TOKEN}`, 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                message: 'chore: update wrangler KV id',
-                content: Buffer.from(newToml, 'utf8').toString('base64'),
-                sha: shaData.sha
-              })
-            });
-            const updateData = await updateRes.json();
-            if (!updateData.commit) throw new Error(JSON.stringify(updateData));
-            console.log(`  ✅ wrangler.toml mis à jour (commit ${updateData.commit.sha.slice(0,7)})`);
-
-            console.log(`\n🎉 SETUP COMPLET !`);
-            console.log(`📊 ${Object.keys(communeMap).length} communes dans KV`);
-            console.log(`🔑 KV ID: ${kvId}`);
-          }
+            console.log('\n✅ Setup terminé - wrangler.toml déjà à jour');
 
           main().catch(e => { console.error('❌', e.message); process.exit(1); });
           SCRIPT
