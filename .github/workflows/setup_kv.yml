@@ -145,6 +145,7 @@ jobs:
             console.log(`  ✅ Template uploadé (${Math.round(template.length/1024)}kb)`);
 
             console.log('\n✅ Setup terminé - wrangler.toml déjà à jour');
+          }
 
           main().catch(e => { console.error('❌', e.message); process.exit(1); });
           SCRIPT
