@@ -883,8 +883,9 @@ document.getElementById('contactForm').addEventListener('submit',function(e){
     return;
   }
   if(!window._psConsent){
-    var msg=document.getElementById('formMsg');
-    if(msg){msg.textContent='Veuillez cocher la case pour continuer.';msg.className='form-msg err';msg.style.display='block';}
+    var cb=document.getElementById('consent-box');
+    if(cb)cb.style.border='2px solid #ff4444';
+    setTimeout(function(){if(cb)cb.style.border='';},2000);
     return;
   }
   var btn=document.getElementById('submitBtn');
