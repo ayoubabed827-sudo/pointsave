@@ -571,7 +571,7 @@ input,select,textarea{font-size:16px!important;}
           </div>
           <div class="consent-box">
             <label class="consent-label">
-              <input type="checkbox" id="f_consent" required onclick="this.setAttribute('checked',this.checked?'checked':'')">
+              <input type="checkbox" id="f_consent" required onclick="this.setAttribute('data-checked',this.checked?'1':'0')">
               <span>J'accepte d'être recontacté par PointSave concernant ma demande de stage. Mes données ne seront pas transmises à des tiers. <a onclick="openLegal('confidentialite')">Politique de confidentialité</a>.</span>
             </label>
           </div>
@@ -883,9 +883,10 @@ document.getElementById('contactForm').addEventListener('submit',function(e){
     return;
   }
   var consent=document.getElementById('f_consent');
-  if(!consent.checked&&!consent.getAttribute('checked')){
+  var isChecked=consent.checked||consent.getAttribute('data-checked')==='1';
+  if(!isChecked){
     var msg=document.getElementById('formMsg');
-    msg.textContent='Veuillez accepter les conditions avant d\'envoyer.';
+    msg.textContent='Veuillez cocher la case de consentement.';
     msg.className='form-msg err';
     return;
   }
