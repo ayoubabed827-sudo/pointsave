@@ -561,10 +561,8 @@ input,select,textarea{font-size:16px!important;}
             </button>
           </div>
           <div class="consent-box">
-            <label class="consent-label">
-              <input type="checkbox" id="f_consent" required>
-              <span>J'accepte d'être recontacté par PointSave concernant ma demande de stage. Mes données ne seront pas transmises à des tiers. <a onclick="openLegal('confidentialite')">Politique de confidentialité</a>.</span>
-            </label>
+            <div class="consent-label" id="consent-box" onclick="window._psConsent=!window._psConsent;document.getElementById('consent-check').style.background=window._psConsent?'#00c77a':'transparent';document.getElementById('consent-check').innerHTML=window._psConsent?'&#10003;':'';" style="cursor:pointer"><div id="consent-check" style="width:18px;height:18px;min-width:18px;border:2px solid #00c77a;border-radius:4px;display:inline-flex;align-items:center;justify-content:center;font-weight:bold;color:#000;font-size:14px;background:transparent;flex-shrink:0;margin-top:1px"></div><span>J'accepte d'être recontacté par PointSave concernant ma demande de stage. Mes données ne seront pas transmises à des tiers. <a onclick="openLegal('confidentialite')">Politique de confidentialité</a>.</span>
+            </div>
           </div>
           <div class="div"><span>OU appelez directement</span></div>
           <a href="tel:+33699926510" class="btn-call-f" onclick="trackCall()"><svg class="ico-tel" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.07 1.15 2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.09a16 16 0 006.29 6.29l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 15.42z"/></svg> +33 6 99 92 65 10</a>
@@ -931,11 +929,10 @@ document.getElementById('contactForm').addEventListener('submit',function(e){
     if(msg){msg.textContent='Numéro invalide : doit commencer par 06 ou 07 (10 chiffres).';msg.className='form-msg err';}
     return;
   }
-  var consent=document.getElementById('f_consent');
-  if(!consent.checked){
-    var msg=document.getElementById('formMsg');
-    msg.textContent='Veuillez accepter les conditions avant d\'envoyer.';
-    msg.className='form-msg err';
+  if(!window._psConsent){
+    var cb=document.getElementById('consent-box');
+    if(cb)cb.style.border='2px solid #ff4444';
+    setTimeout(function(){if(cb)cb.style.border='';},2000);
     return;
   }
   var btn=document.getElementById('submitBtn');
@@ -1456,11 +1453,10 @@ function closeLegal(){document.getElementById('lp').classList.remove('show');doc
 // FORMULAIRE
 document.getElementById('contactForm').addEventListener('submit',function(e){
   e.preventDefault();
-  var consent=document.getElementById('f_consent');
-  if(!consent.checked){
-    var msg=document.getElementById('formMsg');
-    msg.textContent='Veuillez accepter les conditions avant d\'envoyer.';
-    msg.className='form-msg err';
+  if(!window._psConsent){
+    var cb=document.getElementById('consent-box');
+    if(cb)cb.style.border='2px solid #ff4444';
+    setTimeout(function(){if(cb)cb.style.border='';},2000);
     return;
   }
   var btn=document.getElementById('submitBtn');
